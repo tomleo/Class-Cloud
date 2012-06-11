@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Assignments Page</title>
+    </head>
+    <body>
+        <h1>Welcome to Assignments Page</h1>
+        {% block your_assignments %}
+            <ul>
+                {% for assignment in list_assignments %}
+                    <li>{{ assignment }}</li>
+                {% endfor %}
+            </ul>
+        {% endblock your_assignments %}
+    </body>
+</html>
