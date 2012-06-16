@@ -126,7 +126,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
 
-    'assignments',
+#    'django_extensions',
+
+#    'assignments',
+     'course',
 )
 
 # A sample logging configuration. The only tangible logging

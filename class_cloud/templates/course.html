@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <title>These are all the courses</title>
+    </head>
+    <body>
+        <h1>Welcome to the Course Page!</h1>
+        <!--{% block courses %}-->
+            <ul>
+                {% for course in list_courses %}
+                    <li><a href="{{ course.syllabus }}">{{ course }}</a></li>
+                {% endfor %}
+            </ul>
+        <!--{% endblock courses %}-->
+    </body>
+</html>
