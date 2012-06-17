@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block page_title %}
+    {{ assignment.name }} | {{ assignment.course.title }} | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ assignment.name }}</h1>
+    <p>{{ assignment.description|linebreaks }}</p>
+{% endblock %}

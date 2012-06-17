@@ -55,6 +55,12 @@ class Course(TimeStampedActivate):
     def __unicode__(self):
         return '{0}'.format(self.title)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('course', (), {
+            'title': self.title
+        })
+
 
 class Grade(models.Model):
     letter_grade = models.CharField(max_length=2,
@@ -67,7 +73,18 @@ class Assignment(TimeStampedActivate):
     description = models.TextField(blank=True,
                                     help_text="Describe the assignment.")
     user = models.ForeignKey(User, related_name="assignments")
-    assignment_grade = models.ForeignKey(Grade)
+    course = models.ForeignKey(Course, related_name="classes")
+    #assignment_grade = models.ForeignKey(Grade)
 
     def __unicode__(self):
         return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('assignment', (), {
+            'assignment': self.assignment.name,
+            'description': self.assignment.description
+        })
+
+    class Meta:
+        ordering = ['-end_date', '-modified', '-created']

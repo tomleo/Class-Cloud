@@ -1,16 +1,26 @@
-<!doctype html>
-<html>
-    <head>
-        <title>These are all the courses</title>
-    </head>
-    <body>
-        <h1>Welcome to the Course Page!</h1>
-        <!--{% block courses %}-->
-            <ul>
-                {% for course in list_courses %}
-                    <li><a href="{{ course.syllabus }}">{{ course }}</a></li>
-                {% endfor %}
-            </ul>
-        <!--{% endblock courses %}-->
-    </body>
-</html>
+{% block page_title %}
+    {{ block.super }} | {{ course.name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ course.name }}</h1>
+    <h1>Welcome to the Course Page!</h1>
+    {{ course.description|linebreaks }}
+        <ul>
+            {% for course in list_courses %}
+                <li><a href="{{ course.get_absolute_url }}">{{ course }}</a></li>
+            {% endfor %}
+        </ul>
+    <div id="new_assignments">
+        <h2>New Assignments</h2>
+        {% if course.posts.all %}
+        <ul>
+            {% for assignment in course.assignments.all %}
+            <li>{{ assignment.name }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No HOMEWORK! WOOT WOOT!!!!</p>
+        {% endif %}
+    </div>
+{% endblock %}

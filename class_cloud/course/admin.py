@@ -11,6 +11,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 class AssignmentAdmin(admin.ModelAdmin):
+    #TODO change the user field to say Teacher: or Professor:
     pass
 
 admin.site.register(Course, CourseAdmin)
