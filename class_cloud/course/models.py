@@ -55,6 +55,9 @@ class Course(TimeStampedActivate):
     def __unicode__(self):
         return '{0}'.format(self.title)
 
+    class Meta:
+        ordering = ["-title"]
+
     @models.permalink
     def get_absolute_url(self):
         return ('course', (), {

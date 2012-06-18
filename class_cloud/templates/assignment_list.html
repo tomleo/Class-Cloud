@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block page_title %}
+	Assignment List
+{% endblock %}
+
+{% block body %}
+	<h1>Assignments</h1>
+	<ul>
+		{% for assignment in assignment_list %}
+			<li>{{ assignment.name }}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

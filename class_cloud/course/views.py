@@ -2,9 +2,34 @@ import datetime
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.views.generic import list_detail, DetailView
+
+from annoying.decorators import render_to
 
 from models import Course, Assignment
 
+class CourseDetailView(DetailView):
+
+    context_object_name = "course"
+    model = Course
+
+    def get_context_data(self, **kwargs):
+        #this calls the base implementation to get context
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+
+        context['course_list'] = Course.objects.filter(active=True)
+        return context
+
+class AssignmentDetailView(DetailView):
+
+    context_object_name = "assignment"
+    model = Assignment
+
+    def get_context_data(self, **kwargs):
+        context = super(AssignmentDetailView, self).get_context_data(**kwargs)
+
+        context['assignment_list'] = Assignment.objects.all()
+        return context
 
 def assignments(request):
     list_of_assignments = []
@@ -15,6 +40,13 @@ def assignments(request):
         'list_assignments': list_of_assignments,
     })
 
+#@render_to('index.html')
+def course_index(request):
+    #courses = Course.objects.filter(active=True)
+    queryset = Course.objects.filter(active=True)
+
+    return list_detail.object_detail(queryset=queryset)
+    #return { 'courses': courses }
 
 def courses(request):
     list_of_courses = Course.objects.all()

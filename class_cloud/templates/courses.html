@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block page_title %}
+	Courses List Poopies!
+{% endblock %}
+
+{% block body %}
+	<h1>Courses</h1>
+	<ul>
+		{% for course in course_list %}
+			<li>{{ course.title }}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
