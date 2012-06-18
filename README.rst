@@ -28,7 +28,7 @@ The Setup before you start coding
 
     source ENV/bin/activate
 
-6. you should not install django via pip::
+6. you should install django via pip::
 
     pip install django
     
