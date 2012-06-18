@@ -35,7 +35,6 @@ The Setup before you start coding
 Other things installed
 ======================
 
-::
-   pip install mercurial
-   sudo apt-get install mercurial
-   pip install -e hg+https://bitbucket.org/offline/django-annoying/#egg=django_annoying
+ - pip install mercurial
+ - sudo apt-get install mercurial
+ - pip install -e hg+https://bitbucket.org/offline/django-annoying/#egg=django_annoying
