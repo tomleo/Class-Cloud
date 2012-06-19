@@ -1,75 +1,29 @@
-import datetime
-from django.http import HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
-from django.views.generic import list_detail, DetailView
+from django.views.generic import list_detail, date_based, TemplateView, RedirectView
 
-from annoying.decorators import render_to
+from course.models import Course, Assignment
+# can i simply do from models import Course, Assignment?
 
-from models import Course, Assignment
-
-class CourseDetailView(DetailView):
-
-    context_object_name = "course"
-    model = Course
+class DisplayCourseView(TemplateView):
+    template_name = "course.html"
 
     def get_context_data(self, **kwargs):
-        #this calls the base implementation to get context
-        context = super(CourseDetailView, self).get_context_data(**kwargs)
-
-        context['course_list'] = Course.objects.filter(active=True)
+        context = super(DisplayCourseView, self).get_context_data(**kwargs)
+        context['course'] = Course.objects.get(pk=self.kwargs.get('course_id',
+                                                                        None))
         return context
 
-class AssignmentDetailView(DetailView):
+class DisplayCourseRedirectView(RedirectView):
+   
+    def get(self, request, *args, **kwargs):
+        course_id = self.kwargs.get('course_id', None)
+        course = Course.objects.get(pk=course_id)
+        self.url = '/courses/%s-%s' % (course.id, course.slug)
+        return super(DisplayCourseRedirectView, self).get(self, request, *args, **kwargs)
 
-    context_object_name = "assignment"
-    model = Assignment
+def course(request, slug):
+    courses = Blog.objects.get(slug=slug)
+    queryset = Assignment.objects.get_visible().filter(course__slug=slug)
+    template_name = 'courses.html'
+    return date_based.archive_index(request, queryset, date_field="end_date",
+                                    extra_context={ 'course': courses })
 
-    def get_context_data(self, **kwargs):
-        context = super(AssignmentDetailView, self).get_context_data(**kwargs)
-
-        context['assignment_list'] = Assignment.objects.all()
-        return context
-
-def assignments(request):
-    list_of_assignments = []
-    for assignment in Assignment.objects.all():
-        if assignment.active:
-            list_of_assignments.append(assignment)
-    return render_to_response('assignments.html', {
-        'list_assignments': list_of_assignments,
-    })
-
-#@render_to('index.html')
-def course_index(request):
-    #courses = Course.objects.filter(active=True)
-    queryset = Course.objects.filter(active=True)
-
-    return list_detail.object_detail(queryset=queryset)
-    #return { 'courses': courses }
-
-def courses(request):
-    list_of_courses = Course.objects.all()
-    #list_of_courses = []
-    #for course in Course.objects.all():
-    #    if course.active:
-    #        list_of_courses.append(course)
-    return render_to_response('course.html', {
-        'list_courses': list_of_courses,
-    })
-
-
-def course(request, title):
-    course = get_object_or_404(Course, active=True, title=title)
-    return render_to_response('course.html', {
-        'course': course
-    })
-
-
-def assignment(request, course, name):
-    _assignment = get_object_or_404(Assignment, active=True,
-                                    publish_at__lte=datetime.datetime.now(),
-                                    name=name)
-    return render_to_response('assignment.html', {
-        'assignment': _assignment,
-        }, context_instance=RequestContext(request))

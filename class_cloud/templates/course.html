@@ -1,26 +1,23 @@
+{% extends 'base.html' %}
+
 {% block page_title %}
     {{ block.super }} | {{ course.name }}
 {% endblock %}
 
 {% block body %}
     <h1>{{ course.name }}</h1>
-    <h1>Welcome to the Course Page!</h1>
-    {{ course.description|linebreaks }}
-        <ul>
-            {% for course in list_courses %}
-                <li><a href="{{ course.get_absolute_url }}">{{ course }}</a></li>
-            {% endfor %}
-        </ul>
+    <p>{{ course.description|linebreaks }}</p>
+    
     <div id="new_assignments">
         <h2>New Assignments</h2>
-        {% if course.posts.all %}
-        <ul>
-            {% for assignment in course.assignments.all %}
-            <li>{{ assignment.name }}</li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>No HOMEWORK! WOOT WOOT!!!!</p>
+        {% if course.assignments.all %}
+          <ul>
+              {% for assignment in course.assignments.all %}
+              <li>{{ assignment.name }}</li>
+              {% endfor %}
+          </ul>
+          {% else %}
+          <p>No Homework</p>
         {% endif %}
     </div>
 {% endblock %}
