@@ -2,18 +2,43 @@
 
 {% block page_title %}
   Courses List | {{ block.super }}
-{% endblock %}
+  {% endblock %}
+
 
 {% block body %}
+<div class="row-fluid">
+<div class="span1"></div>
+<div class="span10">
+<div class="tabbable">
 	<h1>Courses</h1>
-	<ul>
+	<ul class="nav nav-tabs" id="myTab">
 		{% for course in courses_list %}
-    <li><a href="{{ course.get_absolute_url }}" >{{ course.title }}</a></li>
-    <ul>
-      {% for assignment in assignments %}
-        <li>{{ assignment.name }}</li>
-      {% endfor %}
-    </ul>
-		{% endfor %}
-	</ul>
+    <li><a href="#{{ course.slug }}" data-toggle="tab">{{ course.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="tab-content">
+    {% for course in courses_list %}
+    <div class="tab-pane" id="{{ course.slug }}">
+      <h3>Description</h3>
+      <p>{{ course.description|linebreaks }}</p>
+      <!--This link does not work, need to specify it in the URL.py file -->
+      <p><a href="{{ STATIC_URL }}{{ course.syllabus }}">Sylabus</a></p>
+     </div><!--END tab-pane-->
+   {% endfor %}
+  </div><!--END tab-content-->
+</div><!--END tabbable--> 
+</div><!--END span10-->
+<div class="span1"></div>
+{% endblock %}
+
+
+{% block jQuery %}
+<script type="text/javascript">
+$(document).ready(function(){
+//  $("li").first().addClass('active');
+//  $(".tab-pane").first().addClass('active');
+$('#myTab a:first').tab('show');
+});
+</script>
 {% endblock %}

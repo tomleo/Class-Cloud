@@ -4,12 +4,25 @@ Assignments
 {% endblock %}
 
 {% block body %}
-	<h1>Assignments</h1>
-	<ul>
-    {% for assignment in assignments_list %}
-    <a href={{ assignment.get_absolute_url }}>
-      <li>{{ assignment.name }} | {{ assignment.course }} | {{ assignment.due_date }}</li>
-    </a>
-		{% endfor %}
-	</ul>
+
+<div class="row-fluid">
+  <div class="span1"></div>
+  <div class="span10">
+    <h1>Assignments</h1>
+    <ul class="nav nav-tabs nav-stacked">
+      {% for assignment in assignments_list %}
+      <li> 
+      <a href={{ assignment.get_absolute_url }}>
+          <div class="row-fluid">
+            <div class="span4">{{ assignment.name }}</div><div
+              class="span4">{{ assignment.course }}</div><div
+              class="span4">{{ assignment.due_date }}</div>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="span1"></div>
+</div>
 {% endblock %}

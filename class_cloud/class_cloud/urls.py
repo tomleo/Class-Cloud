@@ -21,7 +21,9 @@ assignment_info = {
 }
 
 assignment_detail = {
-    "queryset": Assignment.objects.filter(active=True),
+    "queryset":
+    Assignment.objects.filter(active=True).order_by('due_date').reverse(),
+    #The order_by and reverse functions do not seem to be working
     "template_name": "assignment.html",
 } 
 
