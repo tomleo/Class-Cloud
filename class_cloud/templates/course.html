@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    {{ block.super }} | {{ course.name }}
+    {{ block.super }} | {{ course.title }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ course.name }}</h1>
+  <h1>{{ course.title }}</h1>
+  <h2>About the Course</h2>
     <p>{{ course.description|linebreaks }}</p>
-    
-    <div id="new_assignments">
+    <hr />
+    <!--<div id="new_assignments">
         <h2>New Assignments</h2>
         {% if course.assignments.all %}
           <ul>
@@ -19,5 +20,5 @@
           {% else %}
           <p>No Homework</p>
         {% endif %}
-    </div>
+      </div>-->
 {% endblock %}

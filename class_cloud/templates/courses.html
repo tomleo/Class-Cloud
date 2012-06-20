@@ -7,8 +7,13 @@
 {% block body %}
 	<h1>Courses</h1>
 	<ul>
-		{% for course in courses %}
-      <li><a href="{{ course.get_absolute_url }}">{{ course }}</a></li>
+		{% for course in courses_list %}
+    <li><a href="{{ course.get_absolute_url }}" >{{ course.title }}</a></li>
+    <ul>
+      {% for assignment in assignments %}
+        <li>{{ assignment.name }}</li>
+      {% endfor %}
+    </ul>
 		{% endfor %}
 	</ul>
 {% endblock %}

@@ -6,8 +6,10 @@ Assignments
 {% block body %}
 	<h1>Assignments</h1>
 	<ul>
-		{% for assignment in assignments %}
-			<li>{{ assignment.name }}</li>
+    {% for assignment in assignments_list %}
+    <a href={{ assignment.get_absolute_url }}>
+      <li>{{ assignment.name }} | {{ assignment.course }} | {{ assignment.due_date }}</li>
+    </a>
 		{% endfor %}
 	</ul>
 {% endblock %}

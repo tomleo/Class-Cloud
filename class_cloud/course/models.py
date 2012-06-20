@@ -12,11 +12,11 @@ class TimeStamped(models.Model):
 class TimeStampedActivate(TimeStamped):
     active = models.BooleanField(default=False)
     #start_date = models.DateTimeField(default=False)
-    due_date = models.DateTimeField(default=False)
+    
 
     class Meta:
         get_latest_by = 'due_date'
-        ordering = ('-due_date', '-modified', '-created',)
+        ordering = ('-modified', '-created',)
         abstract = True
 
 
@@ -68,6 +68,7 @@ class Assignment(TimeStampedActivate):
                                     help_text="Describe the assignment.")
     #May want to change this relationship, so that assignments
     #have a OneToMany relationship with Student?
+    due_date = models.DateTimeField(default=False)
     user = models.ForeignKey(User, related_name="assignments")
     course = models.ForeignKey(Course, related_name="classes")
     
