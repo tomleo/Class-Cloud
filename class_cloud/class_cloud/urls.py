@@ -29,6 +29,8 @@ assignment_detail = {
 
 urlpatterns = patterns('',
 
+
+#    (r'^$', 'course.view.Assignment', )
     # /
     (r'^assignments/$', list_detail.object_list, assignment_info),
     # /assignments/<id>  DOES NOT WORK!
@@ -36,12 +38,12 @@ urlpatterns = patterns('',
         assignment_detail),
     (r'^courses/$', list_detail.object_list, course_info),
 
-#    url(r'^$', ListView.as_view(
-#        model = Course,
-#        context_object_name = "courses",
-#        queryset = Course.objects.all(),
-#        template_name="courses.html",
-#    ),name="courses_home"),
+    url(r'^$', ListView.as_view(
+        model = Course,
+        context_object_name = "courses",
+        queryset = Course.objects.all(),
+        template_name="index.html",
+    ),name="courses_home"),
     
 
 #    url(r'^(?P<pk>\d+)-(?P<slug>[-\w]+)/$',

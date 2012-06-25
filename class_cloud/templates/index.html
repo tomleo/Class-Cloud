@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Class Cloud
+{% endblock %}
+
+<!--Main Stuff-->
+{% block body %}
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Class Cloud</a>
+      <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-user"></i>Thomas Leo
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profile</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Sign Out</a></li>
+        </ul>
+      </div><!--END btn-group pull-right -->
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#"><i class="icon-font"></i></a></li>
+          <li class="active"><a href="#"><i class="icon-globe"></i></a></li>
+        </ul>
+      </div><!--END nav-collapse -->
+    </div><!--END container -->
+  </div><!--END navbar-inner -->
+</div><!--END navbar navbar-fixed-top -->
+
+<div class="container-fluid">
+<div class="span10 offset2">
+  <div class="row-fluid">
+    <div class="span3">
+    	
+      <!-- Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li class="active"><a href="#">News Feed</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Assignments</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      <!--Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="#">Grades</a></li>
+          <li><a href="#">Progress</a></li>
+          <li><a href="#">Calendar</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+    </div><!--END span3-->  
+
+	<!-- Assignment -->
+    <div class="span8">
+      <div class="row-fluid">
+        <div class="well">
+          <div class="span1">
+            <a href="#" class="thumbnail">
+              <img src="http://placehold.it/40x40" alt="" />
+            </a>
+          </div><!--END span1-->
+          <p>Assignment Name</p>
+          <p align="right"><small>3 minutes ago</small></p>
+        </div><!--END well -->
+      </div><!--END span8 -->
+    </div><!--END row-fluid-->
+	<!-- END Assignment -->  
+  </div><!--END row-fluid-->
+  </div><!--END span10 offset2 -->
+</div><!--END Container Fluid -->
+    
+
+{% endblock %}
+
+<!-- JavaScript to execute after everything else has loaded -->
+{% block jQuery %}
+
+
+{% endblock %}
