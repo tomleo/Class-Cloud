@@ -5,6 +5,28 @@ from django.views.generic.edit import FormView
 from course.models import Course, Assignment
 # can i simply do from models import Course, Assignment?
 
+from django.shortcuts import render_to_response, RequestContext
+#from django.template import Context, loader #Replaced by render_to_response shortcut
+from django.http import HttpResponse
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def index(request):
+    """ Template is passed a context
+    
+    The context is a dictionary mapping between template variable names and
+    Python objects
+    """
+    courses = Course.objects.all()
+    #template = loader.get_template('index.html')
+    #context = Context({'courses': courses,})
+    #eturn HttpResponse(template.render(context))
+    return render_to_response('index.html',
+        {'course': courses},
+        context_instance=RequestContext(request))
+    
+
 class DetailCourseView(DetailView):
     
     template_name = "courses.html"

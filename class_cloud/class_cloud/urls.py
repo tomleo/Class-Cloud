@@ -29,9 +29,11 @@ assignment_detail = {
 
 urlpatterns = patterns('',
 
+    (r'^home/$', 'course.views.index'),
+    (r'^accounts/login/$', 'django.contrib.auth.views.login', 
+        {'template_name': 'login.html'} ),
 
-#    (r'^$', 'course.view.Assignment', )
-    # /
+
     (r'^assignments/$', list_detail.object_list, assignment_info),
     # /assignments/<id>  DOES NOT WORK!
     (r'^assignments/(?P<pk>d+)/$', list_detail.object_detail,

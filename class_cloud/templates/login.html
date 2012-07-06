@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Class Cloud
+{% endblock %}
+
+
+<!--Main Stuff-->
+{% block body %}
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Class Cloud</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+
+                </ul>
+            </div><!--END nav-collapse -->
+        </div><!--END container -->
+    </div><!--END navbar-inner -->
+</div><!--END navbar navbar-fixed-top -->
+
+<div class="container">
+    <div class="hero-unit">
+        <h1>Class Cloud</h1>
+        <p>Class Cloud is a social course managment system.</p>
+        <p>
+        <a class="btn btn-primary btn-large">
+        Register
+        </a>
+        </p>
+    </div><!--END hero-unit -->
+</div> <!--END container -->
+
+
+<div class="row">
+    <div class="span4 offset6">
+        <div class = "container">
+            <div class = "span3">
+                {% if form.errors %}
+                    <p class="error">Sorry, that's not a valid username or password</p>
+                {% endif %}
+                
+                <form action="" method="post" class="well">
+                {% csrf_token %}
+                <input type="text" class="span2" placeholder="username" name="username" value="" id="username">
+                <label></label>
+                <input type="password" class="span2" placeholder="Password" name="password" value="" id="password">
+                <label class="checkbox">
+                <input type="checkbox"> Remember me
+                </label>
+                <input type="submit" value="login" />
+                <input type="hidden" name="next" value="{{ next|escape }}" />
+                </form>
+            </div><!--END span3 -->
+        </div><!--END container -->
+    </div><!--END span4 offset6 -->
+</div><!--END row -->
+
+<div class="row" style = "color:#00FF00">
+    <div class="span2 offset6"><a href="http://glyphicons.com">forgot password?</a></div>
+    <div class="span2 offset1"><a href="http://glyphicons.com">need help?</a></div>
+</div><!--END row -->
+
+{% endblock %}
+
+<!-- JavaScript to execute after everything else has loaded -->
+{% block jQuery %}
+
+
+{% endblock %}
