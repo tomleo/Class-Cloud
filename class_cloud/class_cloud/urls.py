@@ -29,6 +29,7 @@ assignment_detail = {
 
 urlpatterns = patterns('',
 
+    (r'^$', 'course.views.index'),
     (r'^home/$', 'course.views.index'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
@@ -40,12 +41,12 @@ urlpatterns = patterns('',
         assignment_detail),
     (r'^courses/$', list_detail.object_list, course_info),
 
-    url(r'^$', ListView.as_view(
-        model = Course,
-        context_object_name = "courses",
-        queryset = Course.objects.all(),
-        template_name="index.html",
-    ),name="courses_home"),
+    #url(r'^$', ListView.as_view(
+    #    model = Course,
+    #    context_object_name = "courses",
+    #    queryset = Course.objects.all(),
+    #    template_name="index.html",
+    #),name="courses_home"),
     
 
 #    url(r'^(?P<pk>\d+)-(?P<slug>[-\w]+)/$',
