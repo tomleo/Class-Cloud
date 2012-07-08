@@ -51,7 +51,7 @@ In ubuntu
 10. chmod 600 sasl/passwd sasl/passwd.db
 11. sudo /etc/init.d/postfix restart
 
-*main.cf*
+*main.cf*::
 
     smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
     biff = no
@@ -77,13 +77,13 @@ In ubuntu
     smtp_sasl_security_options = noanonymous
     smtp_generic_maps=hash:/etc/postfix/generic
 
-*generic*
+*generic*::
 
     tom@localhost tomjleo@gmail.com
     root@localhost tomjleo@gmail.com
     svnmanager@192.168.1.5 tomjleo@gmail.com
 
-*sasl/passwd*
+*sasl/passwd*::
 
     [smtp.gmail.com]:587 tomjleo@gmail.com:=NOT_TELLING!!!
 
