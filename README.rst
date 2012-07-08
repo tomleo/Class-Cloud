@@ -31,6 +31,7 @@ The Setup before you start coding
 6. you should install django via pip::
 
     pip install django
+    pip install django-registration
     
 Other things installed
 ======================
