@@ -11,6 +11,8 @@ from django.http import HttpResponse
 
 from django.contrib.auth.decorators import login_required
 
+from django.contrib.auth import login
+
 @login_required
 def index(request):
     """ Template is passed a context
@@ -25,6 +27,9 @@ def index(request):
     return render_to_response('index.html',
         {'course': courses},
         context_instance=RequestContext(request))
+        
+def logout_view(request):
+    logout(request)
     
 
 class DetailCourseView(DetailView):

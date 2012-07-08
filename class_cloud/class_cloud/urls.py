@@ -48,6 +48,11 @@ urlpatterns = patterns('',
     #    template_name="index.html",
     #),name="courses_home"),
     
+    #Testing not sure if this is going to work
+    #(r'^registration/', include('registration.backends.default.urls')),
+    #(r'^registration/', include('registration.urls')),
+    #Hopefully this solution will work
+    (r'^accounts/', include('registration.backends.default.urls')),
 
 #    url(r'^(?P<pk>\d+)-(?P<slug>[-\w]+)/$',
 #        DetailView.as_view(

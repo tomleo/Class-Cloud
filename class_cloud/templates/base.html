@@ -15,6 +15,7 @@
     
     <script type="text/javascript" href="{{ STATIC_URL }}js/modernizr-2.5.3.js"></script>
 
+    {% block head_js %}{% endblock %}
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}img/apple-touch-icon-114-precomposed.png">
@@ -24,7 +25,7 @@
 
 </head>
 
-<body>
+<body {% block body_attrs %}{% endblock %}>
     {% block body %}{% endblock %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
