@@ -7,6 +7,47 @@
 
 {% block body %}
 
-{{ form }}
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Class Cloud</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+
+                </ul>
+            </div><!--END nav-collapse -->
+        </div><!--END container -->
+    </div><!--END navbar-inner -->
+</div><!--END navbar navbar-fixed-top -->
+
+<div class="container-fluid">
+    <div class="span10 offset2">
+      <div class="row-fluid">
+        <div class="span3">
+            <div class="row-fluid"></div>
+        </div><!--END span3-->
+
+        <div class="span8">
+        
+            {% load bootstrap %}
+
+            <form method="post" action=".">{% csrf_token %}
+
+            {{ form|bootstrap }}
+
+            <input type="submit" value="Submit" />
+            </form>
+
+        </div><!--END span8-->
+
+        </div><!--END row-fluid-->
+    </div><!--END span10 offset2-->
+</div><!--END container-fluid-->
 
 {% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Class Cloud
+{% endblock %}
+
+{% block head_js %}
+<script type="text/javascript">
+function redirectURL() {
+    window.location.replace("/");
+}
+
+function delayRedirect() {
+    timeout = window.setTimeout(redirectURL,  4000);
+}
+
+/*window.setTimeout(
+    function() {
+        redirectURL();
+    },
+    5000
+);*/
+</script>
+{% endblock %}
+
+{% block body_attrs %}
+onLoad="delayRedirect();"
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">&nbsp;</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">&nbsp;</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1">&nbsp;</div>
+        <div id="redirect" class="span10 alert alert-success">
+        <p>
+        <strong>You are now registered</strong><br />
+        <i class="icon-share-alt"></i>&nbsp;Redirecting you home back home!
+        </p>
+        </div>
+        <div class="span1">&nbsp;</div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- JavaScript to execute after everything else has loaded -->
+{% block jQuery %}
+<script type="text/javascript">
+
+</script>
+{% endblock %}
