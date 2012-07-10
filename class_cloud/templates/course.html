@@ -5,20 +5,106 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{ course.title }}</h1>
-  <h2>About the Course</h2>
-    <p>{{ course.description|linebreaks }}</p>
-    <hr />
-    <!--<div id="new_assignments">
-        <h2>New Assignments</h2>
-        {% if course.assignments.all %}
-          <ul>
-              {% for assignment in course.assignments.all %}
-              <li>{{ assignment.name }}</li>
-              {% endfor %}
-          </ul>
-          {% else %}
-          <p>No Homework</p>
-        {% endif %}
-      </div>-->
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Class Cloud</a>
+      <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-user"></i>&nbsp;{{ user.username }}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profile</a></li>
+          <li class="divider"></li>
+          <li><a href="/accounts/logout/">Sign Out</a></li>
+        </ul>
+      </div><!--END btn-group pull-right -->
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#"><i class="icon-font"></i></a></li>
+          <li class="active"><a href="#"><i class="icon-globe"></i></a></li>
+        </ul>
+      </div><!--END nav-collapse -->
+    </div><!--END container -->
+  </div><!--END navbar-inner -->
+</div><!--END navbar navbar-fixed-top -->
+
+<div class="container-fluid">
+<div class="span10 offset2">
+  <div class="row-fluid">
+    <div class="span3">
+    	
+      <!-- Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li class="active"><a href="#">News Feed</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Assignments</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      <!--Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="#">Grades</a></li>
+          <li><a href="#">Progress</a></li>
+          <li><a href="#">Calendar</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+    </div><!--END span3-->  
+  
+<div class="span8">
+<div class="tabbable">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#tab1" data-toggle="tab">{{ course.title }}</a></li>
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="tab2"> Assignments <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li> <a href = "#tab2">Inbox</a></li>
+				<li> <a href = "#tab5">Submitted</a></li>
+				<li> <a href = "#tab5">Graded</a></li>
+			</ul>
+		</li>
+		<li><a href="#tab3" data-toggle="tab">Grades</a></li>
+		<li><a href="#tab4" data-toggle="tab">Announcements</a></li>
+		<li><a href="#tab5" data-toggle="tab">Discussions</a></li>
+	</ul>
+	
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+	        {{ course.description|linebreaks }}
+        </div>
+        <div class="tab-pane" id="tab3">
+            {% for assignment in assignments %}
+                <p>{{ assignment.name }} | {{ assignment.description }}</p>
+            {% endfor %}
+	        <!--<p>Grades.</p>-->
+        </div>
+        <div class="tab-pane" id="tab4">
+	        <p>Announcements</p>
+        </div>
+        <div class="tab-pane" id="tab5">
+	        <p>Discussions.</p>
+        </div>
+    </div><!--END tab-content-->
+	
+</div><!--END tabbable-->  
+</div><!--END span8 -->
+  
+  
+</div><!--END row-fluid-->
+</div><!--END span10 offset2-->
+</div><!--END container-fluid-->
+  
+{% endblock %}
+
+
+{% block jQuery %}
+
 {% endblock %}
