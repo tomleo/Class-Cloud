@@ -1,5 +1,5 @@
 from django.contrib import admin
-from course.models import Course, Assignment
+from course.models import Course, Assignment, Grade
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -15,5 +15,9 @@ class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'due_date', 'course')
     list_filter = ('modified', 'created', 'active', 'due_date')
 
+class GradeAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
+admin.site.register(Grade, GradeAdmin)

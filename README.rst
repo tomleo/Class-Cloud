@@ -32,6 +32,8 @@ The Setup before you start coding
 
     pip install django
     pip install django-registration
+    pip install django_extensions?
+    pip install django-bootstrap-form
     
 Setting up mail server for email based registration
 ===================================================

@@ -2,34 +2,88 @@
 
 {% block page_title %}
   Courses List | {{ block.super }}
-  {% endblock %}
+{% endblock %}
 
 
 {% block body %}
-<div class="row-fluid">
-<div class="span1"></div>
-<div class="span10">
-<div class="tabbable">
-	<h1>Courses</h1>
-	<ul class="nav nav-tabs" id="myTab">
-		{% for course in courses_list %}
-    <li><a href="#{{ course.slug }}" data-toggle="tab">{{ course.title }}</a></li>
-    {% endfor %}
-  </ul>
+<!--courses.html template-->
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Class Cloud</a>
+      <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-user"></i>&nbsp;{{ user.username }}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profile</a></li>
+          <li class="divider"></li>
+          <li><a href="/accounts/logout/">Sign Out</a></li>
+        </ul>
+      </div><!--END btn-group pull-right -->
 
-  <div class="tab-content">
-    {% for course in courses_list %}
-    <div class="tab-pane" id="{{ course.slug }}">
-      <h3>Description</h3>
-      <p>{{ course.description|linebreaks }}</p>
-      <!--This link does not work, need to specify it in the URL.py file -->
-      <p><a href="{{ STATIC_URL }}{{ course.syllabus }}">Sylabus</a></p>
-     </div><!--END tab-pane-->
-   {% endfor %}
-  </div><!--END tab-content-->
-</div><!--END tabbable--> 
-</div><!--END span10-->
-<div class="span1"></div>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#"><i class="icon-font"></i></a></li>
+          <li class="active"><a href="#"><i class="icon-globe"></i></a></li>
+        </ul>
+      </div><!--END nav-collapse -->
+    </div><!--END container -->
+  </div><!--END navbar-inner -->
+</div><!--END navbar navbar-fixed-top -->
+
+<div class="container-fluid">
+<div class="span10 offset2">
+  <div class="row-fluid">
+    <div class="span3">
+    	
+      <!-- Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li class="active"><a href="#">News Feed</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Assignments</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      <!--Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="#">Grades</a></li>
+          <li><a href="#">Progress</a></li>
+          <li><a href="#">Calendar</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+    </div><!--END span3-->  
+
+<!-- Assignment -->
+
+    <div class="span8">
+      <div class="row-fluid">
+        <ul class="thumbnails">
+            {% for course in courses_list %}
+            <li class="span5">
+	            <div class="thumbnail">
+		            <img src="http://placehold.it/400x230" alt="">
+		            <h5><a href = "">{{course.title}}</a></h5>
+		            <p>Durga Suresh</p>
+	            </div>
+            </li>
+            {% endfor %}
+        </ul>
+      </div><!--END span8 -->
+    </div><!--END row-fluid-->
+    
+<!-- END Assignment -->
+	
+    </div><!--END row-fluid-->
+  </div><!--END span10 offset2 -->
+</div><!--END Container Fluid -->
+
 {% endblock %}
 
 

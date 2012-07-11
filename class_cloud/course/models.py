@@ -12,7 +12,6 @@ class TimeStamped(models.Model):
 class TimeStampedActivate(TimeStamped):
     active = models.BooleanField(default=False)
     #start_date = models.DateTimeField(default=False)
-    
 
     class Meta:
         get_latest_by = 'due_date'
@@ -92,18 +91,7 @@ class Assignment(TimeStampedActivate):
 #Stuff to be modified after the prototype
 ###
 
-class Grade(models.Model):
-    """
-    Note sure how to implement this, I think that this should be a
-    foreignkey on Student, as teachers don't get grades.
 
-    Alternativly It should somehow relate to an Assignment, and
-    a course as a whole.
-
-    Students have course grades, Students have assignment grades
-    """
-    letter_grade = models.CharField(max_length=2,
-                                    help_text="Letter grade A, B, C, D, or F")
 
 
 class Person(TimeStamped):
@@ -148,6 +136,24 @@ class Student(Person):
 
     def __unicode__(self):
         return self.email
+        
+class Grade(models.Model):
+    """
+    Note sure how to implement this, I think that this should be a
+    foreignkey on Student, as teachers don't get grades.
+
+    Alternativly It should somehow relate to an Assignment, and
+    a course as a whole.
+
+    Students have course grades, Students have assignment grades
+    """
+    letter_grade = models.CharField(max_length=10,
+                                    help_text="Letter grade A, B, C, D, or F")
+    course = models.ForeignKey(Course)
+    assignment = models.ForeignKey(Assignment)
+    
+    def __unicode__(self):
+        return self.letter_grade
 
 class Enrollment(models.Model):
     student = models.ForeignKey(Student,

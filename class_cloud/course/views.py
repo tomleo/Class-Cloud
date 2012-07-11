@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment
+from course.models import Course, Assignment, Grade
 # can i simply do from models import Course, Assignment?
 
 from django.shortcuts import render_to_response, RequestContext
@@ -27,7 +27,29 @@ def index(request):
     return render_to_response('index.html',
         {'course': courses},
         context_instance=RequestContext(request))
-        
+
+@login_required
+def courses(request, slug):
+    courses = Course.objects.all()
+    return render_to_response('courses.html',
+        {'courses': courses},
+        context_instance=RequestContext(request))
+                                    
+@login_required
+def course(request, slug):
+    selected_course = Course.objects.get(slug=slug)
+    #course_assignments = Assignment.objects.get(course.slug=selected_course.slug)
+    course_assignments = Assignment.objects.filter(course=selected_course)
+    grades = Grade.objects.filter(course=selected_course)
+    
+    courseAndGrade = []
+    
+    
+    template_name = 'course.html'
+    return render_to_response(template_name, {'course':selected_course, 'assignments':course_assignments}, context_instance=RequestContext(request))
+    
+
+
 def logout_view(request):
     logout(request)
     
@@ -60,13 +82,6 @@ class DisplayCourseRedirectView(RedirectView):
         self.url = '/courses/%s-%s' % (course.id, course.slug)
         return super(DisplayCourseRedirectView, self).get(self, request, *args, **kwargs)
 
-
-def course(request, slug):
-    courses = Blog.objects.get(slug=slug)
-    queryset = Assignment.objects.get_visible().filter(course__slug=slug)
-    template_name = 'courses.html'
-    return date_based.archive_index(request, queryset, date_field="end_date",
-                                    extra_context={ 'course': courses })
 
 
 def assignment(request, course, slug):

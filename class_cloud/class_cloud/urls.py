@@ -42,32 +42,39 @@ urlpatterns = patterns('',
     
     #Course Page
     (r'^courses/$', list_detail.object_list, course_info),
-    url(r'^courses/',TemplateView.as_view(template_name="courses.html")),
-    url(r'^courses/(?P<pk>\d+)-(?P<slug>[-\w]+)/$',
-        DetailView.as_view(
-            context_object_name="courses",
-            model=Course,
-            template_name="courses.html"),
-        name="courses"),
-    url(r'^courses/(?P<course_id>\d+)-(?P<slug>[-\w]+)/$',
-        DisplayCourseView.as_view()),
-    url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
+    (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
+    
+    
+    #url(r'^courses/',TemplateView.as_view(template_name="courses.html")),
+    
+    #url(r'^courses/(?P<pk>\d+)-(?P<slug>[-\w]+)/$',
+    #    DetailView.as_view(
+    #        context_object_name="courses",
+    #        model=Course,
+    #        template_name="courses.html"),
+    #    name="courses"),
+        
+    #url(r'^courses/(?P<course_id>\d+)-(?P<slug>[-\w]+)/$',
+    #    DisplayCourseView.as_view()),
+    
+    #url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
+    
     #This Query Isn't Working!
-    url(r'^course/(?P<course>[-\w]+)/assignment/(?P<slug>[-\w]+)/$',
-        'course.views.assignment',
-        {'queryset': Assignment.objects.all(),
-         'template_name': 'assignment.html'}),
+    #url(r'^course/(?P<course>[-\w]+)/assignment/(?P<slug>[-\w]+)/$',
+    #    'course.views.assignment',
+    #    {'queryset': Assignment.objects.all(),
+    #     'template_name': 'assignment.html'}),
 
     #Registration Pages
     (r'^accounts/', include('registration.backends.default.urls')),
 
     #Test Not sure if this is work keeping for any reason
-    url(r'^test/(?P<pk>\d+)-(?P<slug>[-_\w]+)/$',
-        DetailView.as_view(
-            context_object_name="course",
-            model=Course,
-            template_name="courses.html"
-            ), name = "course"),
+    #url(r'^test/(?P<pk>\d+)-(?P<slug>[-_\w]+)/$',
+    #    DetailView.as_view(
+    #        context_object_name="course",
+    #        model=Course,
+    #        template_name="courses.html"
+    #        ), name = "course"),
 
     #Admin Site
     url(r'^admin/', include(admin.site.urls)),

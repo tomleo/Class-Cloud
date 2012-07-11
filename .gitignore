@@ -1,0 +1,6 @@
+*~
+*.pyc
+*.db
+.DS_Store
+ENV/*
+class_cloud/syllabus/*
