@@ -147,16 +147,13 @@ class Grade(models.Model):
 
     Students have course grades, Students have assignment grades
     """
-    letter_grade = models.CharField(max_length=2,
+    letter_grade = models.CharField(max_length=10,
                                     help_text="Letter grade A, B, C, D, or F")
-                                    
-    #student = models.ForeignKey(Student)
-    
     course = models.ForeignKey(Course)
     assignment = models.ForeignKey(Assignment)
     
     def __unicode__(self):
-        return letter_grade
+        return self.letter_grade
 
 class Enrollment(models.Model):
     student = models.ForeignKey(Student,
