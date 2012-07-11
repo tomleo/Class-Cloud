@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Class Cloud
+{% endblock %}
+
+<!--Main Stuff-->
+{% block body %}
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Class Cloud</a>
+      <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-user"></i>&nbsp;{{ user.username }}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="./profile.html">Profile</a></li>
+          <li class="divider"></li>
+          <li><a href="/accounts/logout/">Sign Out</a></li>
+        </ul>
+      </div><!--END btn-group pull-right -->
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#"><i class="icon-font"></i></a></li>
+          <li class="active"><a href="#"><i class="icon-globe"></i></a></li>
+        </ul>
+      </div><!--END nav-collapse -->
+    </div><!--END container -->
+  </div><!--END navbar-inner -->
+</div><!--END navbar navbar-fixed-top -->
+
+<div class="container-fluid">
+<div class="span10 offset2">
+  <div class="row-fluid">
+    <div class="span3">
+    	
+      <!-- Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li class="active"><a href="#">News Feed</a></li>
+          <li><a href="./courses.html">Courses</a></li>
+          <li><a href="#">Assignments</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      <!--Sidebar content -->
+      <div class="row-fluid">
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="./grades.html">Grades</a></li>
+          <li><a href="#">Progress</a></li>
+          <li><a href="./calendar.html">Calendar</a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+    </div><!--END span3-->  
+
+	<form class="form-horizontal">
+		<fieldset>
+		<legend>Profile</legend>
+
+		<div class="control-group">
+		<label class="control-label" for="stu_name">Student</label>	
+		<div class="controls">
+		<input type="text" class"input-medium" id=stu_name disabled>
+		</div> </div>
+
+		<div class="control-group">
+		<label class="control-label" for="prof_name">Professor</label>	
+		<div class="controls">
+		<input type="text" class"input-medium" id=prof_name disabled>
+</div> </div>
+
+	<br><p align="center">Password Changes</p>
+
+		<div class="control-group">
+		<label class="control-label" for="old_pw">Old Password</label>	
+		<div class="controls">
+		<input type="password" class"input-medium" placeholder="Old Password" id=old_pw>
+</div> </div>
+
+		<div class="control-group">
+		<label class="control-label" for="new_pw">New Password</label>	
+		<div class="controls">
+		<input type="password" class"input-medium" placeholder="New Password" id="new_pw"></div> </div>
+
+		<div class="control-group">
+		<label class="control-label" for="new_pw">New Password (again)</label>	
+		<div class="controls">
+		<input type="password" class"input-medium" placeholder="Re-Enter New Password" id="new_pw">
+		<button type="submit" class="btn">Change Password</button>
+		</div> </div>
+		
+		
+		</fieldset>
+	</form>
+  </div><!--END row-fluid-->
+  </div><!--END span10 offset2 -->
+</div><!--END Container Fluid -->
+    
+
+{% endblock %}
+
+<!-- JavaScript to execute after everything else has loaded -->
+{% block jQuery %}
+
+
+{% endblock %}
