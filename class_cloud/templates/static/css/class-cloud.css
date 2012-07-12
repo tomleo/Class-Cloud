@@ -2,6 +2,33 @@
     text-align: center;
 }
 
-body {
-    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+@media (max-width: 480px) {
+    body {
+        padding-top: 0;
+    } 
+}
+
+@media (max-width: 767px) {
+    body {
+        padding-top: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+    body {
+        padding-top: 0;
+    }
+}
+
+/*There is a gap between the 979 and 1200*/
+@media (min-width: 980px) {
+    body {
+        padding-top: 60px;
+    }
+}
+
+@media (min-width: 1200px) {
+    body  {
+        padding-top: 60px;
+    }
 }
