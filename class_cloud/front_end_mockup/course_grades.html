@@ -9,6 +9,11 @@
     
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <style rel="stylesheet" type="text/css">
+    tr {
+        cursor:pointer;
+    }
+    </style>
 </head>
 
 <body>
@@ -39,16 +44,70 @@
 </div><!--END navbar navbar-fixed-top -->
 
 <h1>COMP1 Grades</h1>
-<table class="table table-condensed">
+
+<h2>Assignment 1</h2>
+<table class="table tab le-striped">
     <thead>
-        <th>Graded</th>
-        <th>Student</th>
-        <th>Assignment</th>
+        <th>Status</th>
+        <th>Name</th>
+        <th>Submission Date</th>
+        <th>Grade</th>
     </thead>
-    
-    icon-ok
-    icon-remove
+    <tbody>
+        <!--example of not yet graded-->
+        <tr id="modal1-a">
+            <td><i class="icon-flag"></i></td>
+            <td>Bob</td>
+            <td>5/12/2011</td>
+            <td>x out of 5</td>
+        </tr>
+        
+        <!--example of graded-->
+        <tr>
+            <td><i class="icon-ok"></i></td>
+            <td>John</td>
+            <td>5/11/2011</td>
+            <td>5 out of 5</td>
+        </tr>
+        
+        <!--example of graded & late-->
+        <tr>
+            <td><i class="icon-time"></i></td>
+            <td>Laura</td>
+            <td>5/20/2011</td>
+            <td>4 out of 5</td>
+        </tr>
+        
+        <!--example of missed-->
+        <tr>
+            <td><i class="icon-remove"></i></td>
+            <td>Tom</td>
+            <td>--</td>
+            <td>Missed</td>
+        </tr>
+    </tbody>
 </table>
+
+<div class="modal hide" id="modal1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3>Assignment 1 - Bob</h3>
+        <p>Comments: Home that I did this assignment correctly</p>
+        <p>Attachments: <i class="icon-file"></i>Paper 1, <i class="icon-file"></i>Paper 2</p>
+    </div>
+    <div class="modal-body">
+        <form class="well">
+            <label>Feeback</label>
+            <input type="text" class="span8" placeholder="leave feedback...">
+            <label>Grade</label>
+            <input type="text" class="span5" placeholder="5">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="assets/js/bootstrap-transition.js"></script>
@@ -63,6 +122,12 @@
 <script src="assets/js/bootstrap-collapse.js"></script>
 <script src="assets/js/bootstrap-carousel.js"></script>
 <script src="assets/js/bootstrap-typeahead.js"></script>
-
+<script type="text/javascript">
+$('#modal1-a').click(function() {
+    $('#modal1').modal({
+      keyboard: true
+    })
+});
+</script>
 </body>
 </html>
