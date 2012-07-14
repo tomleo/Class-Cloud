@@ -1,5 +1,5 @@
 from django.contrib import admin
-from course.models import Course, Assignment, Grade
+from course.models import Course, Assignment, Grade, Enrollment
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -17,7 +17,11 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 class GradeAdmin(admin.ModelAdmin):
     pass
+    
+class EnrollmentAdmin(admin.ModelAdmin):
+    list_display = ('students', 'course', 'start_date') 
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Grade, GradeAdmin)
+admin.site.register(Enrollment, EnrollmentAdmin)

@@ -24,8 +24,8 @@ def index(request):
     #template = loader.get_template('index.html')
     #context = Context({'courses': courses,})
     #eturn HttpResponse(template.render(context))
-    return render_to_response('index.html',
-        {'course': courses},
+    return render_to_response('courses.html',
+        {'courses': courses},
         context_instance=RequestContext(request))
 
 @login_required
@@ -48,6 +48,13 @@ def course(request, slug):
     template_name = 'course.html'
     return render_to_response(template_name, {'course':selected_course, 'assignments':course_assignments}, context_instance=RequestContext(request))
     
+
+@login_required
+def assignments(request):
+    assignments = Assignment.objects.all()
+    return render_to_response('assignments.html',
+        {'assignments': assignments},
+        context_instance=RequestContext(request))
 
 
 def logout_view(request):

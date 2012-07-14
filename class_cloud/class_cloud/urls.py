@@ -31,18 +31,20 @@ urlpatterns = patterns('',
 
     #Index page
     (r'^$', 'course.views.index'),
+    (r'^courses/$', 'course.views.index'),
     (r'^home/$', 'course.views.index'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
 
     #Assignment page
-    (r'^assignments/$', list_detail.object_list, assignment_info),
+    (r'^assignments/$', 'course.views.assignments'),
+    #(r'^assignments/$', list_detail.object_list, assignment_info),
     (r'^assignments/(?P<pk>d+)/$', list_detail.object_detail,
         assignment_detail),
     
     #Course Page
-    (r'^courses/$', list_detail.object_list, course_info),
-    (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
+    #(r'^courses/$', list_detail.object_list, course_info),
+    #(r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
     
     
     #url(r'^courses/',TemplateView.as_view(template_name="courses.html")),

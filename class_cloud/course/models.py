@@ -87,13 +87,6 @@ class Assignment(TimeStampedActivate):
         ordering = ['-due_date', '-modified', '-created']
 
 
-###
-#Stuff to be modified after the prototype
-###
-
-
-
-
 class Person(TimeStamped):
     """
     A Person is a User with the following attributes
@@ -156,10 +149,14 @@ class Grade(models.Model):
         return self.letter_grade
 
 class Enrollment(models.Model):
-    student = models.ForeignKey(Student,
-                                verbose_name="Enrolled",
-                                help_text="Enroll this user as student in Course.",
-                                )
+    #student = models.ForeignKey(Student,
+    #                            verbose_name="Enrolled",
+    #                            help_text="Enroll this user as student in Course.",
+    #                            )
+    students = models.ForeignKey(User, 
+                                 verbose_name="Enrolled",
+                                 help_text="Enroll this user as student in Course."
+                                 )
     course = models.ForeignKey(Course,
                                 verbose_name="In Course",)
     start_date = models.DateField()
