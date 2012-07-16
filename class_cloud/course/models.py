@@ -19,6 +19,7 @@ class TimeStampedActivate(TimeStamped):
         abstract = True
 
 
+#wtf what does this do?
 class AssignmentManager(models.Manager):
     def get_visible(self):
         # look into filter option
@@ -41,6 +42,9 @@ class Course(TimeStampedActivate):
     #syllabus = models.FileField(upload_to='{0}/syllabus'.format(getFilePath()))
     syllabus = models.FileField(upload_to='syllabus')
     user = models.ForeignKey(User, related_name="courses")
+    
+    students = models.ManyToManyField(User, through='Enrollment')
+
 
     def __unicode__(self):
         return '{0}'.format(self.title)
@@ -68,10 +72,13 @@ class Assignment(TimeStampedActivate):
     #May want to change this relationship, so that assignments
     #have a OneToMany relationship with Student?
     due_date = models.DateTimeField(default=False)
+
+    #Not sure user makes sense here
+    #todo - maybe remove the user foreignkey
     user = models.ForeignKey(User, related_name="assignments")
+
     course = models.ForeignKey(Course, related_name="classes")
-    
-    objects = AssignmentManager()
+    objects = AssignmentManager() #What does this do?
 
     def __unicode__(self):
         return self.name
@@ -86,15 +93,28 @@ class Assignment(TimeStampedActivate):
     class Meta:
         ordering = ['-due_date', '-modified', '-created']
 
-
+#todo remove this class
 class Person(TimeStamped):
     """
     A Person is a User with the following attributes
+
+    user correleates to models.User which has the following
+    -username
+    -first_name (optional)
+    -last_name (optional)
+    -email (optional)
+    -password
+    -last_login
+    -date_joined
     """
     first_name = models.CharField(verbose_name="First Name", max_length=60)
     last_name = models.CharField(verbose_name="Last Name", max_length=60)
     email = models.EmailField(verbose_name="Email Address")
-    user = models.ForeignKey(User,unique=True,verbose_name="User",blank=True,null=True)
+    user = models.ForeignKey(User,
+                             unique=True,
+                             verbose_name="User",
+                             blank=True,
+                             null=True)
 
     def full_name(self):
         return '{fname} {lname}'.format(fname=first_name,
@@ -110,6 +130,7 @@ class Person(TimeStamped):
     def get_absolute_url(self):
         pass
 
+#todo Remove this class
 class Teacher(Person):
     """
     A course has a teacher
@@ -120,7 +141,7 @@ class Teacher(Person):
     def __unicode__(self):
         return self.email
 
-
+#todo Remove this class
 class Student(Person):
     """
     A course has many students,
@@ -129,6 +150,10 @@ class Student(Person):
 
     def __unicode__(self):
         return self.email
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    #Additional fields will go here
         
 class Grade(models.Model):
     """
