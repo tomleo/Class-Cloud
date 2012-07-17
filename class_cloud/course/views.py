@@ -26,6 +26,11 @@ def calendar(request):
     return render_to_response('calendar.html',
         context_instance=RequestContext(request))
 
+def passign(request):
+    return render_to_response('passign.html',
+        context_instance=RequestContext(request))
+        
+
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.view_course'))
