@@ -4,7 +4,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 admin.autodiscover()
 
-from course.views import DisplayCourseView, DisplayCourseRedirectView, DetailCourseView
+#from course.views import DisplayCourseView, DisplayCourseRedirectView, DetailCourseView
 from course.models import Course, Assignment
 
 course_info = {
