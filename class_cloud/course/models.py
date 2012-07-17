@@ -11,7 +11,6 @@ class TimeStamped(models.Model):
 
 class TimeStampedActivate(TimeStamped):
     active = models.BooleanField(default=False)
-    #start_date = models.DateTimeField(default=False)
 
     class Meta:
         get_latest_by = 'due_date'
@@ -19,6 +18,7 @@ class TimeStampedActivate(TimeStamped):
         abstract = True
 
 
+#wtf what does this do?
 class AssignmentManager(models.Manager):
     def get_visible(self):
         # look into filter option
@@ -40,13 +40,18 @@ class Course(TimeStampedActivate):
     #pictures in isn't accessable to the user.
     #syllabus = models.FileField(upload_to='{0}/syllabus'.format(getFilePath()))
     syllabus = models.FileField(upload_to='syllabus')
-    user = models.ForeignKey(User, related_name="courses")
+    teacher = models.ForeignKey(User, related_name="courses")
+    students = models.ManyToManyField(User, through='Enrollment', blank=True)
 
     def __unicode__(self):
         return '{0}'.format(self.title)
 
     class Meta:
         ordering = ["-title"]
+        permissions = (
+            ('view_course', 'This course is visible'),
+            ('edit_course', 'This course can be modified'),
+        )
 
     @models.permalink
     def get_absolute_url(self):
@@ -68,10 +73,12 @@ class Assignment(TimeStampedActivate):
     #May want to change this relationship, so that assignments
     #have a OneToMany relationship with Student?
     due_date = models.DateTimeField(default=False)
-    user = models.ForeignKey(User, related_name="assignments")
+
+    #Not sure user makes sense here
+    #todo - maybe remove the user foreignkey
+    teacher = models.ForeignKey(User, related_name="assignments")
     course = models.ForeignKey(Course, related_name="classes")
-    
-    objects = AssignmentManager()
+    objects = AssignmentManager() #What does this do?
 
     def __unicode__(self):
         return self.name
@@ -87,49 +94,11 @@ class Assignment(TimeStampedActivate):
         ordering = ['-due_date', '-modified', '-created']
 
 
-class Person(TimeStamped):
-    """
-    A Person is a User with the following attributes
-    """
-    first_name = models.CharField(verbose_name="First Name", max_length=60)
-    last_name = models.CharField(verbose_name="Last Name", max_length=60)
-    email = models.EmailField(verbose_name="Email Address")
-    user = models.ForeignKey(User,unique=True,verbose_name="User",blank=True,null=True)
-
-    def full_name(self):
-        return '{fname} {lname}'.format(fname=first_name,
-                                        lname=last_name)
-
-    def __unicode__(self):
-        return self.full_name()
-
-    class Meta:
-        verbose_name_plural = "People"
-
-    @models.permalink
-    def get_absolute_url(self):
-        pass
-
-class Teacher(Person):
-    """
-    A course has a teacher
-    which is a specific type of Person
-    """
-    courses = models.ManyToManyField('Course')
-
-    def __unicode__(self):
-        return self.email
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    #Additional fields will go here
 
 
-class Student(Person):
-    """
-    A course has many students,
-    a student is a specific type of Person
-    """
-
-    def __unicode__(self):
-        return self.email
-        
 class Grade(models.Model):
     """
     Note sure how to implement this, I think that this should be a
@@ -160,3 +129,4 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course,
                                 verbose_name="In Course",)
     start_date = models.DateField()
+

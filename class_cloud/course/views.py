@@ -13,7 +13,11 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login
 
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
+
 @login_required
+@user_passes_test(lambda u: u.has_perm('course.view_course'))
 def index(request):
     """ Template is passed a context
     
@@ -29,6 +33,7 @@ def index(request):
         context_instance=RequestContext(request))
 
 @login_required
+@user_passes_test(lambda u: u.has_perm('course.view_course'))
 def courses(request, slug):
     courses = Course.objects.all()
     return render_to_response('courses.html',
@@ -36,6 +41,7 @@ def courses(request, slug):
         context_instance=RequestContext(request))
                                     
 @login_required
+@user_passes_test(lambda u: u.has_perm('course.view_course'))
 def course(request, slug):
     selected_course = Course.objects.get(slug=slug)
     #course_assignments = Assignment.objects.get(course.slug=selected_course.slug)
@@ -50,6 +56,7 @@ def course(request, slug):
     
 
 @login_required
+@user_passes_test(lambda u: u.has_perm('course.view_course'))
 def assignments(request):
     assignments = Assignment.objects.all()
     return render_to_response('assignments.html',
@@ -61,37 +68,38 @@ def logout_view(request):
     logout(request)
     
 
-class DetailCourseView(DetailView):
-    
-    template_name = "courses.html"
-    model = Course
+#class DetailCourseView(DetailView):
+#    
+#    template_name = "courses.html"
+#    model = Course
+#
+#    def get_context_data(self, **kwargs):
+#        context = super(DetailCourseView, self).get_context_data(**kwargs)
+#        context['course'] = Course.objects.all()
+#        return context
 
-    def get_context_data(self, **kwargs):
-        context = super(DetailCourseView, self).get_context_data(**kwargs)
-        context['course'] = Course.objects.all()
-        return context
-
-class DisplayCourseView(TemplateView):
-    template_name = "course.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(DisplayCourseView, self).get_context_data(**kwargs)
-        context['course'] = Course.objects.get(pk=self.kwargs.get('course_id',
-                                                                        None))
-        return context
-
-
-class DisplayCourseRedirectView(RedirectView):
-   
-    def get(self, request, *args, **kwargs):
-        course_id = self.kwargs.get('course_id', None)
-        course = Course.objects.get(pk=course_id)
-        self.url = '/courses/%s-%s' % (course.id, course.slug)
-        return super(DisplayCourseRedirectView, self).get(self, request, *args, **kwargs)
+#class DisplayCourseView(TemplateView):
+#    template_name = "course.html"
+#
+#    def get_context_data(self, **kwargs):
+#        context = super(DisplayCourseView, self).get_context_data(**kwargs)
+#        context['course'] = Course.objects.get(pk=self.kwargs.get('course_id',
+#                                                                        None))
+#        return context
 
 
+#class DisplayCourseRedirectView(RedirectView):
+#   
+#    def get(self, request, *args, **kwargs):
+#        course_id = self.kwargs.get('course_id', None)
+#        course = Course.objects.get(pk=course_id)
+#        self.url = '/courses/%s-%s' % (course.id, course.slug)
+#        return super(DisplayCourseRedirectView, self).get(self, request, *args, **kwargs)
 
-def assignment(request, course, slug):
-    #template_name = "assignment.html"
-    queryset = Assignment.objects.get_visible().filter(course__slug=course)
-    return list_detail.object_detail(request, queryset, slug=slug)
+
+#def assignment(request, course, slug):
+#    #template_name = "assignment.html"
+#    queryset = Assignment.objects.get_visible().filter(course__slug=course)
+#    return list_detail.object_detail(request, queryset, slug=slug)
+
+
