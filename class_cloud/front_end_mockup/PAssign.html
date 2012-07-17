@@ -86,7 +86,7 @@
 			<ul class="nav nav-tabs nav-stacked">
     			<li class = "active"><a href="#">Assign an assignment</a></li>
 				<li><a href="PGrade.html">Grade an assingment</a></li>
-				<li><a href="#">Calendar</a></li>
+				<li><a href="calendar.html">Calendar</a></li>
     		</ul>
 		</div>
    </div>
@@ -97,6 +97,14 @@
    <form>
         <fieldset>
           <legend>Assign an assignment</legend>
+
+###Django code to replace Select Course
+<form method="post" action"">
+	{{ formset.courselist_form }}
+	{% for form in courselist %}
+		{{ form }}
+	{% endfor %}
+</form>
           
 			<div class="clearfix">
             <label for="normalSelect">Select Course</label>
@@ -110,6 +118,10 @@
               </select>
             </div>
           </div><!-- /clearfix -->
+
+<form>
+        <fieldset>
+
 
           <div class="clearfix">
             <label for="NameInput">Assignment Name</label>

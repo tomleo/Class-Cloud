@@ -37,6 +37,7 @@ urlpatterns = patterns('',
     (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
     (r'^courses/$', 'course.views.index'),
     (r'^home/$', 'course.views.index'),
+    (r'^calendar/$', 'course.views.calendar'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
 

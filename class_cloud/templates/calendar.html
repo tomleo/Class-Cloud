@@ -1,114 +1,18 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    {{ block.super }} | {{ course.title }}
+  Calendar | {{ block.super }}
 {% endblock %}
 
+{% block more_css %}
+<link href="{{ STATIC_URL }}css/bootstrap.calendar.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block body_attrs %}data-offset="50" data-target=".subnav" data-spy="scroll" data-twttr-rendered="true"{% endblock %}
 {% block body %}
 
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">Class Cloud</a>
-      <div class="btn-group pull-right">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-          <i class="icon-user"></i>&nbsp;{{ user.username }}
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Profile</a></li>
-          <li class="divider"></li>
-          <li><a href="/accounts/logout/">Sign Out</a></li>
-        </ul>
-      </div><!--END btn-group pull-right -->
-
-      <div class="nav-collapse">
-        <ul class="nav">
-          <li class="active"><a href="#"><i class="icon-font"></i></a></li>
-          <li class="active"><a href="#"><i class="icon-globe"></i></a></li>
-        </ul>
-      </div><!--END nav-collapse -->
-    </div><!--END container -->
-  </div><!--END navbar-inner -->
-</div><!--END navbar navbar-fixed-top -->
-
-<div class="container-fluid">
-<div class="span10 offset2">
-  <div class="row-fluid">
-    <div class="span3">
-    	
-      <!-- Sidebar content -->
-      <div class="row-fluid">
-        <ul class="nav nav-tabs nav-stacked">
-          <li class="active"><a href="#">News Feed</a></li>
-          <li><a href="#">Courses</a></li>
-          <li><a href="#">Assignments</a></li>
-        </ul>
-      </div>
-      <!--END Sidebar content -->
-      
-      <!--Sidebar content -->
-      <div class="row-fluid">
-        <ul class="nav nav-tabs nav-stacked">
-          <li><a href="#">Grades</a></li>
-          <li><a href="#">Progress</a></li>
-          <li><a href="/calendar.html">Calendar</a></li>
-        </ul>
-      </div>
-      <!--END Sidebar content -->
-      
-    </div><!--END span3--> 
-
-    <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css" />
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <link rel="stylesheet" href="assets/css/bootstrap.calendar.css" type="text/css" />
-
-
-    <!-- jQuery and the Calendar plugin files -->
-    <!--<script type="text/javascript" src="assets/js/jquery.js" ></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.js" ></script>
-    <script type="text/javascript" src="assets/js/bootstrap-calendar.js" ></script>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-          var evnts = function(){
-              return {
-                      "event":
-                          [
-                               {"date":"2012-01-01","title":"1"}
-                              ,{"date":"2012-02-02","title":"2"}
-                              ,{"date":"2012-03-03","title":"34"}
-                              ,{"date":"2012-04-04","title":"123"}
-                              ,{"date":"2012-05-05","title":"223"}
-                              ,{"date":"2012-06-06","title":"4"}
-                              ,{"date":"2012-07-07","title":"5"}
-                              ,{"date":"2012-08-08","title":"14"}
-                              ,{"date":"2012-09-09","title":"10"}
-                              ,{"date":"2012-10-10","title":"10"}
-                              ,{"date":"2012-11-11","title":"10"}
-                              ,{"date":"2012-12-12","title":"10"}
-                          ]
-                      }
-          };
-
-         $('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
-         .on('changeDay', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-         .on('onEvent', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-         .on('onNext', function(event){ alert("Next"); })
-         .on('onPrev', function(event){ alert("Prev"); })
-         .on('onCurrent', function(event){ alert("Current"); });
-      });
-
-    </script>
-  </head>
-
-
+{% include 'header.html' %}
+{% include 'pre_body.html' %}
 
 
     <div class="container">
@@ -117,9 +21,13 @@
       </div>
     </div> <!-- /container -->
 
+
+{% include 'post_body.html' %}
+
 {% endblock %}
 
-
 {% block jQuery %}
+
+
 
 {% endblock %}

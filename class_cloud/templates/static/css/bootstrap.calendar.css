@@ -79,7 +79,7 @@
 }
 
 .calendar TD.holiday {
-     color: blue;
+     color: red;
 }
 
 .calendar TD.holiday:hover {
@@ -130,5 +130,4 @@
 .calendar .arrow{
      padding:10px 0px 0px 0px;
 }
-
 
