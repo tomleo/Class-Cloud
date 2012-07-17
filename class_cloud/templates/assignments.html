@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
+
 {% block page_title %}
-Assignments
+  Assignments | {{ block.super }}
 {% endblock %}
+
 
 {% block body %}
 
-<div class="row-fluid">
-  <div class="span1"></div>
-  <div class="span10">
+{% include 'header.html' %}
+{% include 'pre_body.html' %}
+
+
+  <div class="span9">
     <h1>Assignments</h1>
     <ul class="nav nav-tabs nav-stacked">
-      {% for assignment in assignments_list %}
+      {% for assignment in assignments %}
       <li> 
       <a href={{ assignment.get_absolute_url }}>
           <div class="row-fluid">
@@ -23,6 +27,9 @@ Assignments
       {% endfor %}
     </ul>
   </div>
-  <div class="span1"></div>
-</div>
+
+
+
+{%  include 'post_body.html' %}
+
 {% endblock %}

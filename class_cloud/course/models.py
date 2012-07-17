@@ -11,7 +11,6 @@ class TimeStamped(models.Model):
 
 class TimeStampedActivate(TimeStamped):
     active = models.BooleanField(default=False)
-    #start_date = models.DateTimeField(default=False)
 
     class Meta:
         get_latest_by = 'due_date'
@@ -41,16 +40,18 @@ class Course(TimeStampedActivate):
     #pictures in isn't accessable to the user.
     #syllabus = models.FileField(upload_to='{0}/syllabus'.format(getFilePath()))
     syllabus = models.FileField(upload_to='syllabus')
-    user = models.ForeignKey(User, related_name="courses")
-    
-    students = models.ManyToManyField(User, through='Enrollment')
-
+    teacher = models.ForeignKey(User, related_name="courses")
+    students = models.ManyToManyField(User, through='Enrollment', blank=True)
 
     def __unicode__(self):
         return '{0}'.format(self.title)
 
     class Meta:
         ordering = ["-title"]
+        permissions = (
+            ('view_course', 'This course is visible'),
+            ('edit_course', 'This course can be modified'),
+        )
 
     @models.permalink
     def get_absolute_url(self):
@@ -75,8 +76,7 @@ class Assignment(TimeStampedActivate):
 
     #Not sure user makes sense here
     #todo - maybe remove the user foreignkey
-    user = models.ForeignKey(User, related_name="assignments")
-
+    teacher = models.ForeignKey(User, related_name="assignments")
     course = models.ForeignKey(Course, related_name="classes")
     objects = AssignmentManager() #What does this do?
 
@@ -93,68 +93,12 @@ class Assignment(TimeStampedActivate):
     class Meta:
         ordering = ['-due_date', '-modified', '-created']
 
-#todo remove this class
-class Person(TimeStamped):
-    """
-    A Person is a User with the following attributes
-
-    user correleates to models.User which has the following
-    -username
-    -first_name (optional)
-    -last_name (optional)
-    -email (optional)
-    -password
-    -last_login
-    -date_joined
-    """
-    first_name = models.CharField(verbose_name="First Name", max_length=60)
-    last_name = models.CharField(verbose_name="Last Name", max_length=60)
-    email = models.EmailField(verbose_name="Email Address")
-    user = models.ForeignKey(User,
-                             unique=True,
-                             verbose_name="User",
-                             blank=True,
-                             null=True)
-
-    def full_name(self):
-        return '{fname} {lname}'.format(fname=first_name,
-                                        lname=last_name)
-
-    def __unicode__(self):
-        return self.full_name()
-
-    class Meta:
-        verbose_name_plural = "People"
-
-    @models.permalink
-    def get_absolute_url(self):
-        pass
-
-#todo Remove this class
-class Teacher(Person):
-    """
-    A course has a teacher
-    which is a specific type of Person
-    """
-    courses = models.ManyToManyField('Course')
-
-    def __unicode__(self):
-        return self.email
-
-#todo Remove this class
-class Student(Person):
-    """
-    A course has many students,
-    a student is a specific type of Person
-    """
-
-    def __unicode__(self):
-        return self.email
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     #Additional fields will go here
-        
+
+
 class Grade(models.Model):
     """
     Note sure how to implement this, I think that this should be a
@@ -185,3 +129,4 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course,
                                 verbose_name="In Course",)
     start_date = models.DateField()
+

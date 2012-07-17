@@ -13,7 +13,26 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login
 
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
+
+
+def group_required(*group_names):
+    """This function decorator is by msanders via 
+    http://djangosnippets.org/snippets/1703/"""
+    def in_groups(u):
+        if u.is_authenticated():
+            if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
+                return True
+        return False
+    return user_passes_test(in_groups)
+
+
+#@login_required
+#@user_passes_test(lambda u: u.has_perm('course.view_course'))
 @login_required
+#@permission_required('course.view_course')
+@group_required('student', 'teacher')
 def index(request):
     """ Template is passed a context
     
