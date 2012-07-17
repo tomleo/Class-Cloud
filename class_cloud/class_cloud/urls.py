@@ -39,6 +39,7 @@ urlpatterns = patterns('',
     (r'^home/$', 'course.views.index'),
     (r'^calendar/$', 'course.views.calendar'),
     (r'^passign/$', 'course.views.passign'),
+    (r'^course_grades/$', 'course.views.course_grades'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
 

@@ -30,6 +30,10 @@ def passign(request):
     return render_to_response('passign.html',
         context_instance=RequestContext(request))
         
+def course_grades(request):
+    return render_to_response('course_grades.html',
+        context_instance=RequestContext(request))        
+        
 
 
 @login_required
