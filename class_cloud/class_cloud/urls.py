@@ -31,6 +31,7 @@ urlpatterns = patterns('',
 
     #Index page
     (r'^$', 'course.views.index'),
+    (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
     (r'^courses/$', 'course.views.index'),
     (r'^home/$', 'course.views.index'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
