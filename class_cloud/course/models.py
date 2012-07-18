@@ -157,9 +157,6 @@ class StudentGrade(models.Model):
     grade = models.ForeignKey(Grade, verbose_name="Students Grade")
 
 
-
-
-
 class Enrollment(models.Model):
     students = models.ForeignKey(User, 
                                  verbose_name="Enrolled",
