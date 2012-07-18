@@ -4,7 +4,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 admin.autodiscover()
 
-from course.views import DisplayCourseView, DisplayCourseRedirectView, DetailCourseView
+#from course.views import DisplayCourseView, DisplayCourseRedirectView, DetailCourseView
 from course.models import Course, Assignment
 
 course_info = {
@@ -31,6 +31,7 @@ urlpatterns = patterns('',
 
     #Index page
     (r'^$', 'course.views.index'),
+    (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
     (r'^courses/$', 'course.views.index'),
     (r'^home/$', 'course.views.index'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
