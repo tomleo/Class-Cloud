@@ -11,8 +11,23 @@ from django.http import HttpResponse
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
+
+def calendar(request):
+    return render_to_response('calendar.html',
+        context_instance=RequestContext(request))
+
+def passign(request):
+    return render_to_response('passign.html',
+        context_instance=RequestContext(request))
+        
+def course_grades(request):
+    return render_to_response('course_grades.html',
+        context_instance=RequestContext(request))        
+        
+
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
@@ -40,6 +55,7 @@ def courses(request, slug):
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def course(request, slug):
+
     selected_course = Course.objects.get(slug=slug)
     course_assignments = Assignment.objects.filter(course=selected_course)
     grades = Grade.objects.filter(course=selected_course)
@@ -53,6 +69,7 @@ def course(request, slug):
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def assignments(request):
+
     assignment_list = []
     courses = Course.objects.filter(students__username=request.user.username)
     for icourse in courses:
@@ -70,7 +87,7 @@ def grades(request):
 
 def logout_view(request):
     logout(request)
-
+    
 
 #def assignment(request, course, slug):
 #    #template_name = "assignment.html"
