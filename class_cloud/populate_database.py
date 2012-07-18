@@ -5,6 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 
 student_users = Group(name='Student Users')
 teacher_users = Group(name='Teacher Users')
+student_users.save()
+teacher_users.save()
 ct = ContentType.objects.get(app_label='course', model='course')
 student_view = Permission(name='Student View', 
                           codename='student_view',
@@ -14,18 +16,21 @@ teacher_view = Permission(name='Teacher View',
                           codename='teacher_view',
                           content_type=ct)
 teacher_view.save()
+
 student_users.permissions.add(student_view)
 teacher_users.permissions.add(teacher_view)
 student_users.save()
 teacher_users.save()
 
-bob = User.objects.create_user('bob', 'bob@bob.com', 'thomas')
-bob.groups.add(student_users)
-bob.save()
+rob = User.objects.create_user('rob', 'bob@bob.com', 'thomas')
+rob.groups.add(student_users)
+rob.save()
 
 durga = User.objects.create_user('durga', 'durga@durga.com', 'thomas')
 durga.groups.add(teacher_users)
 durga.save()
+
+#Copy and paste everything above into a manage.py shell session
 
 course1  = Course(title="course 1", slug="course-1", description="description", teacher=bob)
 course1.save()

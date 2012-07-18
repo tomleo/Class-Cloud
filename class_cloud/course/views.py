@@ -84,6 +84,7 @@ def assignments(request):
     for icourse in courses:
         assignment_list.append(Assignment.objects.get(course=icourse))
     
+    
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
         context_instance=RequestContext(request))
