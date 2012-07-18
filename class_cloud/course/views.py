@@ -78,10 +78,11 @@ def course(request, slug):
 def assignments(request):
 
     assignment_list = []
-    courses = Course.objects.filter(students__username=request.user.username)
-    for icourse in courses:
-        assignment_list.append(Assignment.objects.get(icourse))
+    courses = []
+    courses.extend(Course.objects.filter(students__username=request.user.username))
     
+    for icourse in courses:
+        assignment_list.append(Assignment.objects.get(course=icourse))
     
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
