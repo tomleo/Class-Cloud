@@ -58,7 +58,7 @@ def course(request, slug):
 
     selected_course = Course.objects.get(slug=slug)
     course_assignments = Assignment.objects.filter(course=selected_course)
-    grades = Grade.objects.filter(course=selected_course)
+    #grades = Grade.objects.filter(course=selected_course)
     
     template_name = 'course.html'
     return render_to_response(template_name, 
@@ -73,7 +73,7 @@ def assignments(request):
     assignment_list = []
     courses = Course.objects.filter(students__username=request.user.username)
     for icourse in courses:
-        assignment_list.append(Assignment.objects.get(course=icourse))
+        assignment_list.append(Assignment.objects.get(icourse))
     
     return render_to_response('assignments.html',
         {'assignments': assignment_list},

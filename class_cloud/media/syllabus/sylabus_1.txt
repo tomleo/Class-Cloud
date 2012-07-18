@@ -1,0 +1,8 @@
+Welcom to example class
+
+Here is some information about example class.
+As you can see there is not much here at this time. Although pretty soon
+we plan to add more information here. So please stay tuned.
+
+Thanks,
+Tom Leo
