@@ -16,11 +16,17 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
 
+<<<<<<< Updated upstream
 def getUser(request):
     try:
         User.objects.get(username = request.user)
     except User.DoesNotExist:
         return HttpResponse("Invalid username")
+
+def calendar(request):
+    return render_to_response('calendar.html',
+        context_instance=RequestContext(request))
+
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.view_course'))
