@@ -61,8 +61,8 @@ def course(request, slug):
     #grades = Grade.objects.filter(course=selected_course)
     
     class_grades = []
-    grades = StudentGrarde.objects.filter(student__username=request.user.username,
-                                          assignment__course=select_course)
+    grades = StudentGrade.objects.filter(student__username=request.user.username,
+                                          assignment__course=selected_course)
     class_grades = grades
     
     template_name = 'course.html'
