@@ -84,6 +84,10 @@
             {% for assignment in assignments %}
                 <p>{{ assignment.name }} | {{ assignment.description }}</p>
             {% endfor %}
+            <hr>
+            {% for grade in grades %}
+                <p>{{ grade.grade }}</p>
+            {% endfor %}
 	        <!--<p>Grades.</p>-->
         </div>
         <div class="tab-pane" id="tab4">

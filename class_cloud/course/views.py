@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment, Grade
+from course.models import Course, Assignment, Grade, StudentGrade
 from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
@@ -58,11 +58,20 @@ def course(request, slug):
 
     selected_course = Course.objects.get(slug=slug)
     course_assignments = Assignment.objects.filter(course=selected_course)
-    grades = Grade.objects.filter(course=selected_course)
+    #grades = Grade.objects.filter(course=selected_course)
+    
+    class_grades = []
+    grades = StudentGrade.objects.filter(student__username=request.user.username,
+                                         assignment__course=selected_course)
+    #for grade in grades:
+    #    class_grades.append(grade.filter(assignment__course=selected_course))
+    class_grades = grades
     
     template_name = 'course.html'
     return render_to_response(template_name, 
-        {'course':selected_course, 'assignments':course_assignments},
+        {'course':selected_course,
+         'assignments':course_assignments,
+          'grades':class_grades},
         context_instance=RequestContext(request))
     
 
