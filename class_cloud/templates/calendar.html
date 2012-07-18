@@ -23,9 +23,7 @@
 
 
 {% include 'post_body.html' %}
-
 {% endblock %}
-
 {% block jQuery %}
 <script src="{{ STATIC_URL }}js/bootstrap.calendar.js"></script>
     <script type="text/javascript">
@@ -59,4 +57,5 @@ $('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
 });
 
 </script>
+
 {% endblock %}
