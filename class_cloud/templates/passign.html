@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Calendar | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+{% include 'header.html' %}
+{% include 'pre_passign_body.html' %}
+
+
+  <!This is the course part! editing should start here!!)>
+   	<div class="span8">
+   <form>
+        <fieldset>
+          <legend>Assign an assignment</legend>
+
+###Django code to replace Select Course
+<form method="post" action"">
+	{{ formset.courselist_form }}
+	{% for form in courselist %}
+		{{ form }}
+	{% endfor %}
+</form>
+          
+			<div class="clearfix">
+            <label for="normalSelect">Select Course</label>
+            <div class="input">
+              <select name="normalSelect" id="normalSelect">
+                <option>COMP 565 SENIOR PROJECT</option>
+                <option>COMP 666 ABCD EFGH</option>
+                <option>HIS 504 WHAT THE ?</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div><!-- /clearfix -->
+
+<form>
+        <fieldset>
+
+
+          <div class="clearfix">
+            <label for="NameInput">Assignment Name</label>
+            <div class="input">
+              <input class="xlarge" id="NameInput" name="NameInput" size="30" type="text" />
+            </div>
+          </div><!-- /clearfix -->          
+          
+          <div class="clearfix">
+            <label for="TypeInput">Assignment Type</label>
+            <div class="input">
+              <input class="xlarge" id="TypeInput" name="TypeInput" size="30" type="text" />
+            </div>
+          </div><!-- /clearfix -->
+
+			<div class="clearfix">
+            <label for="CriteriaInput">Grading Criteria</label>
+            <div class="input">
+              <input class="xlarge" id="CriteriaInput" name="CriteriaInput" size="30" type="text" />
+            </div>
+          </div><!-- /clearfix -->
+         
+          <div class="clearfix">
+            <label>Date range</label>
+            <div class="input">
+              <div class="inline-inputs">
+                <input data-datepicker="datepicker" class="small" type="text" value="07/05/2012" />
+                <input class="mini" type="text" value="12:00am" />
+                to
+                <input data-datepicker="datepicker" class="small" type="text" value="08/08/2012" />
+                <input class="mini" type="text" value="11:59pm" />
+                <span class="help-block">All times are shown as Eastern Time (GMT -05:00).</span>
+              </div>
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix">
+            <label for="textarea">Instructions</label>
+            <div class="input">
+              <textarea class="xxlarge" id="textarea2" name="textarea2" rows="3"></textarea>
+              <span class="help-block">
+               Tell the students what you expect from this assignment.
+              </span>
+            </div>
+          </div><!-- /clearfix -->
+          
+			<div class = "control-group">
+				<label class = "control-label" for = "attachment">Attachment</label>
+				<div class = "controls">
+					<input id = "attachment" class = "input-file" type = "file">
+				</div>			
+			</div>
+          
+          <div class="actions">
+            <input type="submit" class="btn primary" value="Save changes">&nbsp;<button type="reset" class="btn">Cancel</button>
+          </div>
+        </fieldset>
+      </form>
+		
+
+	
+	
+	
+	
+
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+{% include 'post_body.html' %}
+
+{% endblock %}
+
+{% block jQuery %}
+
+
+
+{% endblock %}

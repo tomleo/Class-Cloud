@@ -1,0 +1,153 @@
+{% extends './professor/prof_base.html' %}
+
+{% block page_title %}
+   Course Grades | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+{% include 'header.html' %}
+   
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span1"></div>
+        <div class="span10">
+
+        <h1>COMP1 Grades</h1>
+        <h2>Assignment 1</h2>
+        <table class="table tab le-striped">
+            <thead>
+                <th>Status</th>
+                <th>Name</th>
+                <th>Submission Date</th>
+                <th>Grade</th>
+            </thead>
+            <tbody>
+                <!--example of not yet graded-->
+                <tr id="modal1-a">
+                    <td><i class="icon-flag"></i></td>
+                    <td>Bob</td>
+                    <td>5/12/2011</td>
+                    <td>x out of 5</td>
+                </tr>
+                <!--example of graded-->
+                <tr id="modal2-a">
+                    <td><i class="icon-ok"></i></td>
+                    <td>John</td>
+                    <td>5/11/2011</td>
+                    <td>5 out of 5</td>
+                </tr>
+                <!--example of graded & late-->
+                <tr id="modal3-a">
+                    <td><i class="icon-time"></i></td>
+                    <td>Laura</td>
+                    <td>5/20/2011</td>
+                    <td>4 out of 5</td>
+                </tr>
+                <!--example of missed-->
+                <tr id="modal4-a">
+                    <td><i class="icon-remove"></i></td>
+                    <td>Tom</td>
+                    <td>--</td>
+                    <td>Missed</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        </div><!--END span10-->
+        <div class="span1"></div>
+    </div>
+</div>
+
+<div class="modal hide" id="modal1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3>Assignment 1 - Bob</h3>
+        <p>Comments: Home that I did this assignment correctly</p>
+        <p>Attachments: <i class="icon-file"></i>Paper 1, <i class="icon-file"></i>Paper 2</p>
+    </div>
+    <div class="modal-body">
+        <form class="well">
+            <label>Feeback</label>
+            <input type="text" class="span8" placeholder="leave feedback...">
+            <label>Grade</label>
+            <input type="text" class="span5" placeholder="5">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+</div>
+
+<div class="modal hide" id="modal2">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3>Assignment 1 - John</h3>
+        <p>Comments: See attachments</p>
+        <p>Attachments: <i class="icon-file"></i>Paper 1, <i class="icon-file"></i>Paper 2</p>
+    </div>
+    <div class="modal-body">
+        <form class="well">
+            <label>Feeback</label>
+            <input type="text" class="span8" placeholder="leave feedback...">
+            <label>Grade</label>
+            <input type="text" class="span5" placeholder="5">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+</div>
+
+<div class="modal hide" id="modal3">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3>Assignment 1 - Laura</h3>
+        <p>Comments: Hope that this assignment meets requirments.</p>
+        <p>Attachments: <i class="icon-file"></i>Paper 1, <i class="icon-file"></i>Paper 2</p>
+    </div>
+    <div class="modal-body">
+        <form class="well">
+            <label>Feeback</label>
+            <input type="text" class="span8" placeholder="leave feedback...">
+            <label>Grade</label>
+            <input type="text" class="span5" placeholder="5">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+</div>
+
+<div class="modal hide" id="modal4">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3>Assignment 1 - Tom</h3>
+        <p>Comments: See attachments</p>
+        <p>Attachments: <i class="icon-file"></i>Paper 1, <i class="icon-file"></i>Paper 2</p>
+    </div>
+    <div class="modal-body">
+        <form class="well">
+            <label>Feeback</label>
+            <input type="text" class="span8" placeholder="leave feedback...">
+            <label>Grade</label>
+            <input type="text" class="span5" placeholder="5">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+</div>
+
+{% include 'post_body.html' %}
+
+{% endblock %}
+
+{% block jQuery %}
+
+{% endblock %}

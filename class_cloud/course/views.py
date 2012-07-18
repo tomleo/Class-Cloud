@@ -1,3 +1,4 @@
+
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
@@ -8,27 +9,28 @@ from django.shortcuts import render_to_response, RequestContext
 #from django.template import Context, loader #Replaced by render_to_response shortcut
 from django.http import HttpResponse
 
-from django.contrib.auth.decorators import login_required
-
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
-
-
-def getUser(request):
-    try:
-        User.objects.get(username = request.user)
-    except User.DoesNotExist:
-        return HttpResponse("Invalid username")
 
 def calendar(request):
     return render_to_response('calendar.html',
         context_instance=RequestContext(request))
 
+def passign(request):
+    return render_to_response('passign.html',
+        context_instance=RequestContext(request))
+        
+def course_grades(request):
+    return render_to_response('course_grades.html',
+        context_instance=RequestContext(request))        
+        
+
 
 @login_required
-@user_passes_test(lambda u: u.has_perm('course.view_course'))
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
 def index(request):
     """ Template is passed a context
     
@@ -40,16 +42,18 @@ def index(request):
         {'courses': courses},
         context_instance=RequestContext(request))
 
+
 @login_required
-@user_passes_test(lambda u: u.has_perm('course.view_course'))
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
 def courses(request, slug):
     courses = Course.objects.filter(students__username=request.user.username)
     return render_to_response('courses.html',
         {'courses': courses},
         context_instance=RequestContext(request))
                                     
+                                    
 @login_required
-@user_passes_test(lambda u: u.has_perm('course.view_course'))
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
 def course(request, slug):
 
     selected_course = Course.objects.get(slug=slug)
@@ -63,7 +67,7 @@ def course(request, slug):
     
 
 @login_required
-@user_passes_test(lambda u: u.has_perm('course.view_course'))
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
 def assignments(request):
 
     assignment_list = []
@@ -75,39 +79,15 @@ def assignments(request):
         {'assignments': assignment_list},
         context_instance=RequestContext(request))
 
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def grades(request):
+    pass
+
 
 def logout_view(request):
     logout(request)
     
-
-#class DetailCourseView(DetailView):
-#    
-#    template_name = "courses.html"
-#    model = Course
-#
-#    def get_context_data(self, **kwargs):
-#        context = super(DetailCourseView, self).get_context_data(**kwargs)
-#        context['course'] = Course.objects.all()
-#        return context
-
-#class DisplayCourseView(TemplateView):
-#    template_name = "course.html"
-#
-#    def get_context_data(self, **kwargs):
-#        context = super(DisplayCourseView, self).get_context_data(**kwargs)
-#        context['course'] = Course.objects.get(pk=self.kwargs.get('course_id',
-#                                                                        None))
-#        return context
-
-
-#class DisplayCourseRedirectView(RedirectView):
-#   
-#    def get(self, request, *args, **kwargs):
-#        course_id = self.kwargs.get('course_id', None)
-#        course = Course.objects.get(pk=course_id)
-#        self.url = '/courses/%s-%s' % (course.id, course.slug)
-#        return super(DisplayCourseRedirectView, self).get(self, request, *args, **kwargs)
-
 
 #def assignment(request, course, slug):
 #    #template_name = "assignment.html"
