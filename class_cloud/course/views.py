@@ -88,12 +88,22 @@ def assignments(request):
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
         context_instance=RequestContext(request))
-        
+       
+ 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def assignment(request, slug):
 
     a = Assignment.objects.get(slug=slug)
+    return render_to_response('assignment.html',
+        {'assignment':a},
+        context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def course_assignment(request, course_slug, assignment_slug):
+    a = Assignment.objects.get(slug=assignment_slug)
     return render_to_response('assignment.html',
         {'assignment':a},
         context_instance=RequestContext(request))
