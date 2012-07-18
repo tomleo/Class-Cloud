@@ -50,10 +50,13 @@ urlpatterns = patterns('',
         {'template_name': 'login.html'} ),
 
     #Assignment page
+    (r'^assignments/(?P<slug>[-\w]+)/$', 'course.views.assignment'),
     (r'^assignments/$', 'course.views.assignments'),
     #(r'^assignments/$', list_detail.object_list, assignment_info),
     (r'^assignments/(?P<pk>d+)/$', list_detail.object_detail,
         assignment_detail),
+    
+    
     
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),

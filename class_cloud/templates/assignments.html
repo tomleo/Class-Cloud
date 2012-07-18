@@ -16,7 +16,7 @@
     <ul class="nav nav-tabs nav-stacked">
       {% for assignment in assignments %}
       <li> 
-      <a href={{ assignment.get_absolute_url }}>
+      <a href={{ assignment.slug }}>
           <div class="row-fluid">
             <div class="span4">{{ assignment.name }}</div>
             <div class="span4">{{ assignment.course }}</div>

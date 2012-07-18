@@ -8,12 +8,13 @@ class CourseAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     list_editable = ('active',)
     list_filter = ('modified', 'created', 'active')
-
+    prepopulated_fields = {'slug':('title',),}
 
 class AssignmentAdmin(admin.ModelAdmin):
     #TODO change the user field to say Teacher: or Professor:
     list_display = ('name', 'due_date', 'course')
     list_filter = ('modified', 'created', 'active', 'due_date')
+    prepopulated_fields = {'slug':('name',),}
 
 class GradeAdmin(admin.ModelAdmin):
     pass

@@ -1,5 +1,5 @@
 import datetime
-
+import os.path
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -79,6 +79,8 @@ class Course(TimeStampedActivate):
     teacher = models.ForeignKey(User, related_name="courses")
     students = models.ManyToManyField(User, through='Enrollment', blank=True)
 
+    
+
     def __unicode__(self):
         return '{0}'.format(self.title)
 
@@ -117,7 +119,12 @@ class Assignment(TimeStampedActivate):
     
     grade = models.ManyToManyField(Grade, through='StudentGrade')
     
+    attachments = models.FileField(upload_to='assignment_attachments', blank=True)
+    
     objects = AssignmentManager() #What does this do? Maybe i should remove this
+    
+    def filename(self):
+        return os.path.basename(self.attachments.name)
     
     def __unicode__(self):
         return self.name
