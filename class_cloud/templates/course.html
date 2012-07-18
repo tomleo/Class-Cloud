@@ -14,77 +14,59 @@
 
   
 <div class="span8">
-<div class="tabbable">
+<div class="tabbable">       
 
 <ul id="myTab" class="nav nav-tabs">
-    <li class="active"><a href="#home" data-toggle="tab">{{ course.title }}</a></li>
+	<li class="active"><a href="#home" data-toggle="tab">{{ course.title }}</a></li>
     <li class=""><a href="#announcements" data-toggle="tab">Announcements</a></li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Assignments <b class="caret"></b></a>
-        <ul class="dropdown-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Assignments <b class="caret"></b></a>
+      <ul class="dropdown-menu">
         <li><a href="#dropdown1" data-toggle="tab">Inbox</a></li>
         <li><a href="#dropdown2" data-toggle="tab">Submitted</a></li>
         <li><a href="#dropdown3" data-toggle="tab">Graded</a></li>
-        </ul>
+      </ul>
     </li>
     <li class=""><a href="#grades" data-toggle="tab">Grades</a></li>
     <li class=""><a href="#discussions" data-toggle="tab">Discussions</a></li>
 </ul>
-
+  
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade active in" id="home">
-    <img src="{{course.course_image.url}}" alt="{{course.title}}">
-    {{ course.description|linebreaks }}
-
-    <p>Syllabus for {{course.title}}: <a href="{{course.syllabus.url}}" >{{course.title}}/Syllabus</a></p>
+        <img src="{{course.course_image.url}}" alt="{{course.title}}">
+        	{{ course.description|linebreaks }}
+	    <p>Syllabus for {{course.title}}: <a href="{{course.syllabus.url}}" >{{course.title}}/Syllabus</a></p>
     </div>
-
+ 
     <div class="tab-pane fade" id="announcements">
-    <p>There are no annoucements.</p>
+        <p>There are no annoucements.</p>
     </div>
 
     <div class="tab-pane fade" id="dropdown1">
-    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+        <p>Incoming assingments</p>
     </div>
 
     <div class="tab-pane fade" id="dropdown2">
-    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
+        {% for assignment in assignments %}
+                <p>{{ assignment.name }} | {{ assignment.description }}</p>
+        {% endfor %}
     </div>
 
     <div class="tab-pane fade" id="dropdown3">
-    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
+        <p>Assignments that are already graded!!</p>
     </div>
 
     <div class="tab-pane fade" id="grades">
-    <p>Under construction!! Visit later.</p>
+      {% for grade in grades %}
+                <p>{{ grade.grade }}</p>
+      {% endfor %}
     </div>
 
     <div class="tab-pane fade" id="discussions">
-    <p>Everyone's slacking!! No discussions>.</p>
+      <p>Everyone's slacking!! No discussions>.</p>
     </div>
-</div><!--END myTabContent-->
-
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-	        {{ course.description|linebreaks }}
-        </div>
-        <div class="tab-pane" id="tab3">
-            {% for assignment in assignments %}
-                <p>{{ assignment.name }} | {{ assignment.description }}</p>
-            {% endfor %}
-            <hr>
-            {% for grade in grades %}
-                <p>{{ grade.grade }}</p>
-            {% endfor %}
-	        <!--<p>Grades.</p>-->
-        </div>
-        <div class="tab-pane" id="tab4">
-	        <p>Announcements</p>
-        </div>
-        <div class="tab-pane" id="tab5">
-	        <p>Discussions.</p>
-        </div>
-    </div><!--END tab-content-->
+ 
+</div>
 	
 </div><!--END tabbable-->  
 </div><!--END span8 -->
