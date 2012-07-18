@@ -3,6 +3,21 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
+"""
+TimeStamped
+TimeStampedActivate
+
+Grade
+
+Course
+Assignment
+
+StudentGrade
+Enrollment
+
+AssignmentManager
+UserProfile
+"""
 
 class TimeStamped(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -18,6 +33,27 @@ class TimeStampedActivate(TimeStamped):
         abstract = True
 
 
+class Grade(models.Model):
+    points = models.IntegerField()
+    max_points = models.IntegerField()
+
+    def calculate_grade(self):
+        return int(((float(self.points))/float(self.max_points)) * 100)
+
+
+    def letter_grade(self):
+        g = self.calculate_grade()
+        if   g>=90: return 'A'
+        elif g>=80: return 'B'
+        elif g>=70: return 'C'
+        elif g>=60: return 'D'
+        else: return 'F'
+
+
+    def __unicode__(self):
+        return self.letter_grade()
+
+
 #wtf what does this do?
 class AssignmentManager(models.Manager):
     def get_visible(self):
@@ -31,8 +67,7 @@ class Course(TimeStampedActivate):
     A Course represents a academic course that a student
     might enrole in.
     """
-    title = models.CharField(max_length=255,
-                            help_text="Name of course")
+    title = models.CharField(max_length=255, help_text="Name of course")
     slug = models.SlugField()
     description = models.TextField(blank=True,
                                     help_text="Course Description.")
@@ -78,8 +113,11 @@ class Assignment(TimeStampedActivate):
     #todo - maybe remove the user foreignkey
     teacher = models.ForeignKey(User, related_name="assignments")
     course = models.ForeignKey(Course, related_name="classes")
-    objects = AssignmentManager() #What does this do?
-
+    
+    grade = models.ManyToManyField(Grade, through='StudentGrade')
+    
+    objects = AssignmentManager() #What does this do? Maybe i should remove this
+    
     def __unicode__(self):
         return self.name
 
@@ -97,36 +135,22 @@ class Assignment(TimeStampedActivate):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     #Additional fields will go here
-
-
-class Grade(models.Model):
-    """
-    Note sure how to implement this, I think that this should be a
-    foreignkey on Student, as teachers don't get grades.
-
-    Alternativly It should somehow relate to an Assignment, and
-    a course as a whole.
-
-    Students have course grades, Students have assignment grades
-    """
-    letter_grade = models.CharField(max_length=10,
-                                    help_text="Letter grade A, B, C, D, or F")
-    course = models.ForeignKey(Course)
-    assignment = models.ForeignKey(Assignment)
     
-    def __unicode__(self):
-        return self.letter_grade
+
+class StudentGrade(models.Model):
+    student = models.ForeignKey(User, verbose_name="Student")
+    assignment = models.ForeignKey(Assignment, verbose_name="For Assignment")
+    grade = models.ForeignKey(Grade, verbose_name="Students Grade")
+
+
+
+
 
 class Enrollment(models.Model):
-    #student = models.ForeignKey(Student,
-    #                            verbose_name="Enrolled",
-    #                            help_text="Enroll this user as student in Course.",
-    #                            )
     students = models.ForeignKey(User, 
                                  verbose_name="Enrolled",
                                  help_text="Enroll this user as student in Course."
                                  )
-    course = models.ForeignKey(Course,
-                                verbose_name="In Course",)
+    course = models.ForeignKey(Course, verbose_name="In Course",)
     start_date = models.DateField()
 
