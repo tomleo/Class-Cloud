@@ -40,6 +40,7 @@ class Course(TimeStampedActivate):
     #pictures in isn't accessable to the user.
     #syllabus = models.FileField(upload_to='{0}/syllabus'.format(getFilePath()))
     syllabus = models.FileField(upload_to='syllabus')
+    course_image = models.ImageField(upload_to = 'course_image')
     teacher = models.ForeignKey(User, related_name="courses")
     students = models.ManyToManyField(User, through='Enrollment', blank=True)
 
