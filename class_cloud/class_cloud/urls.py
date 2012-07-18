@@ -9,6 +9,11 @@ admin.autodiscover()
 #from course.views import DisplayCourseView, DisplayCourseRedirectView, DetailCourseView
 from course.models import Course, Assignment
 
+
+from django.conf import settings
+
+
+        
 course_info = {
 	"queryset": Course.objects.filter(active=True),
     "template_name": "courses.html",
@@ -50,6 +55,8 @@ urlpatterns = patterns('',
     (r'^assignments/(?P<pk>d+)/$', list_detail.object_detail,
         assignment_detail),
     
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_DOC_ROOT}),
     #Course Page
     #(r'^courses/$', list_detail.object_list, course_info),
     #(r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
