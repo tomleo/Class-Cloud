@@ -1,4 +1,3 @@
-
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
@@ -16,7 +15,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
 
-<<<<<<< Updated upstream
+
 def getUser(request):
     try:
         User.objects.get(username = request.user)
