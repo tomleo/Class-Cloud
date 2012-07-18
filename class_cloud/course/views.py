@@ -82,7 +82,8 @@ def assignments(request):
     courses.extend(Course.objects.filter(students__username=request.user.username))
     
     for icourse in courses:
-        assignment_list.append(Assignment.objects.get(course=icourse))
+        course_assignments = Assignment.objects.filter(course=icourse)
+        assignment_list.extend(course_assignments)
     
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
