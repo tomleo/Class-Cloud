@@ -15,11 +15,11 @@
 {% include 'pre_body.html' %}
 
 
-    <div class="container">
-      <div class="row">
-        <div class="span4" id="calendar"></div>
-      </div>
-    </div> <!-- /container -->
+<div class="container">
+  <div class="row">
+    <div class="span4" id="calendar"></div>
+  </div>
+</div> <!-- /container -->
 
 
 {% include 'post_body.html' %}
@@ -27,7 +27,36 @@
 {% endblock %}
 
 {% block jQuery %}
+<script src="{{ STATIC_URL }}js/bootstrap.calendar.js"></script>
+    <script type="text/javascript">
+$(document).ready(function(){
+    var evnts = function(){
+    return {
+      "event":
+      [
+           {"date":"2012-01-01","title":"1"}
+          ,{"date":"2012-02-02","title":"2"}
+          ,{"date":"2012-03-03","title":"34"}
+          ,{"date":"2012-04-04","title":"123"}
+          ,{"date":"2012-05-05","title":"223"}
+          ,{"date":"2012-06-06","title":"4"}
+          ,{"date":"2012-07-07","title":"5"}
+          ,{"date":"2012-08-08","title":"14"}
+          ,{"date":"2012-09-09","title":"10"}
+          ,{"date":"2012-10-10","title":"10"}
+          ,{"date":"2012-11-11","title":"10"}
+          ,{"date":"2012-12-12","title":"10"}
+      ]
+    }
+};
 
+$('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
+    .on('changeDay', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
+    .on('onEvent', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
+    .on('onNext', function(event){ alert("Next"); })
+    .on('onPrev', function(event){ alert("Prev"); })
+    .on('onCurrent', function(event){ alert("Current"); });
+});
 
-
+</script>
 {% endblock %}
