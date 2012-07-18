@@ -69,7 +69,31 @@
        </div>
 
 	
+<<<<<<< HEAD
 
+=======
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+	        {{ course.description|linebreaks }}
+        </div>
+        <div class="tab-pane" id="tab3">
+            {% for assignment in assignments %}
+                <p>{{ assignment.name }} | {{ assignment.description }}</p>
+            {% endfor %}
+            <hr>
+            {% for grade in grades %}
+                <p>{{ grade.grade }}</p>
+            {% endfor %}
+	        <!--<p>Grades.</p>-->
+        </div>
+        <div class="tab-pane" id="tab4">
+	        <p>Announcements</p>
+        </div>
+        <div class="tab-pane" id="tab5">
+	        <p>Discussions.</p>
+        </div>
+    </div><!--END tab-content-->
+>>>>>>> 7c9fe398419e74fbdd107f9f3b5fa8e573c1a391
 	
 </div><!--END tabbable-->  
 </div><!--END span8 -->
