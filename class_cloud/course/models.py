@@ -62,6 +62,8 @@ class AssignmentManager(models.Manager):
         return self.get_query_set().filter(active=True)
         
 
+        
+
 class Course(TimeStampedActivate):
     """
     A Course represents a academic course that a student
@@ -97,6 +99,10 @@ class Course(TimeStampedActivate):
             'slug': self.slug
         })
 
+class AssignmentAttempt(models.Model):
+    attachment = models.FileField(upload_to='assignment_submissions')
+    comments = models.TextField(blank=True)
+    submit_date = models.DateTimeField(auto_now_add=True, blank=True)
 
 class Assignment(TimeStampedActivate):
     """
@@ -108,23 +114,16 @@ class Assignment(TimeStampedActivate):
     slug = models.SlugField()
     description = models.TextField(blank=True,
                                     help_text="Describe the assignment.")
-    #May want to change this relationship, so that assignments
-    #have a OneToMany relationship with Student?
     due_date = models.DateTimeField(default=False)
 
-    #Not sure user makes sense here
-    #todo - maybe remove the user foreignkey
     teacher = models.ForeignKey(User, related_name="assignments")
     course = models.ForeignKey(Course, related_name="classes")
-    
-    grade = models.ManyToManyField(Grade, through='StudentGrade')
-    
     attachments = models.FileField(upload_to='assignment_attachments', blank=True)
     
     objects = AssignmentManager() #What does this do? Maybe i should remove this
     
-    def filename(self):
-        return os.path.basename(self.attachments.name)
+    grade = models.ManyToManyField(Grade, through='StudentGrade')
+    submissions = models.ManyToManyField(AssignmentAttempt, through='SubmittedAssignment')
     
     def __unicode__(self):
         return self.name
@@ -138,6 +137,13 @@ class Assignment(TimeStampedActivate):
 
     class Meta:
         ordering = ['-due_date', '-modified', '-created']
+
+
+
+class SubmittedAssignment(models.Model):
+    student = models.ForeignKey(User, verbose_name="Student")
+    assignment = models.ForeignKey(Assignment, verbose_name="Assignment")
+    submission = models.ForeignKey(AssignmentAttempt)
 
 
 class UserProfile(models.Model):
