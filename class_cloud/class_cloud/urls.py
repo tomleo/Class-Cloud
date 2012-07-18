@@ -29,6 +29,9 @@ assignment_detail = {
 
 urlpatterns = patterns('',
 
+    #Current User
+    (r'^getUser/$', 'course.views.getUser'),
+
     #Index page
     (r'^$', 'course.views.index'),
     (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),

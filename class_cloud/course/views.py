@@ -3,7 +3,7 @@ from django.views.generic import list_detail, date_based, TemplateView, Redirect
 from django.views.generic.edit import FormView
 
 from course.models import Course, Assignment, Grade
-# can i simply do from models import Course, Assignment?
+from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
 #from django.template import Context, loader #Replaced by render_to_response shortcut
@@ -16,6 +16,12 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
 
+def getUser(request):
+    try:
+        User.objects.get(username = request.user)
+    except User.DoesNotExist:
+        return HttpResponse("Invalid username")
+
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.view_course'))
 def index(request):
@@ -24,10 +30,7 @@ def index(request):
     The context is a dictionary mapping between template variable names and
     Python objects
     """
-    courses = Course.objects.all()
-    #template = loader.get_template('index.html')
-    #context = Context({'courses': courses,})
-    #eturn HttpResponse(template.render(context))
+    courses = Course.objects.filter(students__username=request.user.username)
     return render_to_response('courses.html',
         {'courses': courses},
         context_instance=RequestContext(request))
@@ -35,7 +38,7 @@ def index(request):
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.view_course'))
 def courses(request, slug):
-    courses = Course.objects.all()
+    courses = Course.objects.filter(students__username=request.user.username)
     return render_to_response('courses.html',
         {'courses': courses},
         context_instance=RequestContext(request))
@@ -43,24 +46,28 @@ def courses(request, slug):
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.view_course'))
 def course(request, slug):
+
     selected_course = Course.objects.get(slug=slug)
-    #course_assignments = Assignment.objects.get(course.slug=selected_course.slug)
     course_assignments = Assignment.objects.filter(course=selected_course)
     grades = Grade.objects.filter(course=selected_course)
     
-    courseAndGrade = []
-    
-    
     template_name = 'course.html'
-    return render_to_response(template_name, {'course':selected_course, 'assignments':course_assignments}, context_instance=RequestContext(request))
+    return render_to_response(template_name, 
+        {'course':selected_course, 'assignments':course_assignments},
+        context_instance=RequestContext(request))
     
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.view_course'))
 def assignments(request):
-    assignments = Assignment.objects.all()
+
+    assignment_list = []
+    courses = Course.objects.filter(students__username=request.user.username)
+    for icourse in courses:
+        assignment_list.append(Assignment.objects.get(course=icourse))
+    
     return render_to_response('assignments.html',
-        {'assignments': assignments},
+        {'assignments': assignment_list},
         context_instance=RequestContext(request))
 
 
