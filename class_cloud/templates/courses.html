@@ -19,9 +19,9 @@
             {% for course in courses %}
             <li class="span5">
 	            <div class="thumbnail">
-		            <img src="http://placehold.it/400x230" alt="">
+		            <img src="{{course.course_image.url}}" alt="{{course.title}}">
 		            <h5><a href = "{{ course.slug }}">{{course.title}}</a></h5>
-		            <p>{{course.user }}</p>
+		            <p>{{course.teacher}}</p>
 	            </div>
             </li>
             {% endfor %}

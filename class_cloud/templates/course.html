@@ -43,7 +43,23 @@
     </div>
 
     <div class="tab-pane fade" id="dropdown1">
-        <p>Incoming assingments</p>
+        <p>Here you will find assignments that are assigned to you that are not submitted by you yet.</p>
+        {% for assignment in assignments %} 
+      
+          <div class="row-fluid">
+          <div class="well">
+          <div class="span12">
+        
+            <div class="span4"><a href={{ assignment.get_absolute_url }}>{{ assignment.name }}</a></div>
+            <div class="span4">{{ assignment.course }}</div>
+            <div class="span4">{{ assignment.due_date }}</div>
+          </div>     
+          </div>
+          </div>
+      {% endfor %}
+        
+        
+
     </div>
 
     <div class="tab-pane fade" id="dropdown2">
