@@ -16,6 +16,7 @@
 <div class="span8">
 <div class="tabbable">       
 
+<!--Tabbed Course Header-->
 <ul id="myTab" class="nav nav-tabs">
 	<li class="active"><a href="#home" data-toggle="tab">{{ course.title }}</a></li>
     <li class=""><a href="#announcements" data-toggle="tab">Announcements</a></li>
@@ -30,76 +31,80 @@
     <li class=""><a href="#grades" data-toggle="tab">Grades</a></li>
     <li class=""><a href="#discussions" data-toggle="tab">Discussions</a></li>
 </ul>
-  
- 
-  
-  
-  
-  
+
 <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="home">
-        <img src="{{course.course_image.url}}" alt="{{course.title}}">
-        	{{ course.description|linebreaks }}
-        	<div class = "row-fluid">
-				<div class = "well">
-					<div class = "span9">
-							<strong>Syllabus for {{course.title}}: <a href="{{course.syllabus.url}}" ><i class="icon-file"></i>{{course.title}}/Syllabus</a></strong>
-					</div>	
-				</div>	
-			</div> 
-	    
-    </div>
- 
-    <div class="tab-pane fade" id="announcements">
-        <p>There are no annoucements.</p>
-    </div>
 
-    <div class="tab-pane fade" id="dropdown1">
-        <p>Here you will find assignments that are assigned to you that are not submitted by you yet.</p>
-        {% for assignment in assignments %} 
-      
-          <div class="row-fluid">
-          <div class="well">
-          <div class="span12">
-        
-            <div class="span4"><a href={{ assignment.slug }}>{{ assignment.name }}</a></div>
-            <div class="span4">{{ assignment.course }}</div>
-            <div class="span4">{{ assignment.due_date }}</div>
-          </div>     
-          </div>
-          </div>
-      {% endfor %}
-        
-        
-
-    </div>
-
-    <div class="tab-pane fade" id="dropdown2">
-        {% for assignment in assignments %}
-                <p>{{ assignment.name }} | {{ assignment.description }}</p>
-        {% endfor %}
-    </div>
-
-    <div class="tab-pane fade" id="dropdown3">
-        <p>Assignments that are already graded!!</p>
-    </div>
-
-    <div class="tab-pane fade" id="grades">
-      {% for grade in grades %}
-                <p>{{ grade.grade }}</p>
-      {% endfor %}
-    </div>
-
-    <div class="tab-pane fade" id="discussions">
-      <p>Everyone's slacking!! No discussions>.</p>
-    </div>
- 
+<!--Home Tab-->
+<div class="tab-pane fade active in" id="home">
+    <img src="{{course.course_image.url}}" alt="{{course.title}}">
+	{{ course.description|linebreaks }}
+	<div class = "row-fluid">
+		<div class = "well">
+			<div class = "span9">
+			    <strong>Syllabus for {{course.title}}: <a href="{{course.syllabus.url}}"><i class="icon-file"></i>{{course.title}}/Syllabus</a></strong>
+			</div>
+		</div>	
+	</div>
 </div>
-	
-</div><!--END tabbable-->  
-</div><!--END span8 -->
-  
-	
+
+<!-- Announcements Tab -->
+<div class="tab-pane fade" id="announcements">
+    <p>There are no annoucements.</p>
+</div>
+
+<!--
+assignments_graded
+assignments_submitted
+assignments_inbox
+-->
+
+<!-- Assignments Inbox Tab -->
+<div class="tab-pane fade" id="dropdown1">
+    {% for assignment in assignments_inbox %}
+    <div class="row-fluid">
+        <div class="well">
+            <div class="span12">
+                <div class="span4"><a href={{ assignment.slug }}>{{ assignment.name }}</a></div>
+                <div class="span4">{{ assignment.course }}</div>
+                <div class="span4">{{ assignment.due_date }}</div>
+            </div>
+        </div>
+    </div>
+    {%  endfor %}
+</div>
+
+<!-- Assignments Submitted Tab -->
+<div class="tab-pane fade" id="dropdown2">
+    {% for assignment in assignments_submitted %}
+        <p>{{ assignment.name }} | {{ assignment.description }}</p>
+    {% endfor %}
+</div>
+
+<!-- Assignments Graded  Tab -->
+<div class="tab-pane fade" id="dropdown3">
+    {% for ag in assignments_graded %}
+        <p>{{ ag }}</p>
+    {% endfor %}
+</div>
+
+
+<!-- Grade Tab -->
+<div class="tab-pane fade" id="grades">
+    {% for grade in grades %}
+        <p>{{ grade.grade }}</p>
+    {% endfor %}
+</div>
+
+<!-- Discussion Tab -->
+<div class="tab-pane fade" id="discussions">
+    <p>Everyone's slacking!! No discussions>.</p>
+</div>
+ 
+</div><!-- END myTabContent -->
+</div><!-- END tabbable -->  
+</div><!-- END span8 -->
+
+
 {%  include 'post_body.html' %}
 
 {% endblock %}

@@ -165,3 +165,11 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, verbose_name="In Course",)
     start_date = models.DateField()
 
+
+class Annoucement(models.Model):
+    title = models.CharField(max_length=255, help_text="Announcement Name")
+    slug = models.SlugField()
+    description = models.TextField(blank=True, help_text="Announcement Description.")
+    course = models.ForeignKey(Course)
+
+

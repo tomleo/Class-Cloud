@@ -18,11 +18,11 @@
             <h1>Courses</h1>
             {% for course in courses %}
             <li class="span5">
-	            <div class="thumbnail">
+                <a href = "{{ course.slug }}" class="thumbnail">
 		            <img src="{{course.course_image.url}}" alt="{{course.title}}">
-		            <h5><a href = "{{ course.slug }}">{{course.title}}</a></h5>
-		            <p>{{course.teacher}}</p>
-	            </div>
+	            </a>
+	            <h5><a href = "{{ course.slug }}">{{course.title}}</a></h5>
+		        <p>{{course.teacher}}</p>
             </li>
             {% endfor %}
         </ul>
