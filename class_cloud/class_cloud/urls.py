@@ -59,7 +59,8 @@ urlpatterns = patterns('',
     #(r'^assignments/(?P<pk>d+)/$', list_detail.object_detail,
     #    assignment_detail),
     
-    
+    #Announcement page
+    (r'^announcements/$', 'course.views.announcements'),
     
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),

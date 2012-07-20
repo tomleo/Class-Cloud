@@ -165,3 +165,15 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, verbose_name="In Course",)
     start_date = models.DateField()
 
+class Announcement(TimeStampedActivate):
+	description = models.CharField(max_length = 255)
+	detail = models.TextField(blank=True,help_text="details")
+	pub_date = models.DateTimeField('date published')
+	course = models.ForeignKey(Course, related_name ="class")
+	teacher = models.ForeignKey(User, related_name="announcements")
+	
+	def __unicode__(self):
+		return self.description
+    
+    
+	

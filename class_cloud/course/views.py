@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment, Grade, StudentGrade
+from course.models import Course, Assignment, Grade, StudentGrade, Announcement
 from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
@@ -58,6 +58,7 @@ def course(request, slug):
 
     selected_course = Course.objects.get(slug=slug)
     course_assignments = Assignment.objects.filter(course=selected_course)
+    course_announcements = Announcement.objects.filter(course = selected_course)
     #grades = Grade.objects.filter(course=selected_course)
     
     class_grades = []
@@ -69,6 +70,7 @@ def course(request, slug):
     return render_to_response(template_name, 
         {'course':selected_course,
          'assignments':course_assignments,
+         'announcements':course_announcements,
           'grades':class_grades},
         context_instance=RequestContext(request))
     
@@ -123,5 +125,21 @@ def logout_view(request):
 #    #template_name = "assignment.html"
 #    queryset = Assignment.objects.get_visible().filter(course__slug=course)
 #    return list_detail.object_detail(request, queryset, slug=slug)
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def announcements(request):
+
+    announcement_list = []
+    courses = []
+    courses.extend(Course.objects.filter(students__username=request.user.username))
+    
+    for icourse in courses:
+        course_announcements = Announcement.objects.filter(course=icourse)
+        announcement_list.extend(course_announcements)
+    
+    return render_to_response('announcements.html',
+        {'announcements': announcement_list},
+        context_instance=RequestContext(request))
 
 

@@ -137,6 +137,7 @@ INSTALLED_APPS = (
 
 #    'assignments',
      'course',
+
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7

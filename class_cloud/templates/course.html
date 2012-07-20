@@ -51,8 +51,24 @@
     </div>
  
     <div class="tab-pane fade" id="announcements">
-        <p>There are no annoucements.</p>
-    </div>
+
+    <h1>Announcements</h1>
+      {% for announcement in announcements %}
+
+     	<div class = "row-fluid">
+			<div class = "well">
+				<div >
+					<h4>{{announcement.description}}</h4>
+					<h6>{{announcement.teacher}}</h6>
+					<h6>{{announcement.course}}</h6>
+					<p> {{announcement.detail}}</p>
+					<p align = "right"><small>{{announcement.pub_date}}</small></p>
+				</div>	
+			</div>	
+		</div>
+      {% endfor %}
+  </div>
+
 
     <div class="tab-pane fade" id="dropdown1">
         <p>Here you will find assignments that are assigned to you that are not submitted by you yet.</p>
