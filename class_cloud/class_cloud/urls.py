@@ -42,7 +42,7 @@ urlpatterns = patterns('',
     #(r'^(?P<slug>[-\w]+)/$', 'course.views.course'),
     
     
-    (r'^courses/(?P<course_slug>[-\w]+)/$', 'course.views.course_test'),
+    (r'^courses/(?P<course_slug>[-\w]+)/$', 'course.views.course'),
     
     #Courses
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),

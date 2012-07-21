@@ -116,7 +116,19 @@ assignments_inbox
 
 <!-- Discussion Tab -->
 <div class="tab-pane fade" id="discussions">
-    <p>Everyone's slacking!! No discussions>.</p>
+    {% for discussion in discussions %}
+
+     	<div class = "row-fluid">
+			<div class = "well">
+				<div >
+					<h4>{{discussion.user}} says:</h4>
+					<p> {{discussion.disqus}}</p>
+					<p align = "right"><small>{{discussion.pub_date}}</small></p>
+					{% include 'disqus.html' %}
+				</div>	
+			</div>	
+		</div>
+      {% endfor %}
 </div>
  
 </div><!-- END myTabContent -->

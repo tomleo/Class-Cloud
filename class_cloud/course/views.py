@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement
+from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion
 from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
@@ -65,17 +65,18 @@ def course_test(request, course_slug):
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
-def course(request, slug):
+def course(request, course_slug):
 
     # Assignments Not Submitted
     # Assignments Submitted
     # Assignments Submitted and Graded
 
-    selected_course = Course.objects.get(slug=slug)
+    selected_course = Course.objects.get(slug=course_slug)
 
     # Need to further filter this by due dates and wheather the assignment is active
     course_assignments = Assignment.objects.filter(course=selected_course)
     course_announcements = Announcement.objects.filter(course = selected_course)
+    course_discussions = Discussion.objects.filter(course = selected_course)
     #grades = Grade.objects.filter(course=selected_course)
     
     # Need to filter this by course
@@ -137,8 +138,9 @@ def course(request, slug):
          'assignments_submitted':a_submitted,
          'assignments_inbox':a_uncomplete,
          'announcements':course_announcements,
+         'discussions' :course_discussions,
          'grades':student_grades},
-        context_instance=RequestContext(request))
+         context_instance=RequestContext(request))
     
 
 @login_required
@@ -207,5 +209,16 @@ def announcements(request):
     return render_to_response('announcements.html',
         {'announcements': announcement_list},
         context_instance=RequestContext(request))
+       
+#we might not need this!!
+def discussions(request):
+	discussion_list = []
+	courses = []
+	courses.extend(Course.objects.filter(students__username=request.user.username))
+	for icourse in courses:
+		course_discussion = Announcement.objects.filter(course=icourse)
+		discussion_list.extend(course_discussion)
+        
+	
 
 

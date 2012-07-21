@@ -21,12 +21,13 @@
 					<h4>{{announcement.description}}</h4>
 					<h6>{{announcement.teacher}}</h6>
 					<h6>{{announcement.course}}</h6>
+					<br>
 					<p> {{announcement.detail}}</p>
+					{% include 'disqus.html' %}
 					<p align = "right"><small>{{announcement.pub_date}}</small></p>
 				</div>	
 			</div>	
 		</div>
-		</br>
       {% endfor %}
 
   </div>

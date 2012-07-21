@@ -175,6 +175,16 @@ class Announcement(TimeStampedActivate):
 	
 	def __unicode__(self):
 		return self.description
+		
+class Discussion(TimeStampedActivate):
+	disqus = models.TextField(blank = True, help_text = "disqus")
+	slug = models.SlugField()
+	pub_date = models.DateTimeField('date published')
+	course = models.ForeignKey(Course, related_name = "course")
+	user = models.ForeignKey(User, related_name = "user")
+	
+	def __unicode__(self):
+		return self.slug
     
     
 	
