@@ -75,6 +75,7 @@ def course(request, course_slug):
 
     # Need to further filter this by due dates and wheather the assignment is active
     course_assignments = Assignment.objects.filter(course=selected_course)
+    
     course_announcements = Announcement.objects.filter(course = selected_course)
     course_discussions = Discussion.objects.filter(course = selected_course)
     #grades = Grade.objects.filter(course=selected_course)
@@ -87,21 +88,15 @@ def course(request, course_slug):
                                           assignment__course=selected_course)
 
     submitted_and_graded = []
-    for assignment in submitted:
-        if assignment in [a.assignment for a in student_grades]:
-            submitted_and_graded.append(assignment)
-    
-    #def isInAssignmentList(submitted, G):
-    #    for (index, a) in enumerate(submitted):
-            #if G.assignment in [a.assignment for a in L[index]]:
-    #        if G.assignment in submitted[index]:
-    #            return (G, submitted[index])
+    for submission in submitted:
+        if submission.assignment in [a.assignment for a in student_grades]:
+            submitted_and_graded.append(submission.assignment)
    
     a_graded = []
     a_submitted = []
     a_uncomplete = []
     
-    for grade in student_grades:
+    #for grade in student_grades:
         #for assignment in enumerate(index, submitted_and_graded):
         #    if grade.assignment in submitted_and_graded[index]:
         #        a_graded.append((grade,submitted_and_graded[index]))
@@ -112,24 +107,21 @@ def course(request, course_slug):
         #if assignment_tuple:
         #    a_graded.append(assignment_tuple)
 
-        for assignment in submitted:
-            for student_grade in student_grades:
-                if assignment == student_grade.assignment:
-                    a_graded.append((student_grade.grade, assignment))
+    for submission in submitted:
+        for student_grade in student_grades:
+            if submission.assignment == student_grade.assignment:
+                a_graded.append((student_grade.grade, submission.assignment))
         
     # Find submitted assignments that are not graded
-    for sa in submitted:
-        if sa not in [a[1] for a in a_graded]:
-            a_submitted.append(sa)
+    for submission in submitted:
+        if submission.assignment not in [a[1] for a in a_graded]:
+            a_submitted.append(submission.assignment)
     
     # Find assignments that have not been submitted
-    for a in course_assignments:
-        if a not in [i[0] for i in a_graded]:
-            if a not in a_submitted:
-                a_uncomplete.append(a)
-    
-    
-
+    for assignment in course_assignments:
+        if assignment not in [i[1] for i in a_graded]:
+            if assignment not in a_submitted:
+                a_uncomplete.append(assignment)
     
     template_name = 'course.html'
     return render_to_response(template_name, 
