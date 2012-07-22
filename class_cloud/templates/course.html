@@ -116,20 +116,19 @@ assignments_inbox
 
 <!-- Discussion Tab -->
 <div class="tab-pane fade" id="discussions">
-    {% for discussion in discussions %}
-
-     	<div class = "row-fluid">
-			<div class = "well">
-				<div >
-					<h4>{{discussion.user}} says:</h4>
-					<p> {{discussion.disqus}}</p>
-					<p align = "right"><small>{{discussion.pub_date}}</small></p>
-					{% include 'disqus.html' %}
-				</div>	
-			</div>	
-		</div>
-      {% endfor %}
-</div>
+    <div class = "row-fluid">
+        <div class = "well">
+        {% for discussion in discussions %}
+            <div>
+                <h4>{{discussion.user}} says:</h4>
+                <p> {{discussion.disqus}}</p>
+                <p align = "right"><small>{{discussion.pub_date}}</small></p>
+            </div>	
+        {% endfor %}
+        {% include 'disqus.html' %}
+        </div><!--END well-->
+    </div><!--END row-fluid-->
+</div><!--END discussions-->
  
 </div><!-- END myTabContent -->
 </div><!-- END tabbable -->  

@@ -209,6 +209,7 @@ def announcements(request):
     return render_to_response('announcements.html',
         {'announcements': announcement_list},
         context_instance=RequestContext(request))
+
        
 #we might not need this!!
 def discussions(request):
@@ -218,7 +219,5 @@ def discussions(request):
 	for icourse in courses:
 		course_discussion = Announcement.objects.filter(course=icourse)
 		discussion_list.extend(course_discussion)
-        
-	
 
 

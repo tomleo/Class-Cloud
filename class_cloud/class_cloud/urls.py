@@ -37,23 +37,25 @@ assignment_detail = {
 urlpatterns = patterns('',
 
     #Index page
+    #If the index page calls index, then a redirect is required so the link
+    #doesn't break
+    #url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
     (r'^$', 'course.views.index'),
+    
     (r'^courses/$', 'course.views.index'),
+    
     #(r'^(?P<slug>[-\w]+)/$', 'course.views.course'),
-    
-    
     (r'^courses/(?P<course_slug>[-\w]+)/$', 'course.views.course'),
     
     #Courses
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),
     #(r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)', 'course.views.course_test'),
     
-
-    (r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
-
-    
     (r'^calendar/$', 'course.views.calendar'),
+    
+    #WTF IS THIS...
     (r'^passign/$', 'course.views.passign'),
+    
     (r'^course_grades/$', 'course.views.course_grades'),
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
@@ -68,51 +70,19 @@ urlpatterns = patterns('',
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),
     
+    #Static Content
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),
-    #Course Page
-    #(r'^courses/$', list_detail.object_list, course_info),
-    #(r'^courses/(?P<slug>[-\w]+)/$', 'course.views.course'),
-    
-    
-    #url(r'^courses/',TemplateView.as_view(template_name="courses.html")),
-    
-    #url(r'^courses/(?P<pk>\d+)-(?P<slug>[-\w]+)/$',
-    #    DetailView.as_view(
-    #        context_object_name="courses",
-    #        model=Course,
-    #        template_name="courses.html"),
-    #    name="courses"),
-        
-    #url(r'^courses/(?P<course_id>\d+)-(?P<slug>[-\w]+)/$',
-    #    DisplayCourseView.as_view()),
-    
-    #url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
-    
-    #This Query Isn't Working!
-    #url(r'^course/(?P<course>[-\w]+)/assignment/(?P<slug>[-\w]+)/$',
-    #    'course.views.assignment',
-    #    {'queryset': Assignment.objects.all(),
-    #     'template_name': 'assignment.html'}),
 
     #Registration Pages
     (r'^accounts/', include('registration.backends.default.urls')),
-
-    #Test Not sure if this is work keeping for any reason
-    #url(r'^test/(?P<pk>\d+)-(?P<slug>[-_\w]+)/$',
-    #    DetailView.as_view(
-    #        context_object_name="course",
-    #        model=Course,
-    #        template_name="courses.html"
-    #        ), name = "course"),
-    
-    
 
     #Admin Site
     url(r'^admin/', include(admin.site.urls)),
 )
 
-
+# This is already implemented above without the check for DEBUG only I called it
+# document_root instead of 'serve'...
 if settings.DEBUG:
     urlpatterns += patterns('django.views.static',
         (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),
