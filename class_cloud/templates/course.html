@@ -68,6 +68,8 @@
 				</div>	
 			</div>	
 		</div>
+        {% empty %}
+        <p>No Announcements at this time</p>
       {% endfor %}
 </div>
 
@@ -89,6 +91,8 @@ assignments_inbox
             </div>
         </div>
     </div>
+    {% empty %}
+    <p>Not Assignments! Go Play!!</p>
     {%  endfor %}
 </div>
 
@@ -104,6 +108,8 @@ assignments_inbox
                 </div><!--END span12-->
             </div><!--END well-->
         </div><!--END row-fluid-->
+    {% empty %}
+    <p>No Assignments submitted</p>
     {% endfor %}
 </div>
 
@@ -119,6 +125,8 @@ assignments_inbox
                 </div>
             </div>
         </div>
+    {% empty %}
+    <p>No Assignments graded</p>
     {% endfor %}
 </div>
 
@@ -143,6 +151,8 @@ assignments_inbox
                 <td>{{ grade }}</td>
             </tr>
         </tbody>
+    {% empty %}
+    <tr><td>No Grades</td></tr>
     {% endfor %}
     </table>
 </div>
@@ -156,7 +166,9 @@ assignments_inbox
                 <h4>{{discussion.user}} says:</h4>
                 <p> {{discussion.disqus}}</p>
                 <p align = "right"><small>{{discussion.pub_date}}</small></p>
-            </div>	
+            </div>
+        {% empty %}
+        <p>Be the first to comment!</p>
         {% endfor %}
         {% include 'disqus.html' %}
         </div><!--END well-->
