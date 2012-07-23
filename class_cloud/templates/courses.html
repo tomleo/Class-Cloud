@@ -24,6 +24,8 @@
 	            <h5><a href = "{{ course.slug }}">{{course.title}}</a></h5>
 		        <p>{{course.teacher}}</p>
             </li>
+            {% empty %}
+            <p>It does not apear you are registered for any classes</p>
             {% endfor %}
         </ul>
       </div><!--END row-fluid-->

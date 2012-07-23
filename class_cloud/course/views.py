@@ -86,10 +86,10 @@ def course(request, course_slug):
                                           assignment__course=selected_course)
 
     # Don't think this is being used...?
-    submitted_and_graded = []
-    for submission in submitted:
-        if submission.assignment in [a.assignment for a in student_grades]:
-            submitted_and_graded.append(submission.assignment)
+    #submitted_and_graded = []
+    #for submission in submitted:
+    #    if submission.assignment in [a.assignment for a in student_grades]:
+    #        submitted_and_graded.append(submission.assignment)
    
     a_graded = []
     a_submitted = []
@@ -103,7 +103,8 @@ def course(request, course_slug):
     # Find submitted assignments that are not graded
     for submission in submitted:
         if submission.assignment not in [a[1].assignment for a in a_graded]:
-            a_submitted.append(submission)
+            if submission.assignment.course == selected_course:
+                a_submitted.append(submission)
     
     # Find assignments that have not been submitted
     for assignment in course_assignments:
