@@ -94,15 +94,31 @@ assignments_inbox
 
 <!-- Assignments Submitted Tab -->
 <div class="tab-pane fade" id="dropdown2">
-    {% for assignment in assignments_submitted %}
-        <p>{{ assignment.name }} | {{ assignment.description }}</p>
+    {% for submission in assignments_submitted %}
+        <div class="row-fluid">
+            <div class="well">
+                <div class="span12">
+                    <div class="span4"><a href={{ assignment.slug }}>{{ submission.assignment.name }}</a></div>
+                    <div class="span4">{{ submission.assignment.course }}</div>
+                    <div class="span4">{{ submission.assignment.submit_date }}</div>
+                </div><!--END span12-->
+            </div><!--END well-->
+        </div><!--END row-fluid-->
     {% endfor %}
 </div>
 
 <!-- Assignments Graded  Tab -->
 <div class="tab-pane fade" id="dropdown3">
-    {% for ag in assignments_graded %}
-        <p>{{ ag }}</p>
+    {% for grade, submission in assignments_graded %}
+        <div class="row-fluid">
+            <div class="well">
+                <div class="span12">
+                    <div class="span4"><a href={{ submission.assignment.slug }}>{{ submission.assignment.name }}</a></div>
+                    <div class="span4">{{ submission.assignment.course }}</div>
+                    <div class="span4">Grade: {{ grade }}</div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
 </div>
 
