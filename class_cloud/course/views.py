@@ -28,9 +28,7 @@ def passign(request):
         context_instance=RequestContext(request))
 
 
-def course_grades(request):
-    return render_to_response('course_grades.html',
-        context_instance=RequestContext(request))        
+    
 
 
 @login_required
@@ -74,6 +72,33 @@ def wtf(request):
         {'student_grades': student_grades},
         context_instance=RequestContext(request))
     
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def course_grades(request, course_slug):    
+    
+    selected_course = Course.objects.get(slug=course_slug)
+    
+    # all grades associated with given course and user
+    student_grades = StudentGrade.objects.filter(student__username=request.user.username,
+                                          assignment__course=selected_course) 
+
+    submitted = SubmittedAssignment.objects.filter(student__username=request.user.username)
+    
+    a_graded = []
+    a_submitted = []
+   
+    for submission in submitted:
+        for student_grade in student_grades:
+            if submission.assignment == student_grade.assignment:
+                a_graded.append((student_grade.grade, submission))
+                                          
+    #import pdb; pdb.set_trace()              
+    template_name = 'course_grades.html'
+    return render_to_response(template_name, 
+        {'course':selected_course,
+         'assignments_graded':a_graded,
+         'grades':student_grades},
+         context_instance=RequestContext (request))                                      
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))

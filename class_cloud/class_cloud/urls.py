@@ -51,6 +51,8 @@ urlpatterns = patterns('',
     #Courses
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),
     #(r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)', 'course.views.course_test'),
+    #Course Grades
+    (r'^courses_grades/(?P<course_slug>[-\w]+)/$', 'course.views.course_grades'),
     
     (r'^calendar/$', 'course.views.calendar'),
     

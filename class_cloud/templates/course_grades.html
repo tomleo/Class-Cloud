@@ -1,5 +1,6 @@
 {% extends './professor/prof_base.html' %}
 
+
 {% block page_title %}
    Course Grades | {{ block.super }}
 {% endblock %}
@@ -7,15 +8,15 @@
 {% block body %}
 
 {% include 'header.html' %}
-   
 
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span1"></div>
         <div class="span10">
-
-        <h1>COMP1 Grades</h1>
-        <h2>Assignment 1</h2>
+    
+        <!--This should work-->
+        <h1><em>{{ selected_course.name }}</em> Grades</h1>
+        <h2>{{assignment.name}}</h2>
         <table class="table tab le-striped">
             <thead>
                 <th>Status</th>
