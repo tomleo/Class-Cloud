@@ -125,9 +125,26 @@ assignments_inbox
 
 <!-- Grade Tab -->
 <div class="tab-pane fade" id="grades">
-    {% for grade in grades %}
-        <p>{{ grade.grade }}</p>
+    <table class="table table-striped">
+    {% for grade, submission in assignments_graded %}
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Points</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href={{ submission.assignment.slug }}>{{ submission.assignment.name }}</a></td>
+                <td>{{ grade.points }} out of {{ grade.max_points }}</td>
+                <td>{{ grade }}</td>
+            </tr>
+        </tbody>
     {% endfor %}
+    </table>
 </div>
 
 <!-- Discussion Tab -->

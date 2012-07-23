@@ -62,8 +62,6 @@ class AssignmentManager(models.Manager):
         return self.get_query_set().filter(active=True)
         
 
-        
-
 class Course(TimeStampedActivate):
     """
     A Course represents a academic course that a student
@@ -82,7 +80,6 @@ class Course(TimeStampedActivate):
     students = models.ManyToManyField(User, through='Enrollment', blank=True)
 
     
-
     def __unicode__(self):
         return '{0}'.format(self.title)
 
@@ -99,10 +96,12 @@ class Course(TimeStampedActivate):
             'slug': self.slug
         })
 
+
 class AssignmentAttempt(models.Model):
     attachment = models.FileField(upload_to='assignment_submissions')
     comments = models.TextField(blank=True)
     submit_date = models.DateTimeField(auto_now_add=True, blank=True)
+
 
 class Assignment(TimeStampedActivate):
     """
@@ -139,7 +138,6 @@ class Assignment(TimeStampedActivate):
         ordering = ['-due_date', '-modified', '-created']
 
 
-
 class SubmittedAssignment(models.Model):
     student = models.ForeignKey(User, verbose_name="Student")
     assignment = models.ForeignKey(Assignment, verbose_name="Assignment")
@@ -165,6 +163,7 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, verbose_name="In Course",)
     start_date = models.DateField()
 
+
 class Announcement(TimeStampedActivate):
 	title = models.CharField(max_length = 255)
 	slug = models.SlugField()
@@ -175,7 +174,8 @@ class Announcement(TimeStampedActivate):
 	
 	def __unicode__(self):
 		return self.description
-		
+
+
 class Discussion(TimeStampedActivate):
 	disqus = models.TextField(blank = True, help_text = "disqus")
 	slug = models.SlugField()
