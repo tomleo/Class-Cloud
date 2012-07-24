@@ -73,7 +73,8 @@ urlpatterns = patterns('',
     
     
     #professor - make an anouncement page
-    (r'make_announcement/$', 'course.views.make_announcement'),
+    (r'^make_announcement/$', 'course.views.make_announcement'),
+    (r'^submit_announcement/$', 'course.views.submit_announcement'),
     
     #Static Content
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',

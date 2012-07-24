@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
 #from django.template import Context, loader #Replaced by render_to_response shortcut
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -208,5 +210,14 @@ def make_announcement(request):
 	return render_to_response('make_announcement.html',
 	{'courses': courses},
 	context_instance=RequestContext(request))
+
+def submit_announcement(request):
+	TITLE = request.POST['input01']
+	COURSE = Course.objects.get(title = request.POST['select01'])
+	DESCRIPTION = request.POST['textarea2']
+	p = Announcement(title = TITLE, slug = "abc", description = DESCRIPTION, pub_date = timezone.now(),course = COURSE, teacher = request.user)
+	p.save()
+	return HttpResponseRedirect(reverse('course.views.make_announcement', ))
+	
 
 
