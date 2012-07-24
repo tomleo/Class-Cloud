@@ -51,6 +51,8 @@ urlpatterns = patterns('',
     #Courses
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),
     #(r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)', 'course.views.course_test'),
+    #Course Grades
+    (r'^courses_grades/(?P<course_slug>[-\w]+)/$', 'course.views.course_grades'),
     
     (r'^calendar/$', 'course.views.calendar'),
     
@@ -70,6 +72,12 @@ urlpatterns = patterns('',
     
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),
+    
+    
+    
+    #professor - make an anouncement page
+    (r'^make_announcement/$', 'course.views.make_announcement'),
+    (r'^submit_announcement/$', 'course.views.submit_announcement'),
     
     #Static Content
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',

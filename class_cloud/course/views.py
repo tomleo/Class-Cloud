@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
 #from django.template import Context, loader #Replaced by render_to_response shortcut
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -26,9 +28,7 @@ def passign(request):
         context_instance=RequestContext(request))
 
 
-def course_grades(request):
-    return render_to_response('course_grades.html',
-        context_instance=RequestContext(request))        
+    
 
 
 @login_required
@@ -72,6 +72,33 @@ def wtf(request):
         {'student_grades': student_grades},
         context_instance=RequestContext(request))
     
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def course_grades(request, course_slug):    
+    
+    selected_course = Course.objects.get(slug=course_slug)
+    
+    # all grades associated with given course and user
+    student_grades = StudentGrade.objects.filter(student__username=request.user.username,
+                                          assignment__course=selected_course) 
+
+    submitted = SubmittedAssignment.objects.filter(student__username=request.user.username)
+    
+    a_graded = []
+    a_submitted = []
+   
+    for submission in submitted:
+        for student_grade in student_grades:
+            if submission.assignment == student_grade.assignment:
+                a_graded.append((student_grade.grade, submission))
+                                          
+    #import pdb; pdb.set_trace()              
+    template_name = 'course_grades.html'
+    return render_to_response(template_name, 
+        {'course':selected_course,
+         'assignments_graded':a_graded,
+         'grades':student_grades},
+         context_instance=RequestContext (request))                                      
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
@@ -213,6 +240,23 @@ def discussions(request):
 	for icourse in courses:
 		course_discussion = Announcement.objects.filter(course=icourse)
 		discussion_list.extend(course_discussion)
+		
+		
+#professor makes announcement
+def make_announcement(request):
+	courses = Course.objects.filter(students__username=request.user.username)
+	return render_to_response('make_announcement.html',
+	{'courses': courses},
+	context_instance=RequestContext(request))
+
+def submit_announcement(request):
+	TITLE = request.POST['input01']
+	COURSE = Course.objects.get(title = request.POST['select01'])
+	DESCRIPTION = request.POST['textarea2']
+	p = Announcement(title = TITLE, slug = "abc", description = DESCRIPTION, pub_date = timezone.now(),course = COURSE, teacher = request.user)
+	p.save()
+	return HttpResponseRedirect(reverse('course.views.make_announcement', ))
+	
 
 
 ## TEACHER VIEWS ##
