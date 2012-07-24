@@ -215,3 +215,15 @@ def discussions(request):
 		discussion_list.extend(course_discussion)
 
 
+## TEACHER VIEWS ##
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def teacher_index(request):
+
+    return render_to_response('teacher/index.html',
+        {},
+        context_instance=RequestContext(request))
+
+
+

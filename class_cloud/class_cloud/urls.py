@@ -77,6 +77,8 @@ urlpatterns = patterns('',
 
     #Registration Pages
     (r'^accounts/', include('registration.backends.default.urls')),
+    
+    (r'^teacher/', 'course.views.teacher_index'),
 
     #Admin Site
     url(r'^admin/', include(admin.site.urls)),
