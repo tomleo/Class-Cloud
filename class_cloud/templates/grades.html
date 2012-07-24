@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+
+{% include 'header.html' %}
+{% include 'pre_body.html' %}
+
+<div class="span8">
+    <div class="row-fluid">
+    
+    
+    {% for k, v in student_grades.iteritems %}
+    <h2>{{ k }}</h2>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Assignment</th>
+            <th>Points</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    {% for i in v %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.assignment.name }}</td>
+            <td>{{ i.grade.points }} out of {{ i.grade.max_points }}</td>
+            <td>{{ i.grade }}</td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+    </table>
+    {% empty %}
+        <tr>No Grades at the moment</tr>
+    {% endfor %}
+    
+     </div><!--END row-fluid-->
+</div><!--END span8 -->
+
+{%  include 'post_body.html' %}
+
+{% endblock %}
+
+
+{% block jQuery %}
+
+{% endblock %}
