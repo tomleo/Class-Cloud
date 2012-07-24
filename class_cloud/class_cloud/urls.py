@@ -70,6 +70,11 @@ urlpatterns = patterns('',
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),
     
+    
+    
+    #professor - make an anouncement page
+    (r'make_announcement/$', 'course.views.make_announcement'),
+    
     #Static Content
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),

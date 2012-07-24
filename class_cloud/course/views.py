@@ -200,5 +200,13 @@ def discussions(request):
 	for icourse in courses:
 		course_discussion = Announcement.objects.filter(course=icourse)
 		discussion_list.extend(course_discussion)
+		
+		
+#professor makes announcement
+def make_announcement(request):
+	courses = Course.objects.filter(students__username=request.user.username)
+	return render_to_response('make_announcement.html',
+	{'courses': courses},
+	context_instance=RequestContext(request))
 
 
