@@ -9,7 +9,6 @@ admin.autodiscover()
 #from course.views import DisplayCourseView, DisplayCourseRedirectView, DetailCourseView
 from course.models import Course, Assignment
 
-
 from django.conf import settings
 
 
@@ -41,6 +40,8 @@ urlpatterns = patterns('',
     #doesn't break
     #url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
     (r'^$', 'course.views.index'),
+    
+    (r'^grades/$', 'course.views.grades'),
     
     (r'^courses/$', 'course.views.index'),
     

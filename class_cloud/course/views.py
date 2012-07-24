@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion
+from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment
 from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
@@ -53,6 +53,7 @@ def courses(request, slug):
         {'courses': courses},
         context_instance=RequestContext(request))
 
+
 def course_test(request, course_slug):
     
     selected_course = Course.objects.get(slug=course_slug)
@@ -61,16 +62,45 @@ def course_test(request, course_slug):
     import pdb; pdb.set_trace()
     
     return HttpResponse(course_assignments)
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def wtf(request):
+    student_grades = StudentGrade.objects.filter(student__username=request.user.username)
+    return render_to_response('grades.html',
+        {'student_grades': student_grades},
+        context_instance=RequestContext(request))
     
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
+def grades(request):
+    
+    #import pdb; pdb.set_trace()
+    
+    grades = {}
+    
+    #Filter student grades by the students enrolled courses
+    enrolled = Enrollment.objects.filter(students__username=request.user.username)
+    student_grades = StudentGrade.objects.filter(student__username=request.user.username)
+
+    for grade in student_grades:
+        if grade.assignment.course in [e.course for e in enrolled]:
+            if grade.assignment.course.title not in grades:
+                grades[grade.assignment.course.title] = [grade]
+            else:
+                grades[grade.assignment.course.title].append(grade)
+
+    #import pdb; pdb.set_trace()
+
+    return render_to_response('grades.html',
+        {'student_grades': grades},
+        context_instance=RequestContext(request))
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
 def course(request, course_slug):
-
-    # Assignments Not Submitted
-    # Assignments Submitted
-    # Assignments Submitted and Graded
-
     selected_course = Course.objects.get(slug=course_slug)
 
     # Need to further filter this by due dates and wheather the assignment is active
@@ -85,16 +115,10 @@ def course(request, course_slug):
     student_grades = StudentGrade.objects.filter(student__username=request.user.username,
                                           assignment__course=selected_course)
 
-    # Don't think this is being used...?
-    #submitted_and_graded = []
-    #for submission in submitted:
-    #    if submission.assignment in [a.assignment for a in student_grades]:
-    #        submitted_and_graded.append(submission.assignment)
-   
     a_graded = []
     a_submitted = []
     a_uncomplete = []
-   
+
     for submission in submitted:
         for student_grade in student_grades:
             if submission.assignment == student_grade.assignment:
@@ -120,7 +144,7 @@ def course(request, course_slug):
          'assignments_inbox':a_uncomplete,
          'announcements':course_announcements,
          'discussions' :course_discussions,
-         'grades':student_grades},
+         },
          context_instance=RequestContext(request))
     
 
@@ -158,22 +182,11 @@ def course_assignment(request, course_slug, assignment_slug):
     return render_to_response('assignment.html',
         {'assignment':a},
         context_instance=RequestContext(request))
-    
-
-@login_required
-@user_passes_test(lambda u: u.has_perm('course.student_view'))
-def grades(request):
-    pass
 
 
 def logout_view(request):
     logout(request)
-    
 
-#def assignment(request, course, slug):
-#    #template_name = "assignment.html"
-#    queryset = Assignment.objects.get_visible().filter(course__slug=course)
-#    return list_detail.object_detail(request, queryset, slug=slug)
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
@@ -191,7 +204,7 @@ def announcements(request):
         {'announcements': announcement_list},
         context_instance=RequestContext(request))
 
-       
+
 #we might not need this!!
 def discussions(request):
 	discussion_list = []
