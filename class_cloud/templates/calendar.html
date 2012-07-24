@@ -4,26 +4,39 @@
   Calendar | {{ block.super }}
 {% endblock %}
 
-{% block more_css %}
-<link href="{{ STATIC_URL }}css/bootstrap.calendar.css" rel="stylesheet" type="text/css" />
-{% endblock %}
 
-{% block body_attrs %}data-offset="50" data-target=".subnav" data-spy="scroll" data-twttr-rendered="true"{% endblock %}
+
 {% block body %}
 
 {% include 'header.html' %}
 {% include 'pre_body.html' %}
 
-
-<div class="container">
-  <div class="row">
-    <div class="span4" id="calendar"></div>
-  </div>
-</div> <!-- /container -->
-
-
+<div class="span9">
+	<h1>Calendar</h1>
+	<div class = "span6" id="calendar">
+	</div>
+	<div class="span5">
+	<br>	<br> <br>
+		<div class = "row-fluid">
+			<div class = "well">
+				<div >
+				<h6>Events:</h6>
+					Maybe we should display events of the day here!!
+					
+					<h6>8:00 AM</h6> 
+					CS 566 Mid -term exam
+					<h6>12:00 AM</h6> 
+					CS 647 Compiler Assignment due
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 {% include 'post_body.html' %}
 {% endblock %}
+
+
+
 {% block jQuery %}
 <script src="{{ STATIC_URL }}js/bootstrap.calendar.js"></script>
     <script type="text/javascript">

@@ -60,10 +60,10 @@
      	<div class = "row-fluid">
 			<div class = "well">
 				<div >
-					<h4>{{announcement.description}}</h4>
+					<h4>{{announcement.title}}</h4>
 					<h6>{{announcement.teacher}}</h6>
 					<h6>{{announcement.course}}</h6>
-					<p> {{announcement.detail}}</p>
+					<p> {{announcement.description}}</p>
 					<p align = "right"><small>{{announcement.pub_date}}</small></p>
 				</div>	
 			</div>	
@@ -161,7 +161,7 @@ assignments_inbox
 <div class="tab-pane fade" id="discussions">
     <div class = "row-fluid">
         <div class = "well">
-        {% for discussion in discussions %}
+        <!--{% for discussion in discussions %}
             <div>
                 <h4>{{discussion.user}} says:</h4>
                 <p> {{discussion.disqus}}</p>
@@ -169,7 +169,7 @@ assignments_inbox
             </div>
         {% empty %}
         <p>Be the first to comment!</p>
-        {% endfor %}
+        {% endfor %}-->
         {% include 'disqus.html' %}
         </div><!--END well-->
     </div><!--END row-fluid-->
