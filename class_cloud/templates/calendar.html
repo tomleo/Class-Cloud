@@ -19,10 +19,9 @@
 	<br>	<br> <br>
 		<div class = "row-fluid">
 			<div class = "well">
-				<div >
+				<div id="lo" >
 				<h6>Events:</h6>
 					Maybe we should display events of the day here!!
-					
 					<h6>8:00 AM</h6> 
 					CS 566 Mid -term exam
 					<h6>12:00 AM</h6> 
@@ -55,7 +54,20 @@ $(document).ready(function(){
 
 $('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
     .on('changeDay', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-    .on('onEvent', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
+    .on('onEvent', function(event){
+    var a = event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf();
+    var c = "sss"
+    {% for assignment in assignments %}
+     var b =  {{assignment.due_date|date:"Y-m-d"}};
+     if (a == b){
+			c= c.concat("ff");     
+     }
+	 {% endfor %}
+    $(lo).html(a
+			
+    
+    ); 
+    })
     .on('onNext', function(event){ alert("Next"); })
     .on('onPrev', function(event){ alert("Prev"); })
     .on('onCurrent', function(event){ alert("Current"); });

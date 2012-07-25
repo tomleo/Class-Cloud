@@ -19,8 +19,17 @@ from django.contrib.auth.decorators import permission_required
 
 
 def calendar(request):
+    assignment_list = []
+    courses = []
+    courses.extend(Course.objects.filter(students__username=request.user.username))
+    
+    for icourse in courses:
+        course_assignments = Assignment.objects.filter(course=icourse)
+        assignment_list.extend(course_assignments)
+
     return render_to_response('calendar.html',
-        context_instance=RequestContext(request))
+    		{'assignments': assignment_list},
+        	context_instance=RequestContext(request))
 
 
 def passign(request):
