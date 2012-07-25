@@ -46,31 +46,28 @@ $(document).ready(function(){
       [
            	{% for assignment in assignments %}
                       		
-                      			{"date":"{{assignment.due_date|date:"Y-m-d"}}","title":"{{assignment.name}}"},
+                      			{"date":"{{assignment.due_date|date:"Y-m-d"}}","title":"assignment {{assignment.name}} from course {{assignment.course}} by professor {{assignment.teacher}}"},
 									{% endfor %}
       ]
     }
 };
 
 $('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
-    .on('changeDay', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
+    .on('changeDay', function(event){ $(lo).html("No events"); })
     .on('onEvent', function(event){
     var a = event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf();
     var c = "sss"
     {% for assignment in assignments %}
      var b =  {{assignment.due_date|date:"Y-m-d"}};
-     if (a == b){
-			c= c.concat("ff");     
-     }
 	 {% endfor %}
     $(lo).html(a
 			
     
     ); 
     })
-    .on('onNext', function(event){ alert("Next"); })
-    .on('onPrev', function(event){ alert("Prev"); })
-    .on('onCurrent', function(event){ alert("Current"); });
+    .on('onNext', function(event){  })
+    .on('onPrev', function(event){  })
+    .on('onCurrent', function(event){  });
 });
 
 </script>
