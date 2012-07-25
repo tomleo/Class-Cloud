@@ -19,10 +19,9 @@
 	<br>	<br> <br>
 		<div class = "row-fluid">
 			<div class = "well">
-				<div >
+				<div id="lo" >
 				<h6>Events:</h6>
 					Maybe we should display events of the day here!!
-					
 					<h6>8:00 AM</h6> 
 					CS 566 Mid -term exam
 					<h6>12:00 AM</h6> 
@@ -45,28 +44,30 @@ $(document).ready(function(){
     return {
       "event":
       [
-           {"date":"2012-01-01","title":"1"}
-          ,{"date":"2012-02-02","title":"2"}
-          ,{"date":"2012-03-03","title":"34"}
-          ,{"date":"2012-04-04","title":"123"}
-          ,{"date":"2012-05-05","title":"223"}
-          ,{"date":"2012-06-06","title":"4"}
-          ,{"date":"2012-07-07","title":"5"}
-          ,{"date":"2012-08-08","title":"14"}
-          ,{"date":"2012-09-09","title":"10"}
-          ,{"date":"2012-10-10","title":"10"}
-          ,{"date":"2012-11-11","title":"10"}
-          ,{"date":"2012-12-12","title":"10"}
+           	{% for assignment in assignments %}
+                      		
+                      			{"date":"{{assignment.due_date|date:"Y-m-d"}}","title":"assignment {{assignment.name}} from course {{assignment.course}} by professor {{assignment.teacher}}"},
+									{% endfor %}
       ]
     }
 };
 
 $('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
-    .on('changeDay', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-    .on('onEvent', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-    .on('onNext', function(event){ alert("Next"); })
-    .on('onPrev', function(event){ alert("Prev"); })
-    .on('onCurrent', function(event){ alert("Current"); });
+    .on('changeDay', function(event){ $(lo).html("No events"); })
+    .on('onEvent', function(event){
+    var a = event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf();
+    var c = "sss"
+    {% for assignment in assignments %}
+     var b =  {{assignment.due_date|date:"Y-m-d"}};
+	 {% endfor %}
+    $(lo).html(a
+			
+    
+    ); 
+    })
+    .on('onNext', function(event){  })
+    .on('onPrev', function(event){  })
+    .on('onCurrent', function(event){  });
 });
 
 </script>

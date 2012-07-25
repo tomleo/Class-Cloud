@@ -33,7 +33,7 @@
             msg_days: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
             msg_months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             msg_today: 'Today',
-            msg_events_header: 'Assignments Due Today',
+            msg_events_header: 'Due Today',
             events: null
         },
 
@@ -130,7 +130,7 @@
                     .append('<span class="weekday">' +i+ '</span>')
                     .popover({
                         'title': msg_evnts_hdr,
-                        'content': 'You have ' +this.title+ ' assignments due',
+                        'content': this.title+ 'due today',
                         'delay': { 'show': 250, 'hide': 250 }
                     });
                 }
