@@ -130,8 +130,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.webdesign',
 
-#    'django_extensions',
+    #'django_extensions',
     'registration',
     'bootstrapform',
 

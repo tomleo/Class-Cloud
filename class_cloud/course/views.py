@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment
+from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment, CourseEditForm
 from django.contrib.auth.models import User
 
 from django.shortcuts import render_to_response, RequestContext
@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
 
+from django.forms.models import modelformset_factory
 
 def calendar(request):
     return render_to_response('calendar.html',
@@ -264,10 +265,64 @@ def submit_announcement(request):
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def teacher_index(request):
-
+    courses = Course.objects.filter(teacher=request.user)
+    #import pdb; pdb.set_trace()
     return render_to_response('teacher/index.html',
-        {},
+        {'courses': courses},
         context_instance=RequestContext(request))
 
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def teacher_enroll(request):
+    """Enroll Student in class"""
+    pass
+    
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def teacher_course(request, course_slug):
+    courses = Course.objects.filter(teacher=request.user)
+    
+    
+    course = Course.objects.get(slug=course_slug)
+    if request.method == 'POST':
+        form = CourseEditForm(request.POST, instance=course)
+        if form.is_valid():
+            course = form.save()
+    
+    form2 = modelformset_factory(Course)
+    
+    
+    courseForm = CourseEditForm(queryset=Course.objects.get(slug=course_slug))
+    customForm = modelformset_factory(Course, formset=courseForm)
+    
+    #import pdb; pdb.set_trace()
+    
+    #if request.method == 'POST':
+    #    if form.is_valid():
+    #        form.save()
+    #else:
+    #    pass
+    
+    if request.method == 'POST':
+        formset = form2(request.POST, request.FILES)
+        if customForm.is_valid():
+            customForm.save()
+    else:
+        formset = form2,
+    
+    return render_to_response('teacher/course.html',
+        {'courses': courses,
+         'course': course,
+         'formset': customForm,
+        },
+        context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))    
+def add_course(request):
+    pass
 
 

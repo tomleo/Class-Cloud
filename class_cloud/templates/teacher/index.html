@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load webdesign %}
+
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+{% include 'header.html' %}
+
+<div class="container-fluid">
+<div class="span10 offset2">
+
+<div class="row-fluid">
+    <div class="span3">
+
+    <h2>Courses</h2>
+    {% for course in courses %}
+    <ul id="courses" class="nav nav-pills nav-stacked">
+        <li><a href="{{ course.slug }}">{{ course.title }}</a></li>
+    {% endfor %}
+        <li><a href="addcourse">Add Course <i class="icon-plus"></i></a></li>
+    </ul>
+
+    </div><!--END span3-->
+</div><!--END row-fluid-->
+
+<div class="row-fluid">
+    <div class="span3">
+        <h2>Enrollment</h2>
+        <ul id="courses" class="nav nav-pills nav-stacked">
+            <li><a href="enrollment/requests">Enrollment Requests</a></li>
+        </ul>
+    </div>
+</div>
+
+</div><!--END span10 offset2-->
+</div><!--END container-fluid-->
+
+{% endblock %}
+
+
+{% block jQuery %}
+
+{% endblock %}

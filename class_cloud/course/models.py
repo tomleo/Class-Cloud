@@ -1,6 +1,7 @@
 import datetime
 import os.path
 from django.db import models
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 """
@@ -97,6 +98,11 @@ class Course(TimeStampedActivate):
         })
 
 
+class CourseEditForm(ModelForm):
+    class Meta:
+        model = Course
+        fields = ('title', 'description', 'syllabus', 'course_image')
+
 class AssignmentAttempt(models.Model):
     attachment = models.FileField(upload_to='assignment_submissions')
     comments = models.TextField(blank=True)
@@ -185,6 +191,6 @@ class Discussion(TimeStampedActivate):
 	
 	def __unicode__(self):
 		return self.slug
-    
-    
+
+
 	

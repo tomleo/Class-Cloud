@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load webdesign %}
+
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+{% include 'header.html' %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="span2"></div>
+            <div class="span3">
+                <h2>Courses</h2>
+                {% for course in courses %}
+                <ul id="courses" class="nav nav-pills nav-stacked">
+                    <li><a href="/teacher/{{ course.slug }}">{{ course.title }}</a></li>
+                {% endfor %}
+                    <li><a href="addcourse">Add Course <i class="icon-plus"></i></a></li>
+                </ul>
+
+                <h2>Enrollment</h2>
+                <ul id="courses" class="nav nav-pills nav-stacked">
+                    <li><a href="enrollment/requests">Enrollment Requests</a></li>
+                </ul>
+            </div><!--END span3-->
+            
+            <div class="span7">
+                <h1>{{ course }}</h1>
+                
+                <form method="post" action="">
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                        {{ form }}
+                    {% endfor %}
+                </form>
+                
+            </div><!--END span7-->
+        </div><!--END span12-->
+    </div><!--END row-fluid-->
+</div><!--END container-fluid-->
+
+{% endblock %}
+
+
+{% block jQuery %}
+
+{% endblock %}

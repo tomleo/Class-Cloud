@@ -41,41 +41,30 @@ urlpatterns = patterns('',
     #url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
     (r'^$', 'course.views.index'),
     
+    #Grades
     (r'^grades/$', 'course.views.grades'),
     
-    (r'^courses/$', 'course.views.index'),
-    
-    #(r'^(?P<slug>[-\w]+)/$', 'course.views.course'),
-    (r'^courses/(?P<course_slug>[-\w]+)/$', 'course.views.course'),
-    
     #Courses
+    (r'^courses/$', 'course.views.index'),
+    (r'^courses/(?P<course_slug>[-\w]+)/$', 'course.views.course'),
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),
-    #(r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)', 'course.views.course_test'),
-    #Course Grades
-    (r'^courses_grades/(?P<course_slug>[-\w]+)/$', 'course.views.course_grades'),
-    
+  
+    #Calendar
     (r'^calendar/$', 'course.views.calendar'),
     
-    #WTF IS THIS...
-    (r'^passign/$', 'course.views.passign'),
-    
-    (r'^course_grades/$', 'course.views.course_grades'),
+    #Login & Registration
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
+    (r'^accounts/', include('registration.backends.default.urls')),
 
     #Assignment page
     (r'^assignments/(?P<slug>[-\w]+)/$', 'course.views.assignment'),
     (r'^assignments/$', 'course.views.assignments'),
-    #(r'^assignments/$', list_detail.object_list, assignment_info),
-    #(r'^assignments/(?P<pk>d+)/$', list_detail.object_detail,
-    #    assignment_detail),
     
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),
     
-    
-    
-    #professor - make an anouncement page
+    #Professor - make an anouncement page
     (r'^make_announcement/$', 'course.views.make_announcement'),
     (r'^submit_announcement/$', 'course.views.submit_announcement'),
     
@@ -83,10 +72,13 @@ urlpatterns = patterns('',
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),
 
-    #Registration Pages
-    (r'^accounts/', include('registration.backends.default.urls')),
+    #TEACHER VIEW_______________________________________________________________
     
-    (r'^teacher/', 'course.views.teacher_index'),
+    #Teacher
+    (r'^teacher/$', 'course.views.teacher_index'),
+    (r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
+    (r'^teacher/add/course/$', 'course.views.add_course'),
 
     #Admin Site
     url(r'^admin/', include(admin.site.urls)),
