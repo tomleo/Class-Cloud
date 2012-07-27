@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Assignments | {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+
+{% include 'header.html' %}
+{% include 'teacher/pre_body.html' %}
+
+<div class="span9">
+	<h1>Make an announcement</h1>
+
+
+     	<div class = "row-fluid">
+			<div class = "well">
+				<div >
+					<form  action="/submit_announcement/" method="post">
+					{% csrf_token %}
+					<fieldset>
+						<div class="clearfix">
+            			<label for="textarea">Make an announcement for </label>
+            			<div class="control-group">
+            				<label class="control-label" for="select01">Select list</label>
+            				<div class="input">
+              					<select id="select01" name="select01">
+              					{% for course in courses %}
+                				<option>{{course.title}}</option>
+									{% endfor %}
+              					</select>
+            				</div>
+          				</div>
+          				<div class="control-group">
+      						<label class="control-label" for="input01">Title:</label>
+      						<div class="input">
+        							<input type="text" class="input-xlarge" id="input01" name = "input01">
+      						</div>
+    						</div>
+    						
+            			<div class="input">
+            				<label class="control-label" for="textarea2">Description:</label>
+              				<textarea class="span7" id="textarea2" name="textarea2" rows="3"></textarea>
+            			</div>
+          			</div><!-- /clearfix -->
+          
+          			<div class="actions">
+            			<input type="submit" class="btn primary" value="Submit">&nbsp;<button type="reset" class="btn">Cancel</button>
+          			</div>
+        			</fieldset>
+      			</form>
+				</div>	
+			</div>	
+		</div>
+
+
+  </div>
+
+
+
+{%  include 'teacher/post_body.html' %}
+
+{% endblock %}

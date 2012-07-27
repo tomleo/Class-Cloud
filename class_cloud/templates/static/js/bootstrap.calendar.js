@@ -130,7 +130,7 @@
                     .append('<span class="weekday">' +i+ '</span>')
                     .popover({
                         'title': msg_evnts_hdr,
-                        'content': 'You have ' +this.title+ ' assignments due',
+                        'content': this.title+ ' due today',
                         'delay': { 'show': 250, 'hide': 250 }
                     });
                 }

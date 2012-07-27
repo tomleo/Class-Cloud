@@ -255,7 +255,7 @@ def discussions(request):
 #professor makes announcement
 def make_announcement(request):
 	courses = Course.objects.filter(students__username=request.user.username)
-	return render_to_response('make_announcement.html',
+	return render_to_response('teacher/make_announcement.html',
 	{'courses': courses},
 	context_instance=RequestContext(request))
 

@@ -1,20 +1,8 @@
-{% extends 'base.html' %}
-
-{% load webdesign %}
-
-{% block page_title %}
-  Teacher View - {{ block.super }}
-{% endblock %}
-
-{% block body %}
-
-{% include 'header.html' %}
-
 <div class="container-fluid">
 <div class="span10 offset2">
 
 <div class="row-fluid">
-    <div class="span5">
+    <div class="span3">
 
     <h2>Manage Courses</h2>
     <ul id="courses" class="nav nav-pills nav-stacked">
@@ -37,14 +25,3 @@
     </ul>
 
     </div><!--END span3-->
-</div><!--END row-fluid-->
-
-</div><!--END span10 offset2-->
-</div><!--END container-fluid-->
-
-{% endblock %}
-
-
-{% block jQuery %}
-
-{% endblock %}
