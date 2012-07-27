@@ -98,7 +98,7 @@ class Course(TimeStampedActivate):
         })
 
 
-class CourseEditForm(ModelForm):
+class CourseForm(ModelForm):
     class Meta:
         model = Course
         fields = ('title', 'description', 'syllabus', 'course_image')

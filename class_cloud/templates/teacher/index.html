@@ -8,35 +8,30 @@
 
 {% block body %}
 
-{% include 'header.html' %}
+{% include 'teacher/t_header.html' %}
 
 <div class="container-fluid">
 <div class="span10 offset2">
 
 <div class="row-fluid">
+    <h2>Welcome Professor {{ user.get_full_name }}</h2>
+    <hr>
     <div class="span5">
-
-    <h2>Manage Courses</h2>
     <ul id="courses" class="nav nav-pills nav-stacked">
-    <li><a href="add/annoucement">Add Annoucement</a></li>
-    <li><a href="grade/assignments">Grade Assignments</a></li>
-    <li><a href="enrollment/student">Enroll Student</a></li>
-    <li><a href="enrollment/request">Enrollment Request
-     <span class="badge badge-info">8</span>
-    </a></li>
-    <li><a href="addassignment">Add Assignment <i class="icon-plus"></i></a></li>
+        <li class="nav-header">Manage Your Courses</li>
+        {% for course in courses %}
+        <li><a href="{{ course.slug }}"><i class="icon-wrench"></i> {{ course.title }}</a></li>
+        {% endfor %}
     </ul>
-
-
-    <h2>Edit Courses</h2>
-    <ul id="courses" class="nav nav-pills nav-stacked">
-    {% for course in courses %}
-        <li><a href="{{ course.slug }}">{{ course.title }}</a></li>
-    {% endfor %}
-        <li><a href="addcourse">Add Course <i class="icon-plus"></i></a></li>
+    </div>
+    
+    <div class="span5">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="nav-header">Create Course</li>
+        <li><a href="add/course/">Add Course <i class="icon-plus"></i></a></li>
     </ul>
-
-    </div><!--END span3-->
+    </div>
+    
 </div><!--END row-fluid-->
 
 </div><!--END span10 offset2-->

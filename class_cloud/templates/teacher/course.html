@@ -11,42 +11,148 @@
 {% include 'header.html' %}
 
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="span2"></div>
-            <div class="span3">
-                <h2>Courses</h2>
-                {% for course in courses %}
+    <div class="span2"></div>
+    <div class="span10">
+        <div class="row-fluid">
+            <h2>{{ course.title }}</h2>
+            <hr>
+        </div>
+        <div class="row-fluid">
+            <div class="span5">
                 <ul id="courses" class="nav nav-pills nav-stacked">
-                    <li><a href="/teacher/{{ course.slug }}">{{ course.title }}</a></li>
-                {% endfor %}
-                    <li><a href="addcourse">Add Course <i class="icon-plus"></i></a></li>
+                    <li class="nav-header">Annoucements</li>
+                    <li><a href="#add-annoucement"
+                           id="a-add-annoucement"
+                           data-toggle="modal">Add Annoucement</a></li>
+                    
+                    <li class="nav-header">Assignments</li>
+                    <li><a href="#add-assignment"
+                           id="a-add-assignment"
+                           data-toggle="modal">Add Assignment</a></li>
+                    <li><a href="#"><i class="icon-share-alt"></i> Grade Assignments </a></li>
+                    
+                    <li class="nav-header">Enrollment</li>
+                    <li><a href="#enroll-student"
+                           id="a-enroll-student"
+                           data-toggle="modal">Enroll Student</a></li>
+                    <li><a href="#enroll-request"
+                           id="a-enroll-request"
+                           data-toggle="modal">Enrollment Request <span class="badge badge-info">8</span></a></li>
                 </ul>
-
-                <h2>Enrollment</h2>
-                <ul id="courses" class="nav nav-pills nav-stacked">
-                    <li><a href="enrollment/requests">Enrollment Requests</a></li>
-                </ul>
-            </div><!--END span3-->
-            
-            <div class="span7">
-                <h1>{{ course }}</h1>
-                
-                <form method="post" action="">
-                    {{ formset.management_form }}
-                    {% for form in formset %}
-                        {{ form }}
-                    {% endfor %}
-                </form>
-                
             </div><!--END span7-->
-        </div><!--END span12-->
-    </div><!--END row-fluid-->
+            
+
+           <!--Looks nice is smaller screen resolutions, ugly fullsize-->
+           <!--<ul class="thumbnails">
+                <li class="span5">
+                    <img src={{course.course_image.url}}>
+                </li>
+            </ul>-->
+            
+        </div><!--END row-fluid-->
+        
+        
+        
+    </div><!--END span10-->
 </div><!--END container-fluid-->
+
+<!--MODAL ADD ANNOUCEMENT----------------------------------------------------->
+<div class="modal hide" id="add-annoucement">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h3>Add Annoucement for {{ course.title }}</h3>
+    </div>
+    <div class="modal-body">
+        <p>Stuff should go here</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-primary">Submit Annoucment</a>
+    </div>
+</div>
+<!--END MODAL ADD ANNOUCEMENT------------------------------------------------->
+
+
+<!--MODAL ADD ASSIGNMENT------------------------------------------------------>
+<div class="modal hide" id="add-assignment">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h3>Add Assignment for {{ course.title }}</h3>
+    </div>
+    <div class="modal-body">
+        <p>Stuff should go here</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-primary">Submit Annoucment</a>
+    </div>
+</div>
+<!--END MODAL ADD ASSIGNMENT-------------------------------------------------->
+
+
+<!--MODAL ENROLL STUDENT------------------------------------------------------>
+<div class="modal hide" id="enroll-student">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h3>Choose a student to Enroll in {{ course.title }}</h3>
+    </div>
+    <div class="modal-body">
+        <p>Stuff should go here</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-primary">Submit Annoucment</a>
+    </div>
+</div>
+<!--END MODAL ENROLL STUDENT-------------------------------------------------->
+
+
+<!--ENROLL REQUEST ----------------------------------------------------------->
+
+<div class="modal hide" id="enroll-request">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h3>Students Requesting Enrollment</h3>
+    </div>
+    <div class="modal-body">
+        <p>Stuff should go here</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-primary">Submit Annoucment</a>
+    </div>
+</div>
+<!--END ENROLL REQUEST ------------------------------------------------------->
+
 
 {% endblock %}
 
-
 {% block jQuery %}
+<script type="text/javascript">
 
+$('#a-add-annoucement').click(function() {
+    $('#add-annoucement').modal({
+      keyboard: true
+    })
+});
+
+$('#a-add-assignment').click(function() {
+    $('#add-assignment').modal({
+      keyboard: true
+    })
+});
+
+$('#a-enroll-student').click(function() {
+    $('#enroll-student').modal({
+      keyboard: true
+    })
+});
+
+$('#a-enroll-request').click(function() {
+    $('#enroll-request').modal({
+      keyboard: true
+    })
+});
+
+</script>
 {% endblock %}
