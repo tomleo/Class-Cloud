@@ -19,7 +19,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 
-
+from django.template import defaultfilters
 
 def calendar(request):
     assignment_list = []
@@ -287,38 +287,47 @@ def teacher_index(request):
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
-def teacher_enroll(request):
-    """Enroll Student in class"""
-    pass
+def teacher_course(request, course_slug):
     
+    course = Course.objects.get(slug=course_slug)
+
+    return render_to_response('teacher/course.html',
+        { 'course': course, },
+        context_instance=RequestContext(request))
+
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
-def teacher_course(request, course_slug):
-
-    #courses = Course.objects.filter(teacher=request.user)
-    
+def annoucement_add(request, course_slug):
     course = Course.objects.get(slug=course_slug)
-    #if request.method == 'POST':
-    #    form = CourseForm(request.POST, instance=course)
-    #    if form.is_valid():
-    #        course = form.save()
-    #        return HttpResponseRedirect(redirect_url)
-    #    else:
-    #        course = CourseForm(instance=course)
+    annoucement = Announcement(course=course, teacher=course.teacher)
     
     if request.method == 'POST':
-        announcementForm = AnnoucementForm(request.POST)
-        if announcementForm.is_valid():
-            announcementForm.save()
-            return HttpResponseRedirect("/teacher/")
+        form = AnnoucementForm(request.POST, instance=annoucement)
+        if form.is_valid():
+            annoucement = form.save()
+            return HttpResponseRedirect("/teacher/{0}/annoucement_complete/".format(course.slug))
     else:
-        announcementForm = AnnoucementForm()
-
-    return render_to_response('teacher/course.html',
-        { 'course': course,
-          'announcementForm': announcementForm },
+        form = AnnoucementForm()
+    
+    return render_to_response('teacher/annoucement_add.html',
+        { 'announcementForm': form },
         context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def annoucement_complete(request, course_slug):
+    return render_to_response('teacher/annoucement_complete.html',
+        {'slug':course_slug},
+        context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def teacher_enroll(request):
+    """Enroll Student in class"""
+    pass
 
 
 @login_required

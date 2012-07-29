@@ -76,8 +76,11 @@ urlpatterns = patterns('',
     
     #Teacher
     (r'^teacher/$', 'course.views.teacher_index'),
-    (r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/annoucement_add/$', 'course.views.annoucement_add'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/annoucement_complete/$', 'course.views.annoucement_complete'),
     (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
+    
+    (r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),
     (r'^teacher/add/course/$', 'course.views.add_course'),
 
     #Admin Site

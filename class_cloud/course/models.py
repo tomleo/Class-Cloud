@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 
 from django.contrib.admin import widgets
 
+from django.template.defaultfilters import slugify
+
 """
 TimeStamped
 TimeStampedActivate
@@ -173,15 +175,19 @@ class Enrollment(models.Model):
 
 
 class Announcement(TimeStampedActivate):
-	title = models.CharField(max_length = 255)
-	slug = models.SlugField()
-	description = models.TextField(blank=True)
-	pub_date = models.DateTimeField('date published')
-	course = models.ForeignKey(Course, related_name ="class")
-	teacher = models.ForeignKey(User, related_name="announcements")
-	
-	def __unicode__(self):
-		return self.description
+    title = models.CharField(max_length = 255)
+    slug = models.SlugField(blank=True)
+    description = models.TextField(blank=True)
+    pub_date = models.DateTimeField(auto_now_add=True, blank=True)
+    course = models.ForeignKey(Course, related_name ="class")
+    teacher = models.ForeignKey(User, related_name="announcements")
+
+    def __unicode__(self):
+	    return self.description
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Announcement, self).save(*args, **kwargs)
 
 class AnnoucementForm(ModelForm):
     class Meta:
