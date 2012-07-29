@@ -120,7 +120,7 @@ class Assignment(TimeStampedActivate):
     """
     name = models.CharField(max_length=255,
                             help_text="Name of assignment.")
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
     description = models.TextField(blank=True,
                                     help_text="Describe the assignment.")
     due_date = models.DateTimeField(default=False)
@@ -133,6 +133,10 @@ class Assignment(TimeStampedActivate):
     
     grade = models.ManyToManyField(Grade, through='StudentGrade')
     submissions = models.ManyToManyField(AssignmentAttempt, through='SubmittedAssignment')
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Announcement, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.name
@@ -147,6 +151,23 @@ class Assignment(TimeStampedActivate):
     class Meta:
         ordering = ['-due_date', '-modified', '-created']
 
+#via http://strattonbrazil.blogspot.com/2011/03/using-jquery-uis-date-picker-on-all.html
+def make_custom_datefield(f):
+    formfield = f.formfield()
+    if isinstance(f, models.DateField):
+        formfield.widget.format = '%m/%d/%Y'
+        formfield.widget.attrs.update({'class':'datePicker', 'readonly':'true'})
+    return formfield
+
+
+class AssignmentForm(ModelForm):
+    formfield_callback = make_custom_datefield
+    class Meta:
+        model = Assignment
+        fields = ('name', 'description', 'due_date', 'attachments')
+        widgets = {
+            #'due_date': widgets.AdminSplitDateTime()
+        }
 
 class SubmittedAssignment(models.Model):
     student = models.ForeignKey(User, verbose_name="Student")
@@ -193,10 +214,6 @@ class AnnoucementForm(ModelForm):
     class Meta:
         model = Announcement
         fields = ('title', 'description')
-        widgets = {
-            #'pud_date': widgets.AdminDateWidget()
-            'pub_date': widgets.AdminSplitDateTime()
-        }
 
 
 class Discussion(TimeStampedActivate):

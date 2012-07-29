@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+{% block more_css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-timepicker-addon.css" />
+{% endblock %}
+
+{% block body %}
+{% include 'teacher/t_header.html' %}
+
+{% load bootstrap %}
+<form method="post" action="." class="form-horizontal">
+{% csrf_token %}
+{{ assignmentForm|bootstrap }}
+
+<input type="submit" value="submit" class="btn btn-primary" />
+
+</form>
+
+{% endblock %}
+
+{% block jQuery %}
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-sliderAccess.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
+<script>
+$(function() {
+//$( ".datePicker" ).datepicker();
+$('.datePicker').datetimepicker();
+});
+</script>
+{% endblock %}

@@ -7,7 +7,7 @@ from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssi
 from django.contrib.auth.models import User
 
 #Model Forms
-from course.models import CourseForm, AnnoucementForm
+from course.models import CourseForm, AnnoucementForm, AssignmentForm
 from django.forms.models import ModelForm, modelformset_factory
 
 from django.shortcuts import render_to_response, RequestContext
@@ -322,6 +322,32 @@ def annoucement_complete(request, course_slug):
         {'slug':course_slug},
         context_instance=RequestContext(request))
 
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def assignment_add(request, course_slug):
+    course = Course.objects.get(slug=course_slug)
+    assignment = Assignment(course=course, teacher=course.teacher)
+    
+    if request.method == 'POST':
+        form = Assignment(request.POST, instance=assignment)
+        if form.is_valid():
+            assignment = form.save()
+            return HttpResponseRedirect("/teacher/{0}/assignment_complete/".format(course.slug))
+    else:
+        form = AssignmentForm()
+    
+    return render_to_response('teacher/assignment_add.html',
+        { 'assignmentForm': form },
+        context_instance=RequestContext(request))
+        
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def assignment_complete(request, course_slug):
+    return render_to_response('teacher/assignment_complete.html',
+        {'slug':course_slug},
+        context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))

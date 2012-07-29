@@ -78,6 +78,8 @@ urlpatterns = patterns('',
     (r'^teacher/$', 'course.views.teacher_index'),
     (r'^teacher/(?P<course_slug>[-\w]+)/annoucement_add/$', 'course.views.annoucement_add'),
     (r'^teacher/(?P<course_slug>[-\w]+)/annoucement_complete/$', 'course.views.annoucement_complete'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/assignment_add/$', 'course.views.assignment_add'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/assignment_complete/$', 'course.views.assignment_complete'),
     (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
     
     (r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),
