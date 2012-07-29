@@ -1,23 +1,25 @@
-
+#Don't think generic views are being used, might want to remove this
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 
-from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment, CourseForm
+#Models
+from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment
 from django.contrib.auth.models import User
 
+#Model Forms
+from course.models import CourseForm, AnnoucementForm
+from django.forms.models import ModelForm, modelformset_factory
+
 from django.shortcuts import render_to_response, RequestContext
-#from django.template import Context, loader #Replaced by render_to_response shortcut
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.decorators import permission_required
 
-from django.forms.models import modelformset_factory
 
 def calendar(request):
     assignment_list = []
@@ -294,22 +296,28 @@ def teacher_enroll(request):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def teacher_course(request, course_slug):
 
-    courses = Course.objects.filter(teacher=request.user)
+    #courses = Course.objects.filter(teacher=request.user)
     
     course = Course.objects.get(slug=course_slug)
+    #if request.method == 'POST':
+    #    form = CourseForm(request.POST, instance=course)
+    #    if form.is_valid():
+    #        course = form.save()
+    #        return HttpResponseRedirect(redirect_url)
+    #    else:
+    #        course = CourseForm(instance=course)
+    
     if request.method == 'POST':
-        form = CourseForm(request.POST, instance=course)
-        if form.is_valid():
-            course = form.save()
-            return HttpResponseRedirect(redirect_url)
-        else:
-            course = CourseForm(instance=course)
-    
-    
-    
+        announcementForm = AnnoucementForm(request.POST)
+        if announcementForm.is_valid():
+            announcementForm.save()
+            return HttpResponseRedirect("/teacher/")
+    else:
+        announcementForm = AnnoucementForm()
+
     return render_to_response('teacher/course.html',
-        {'courses': courses,
-         'course': course },
+        { 'course': course,
+          'announcementForm': announcementForm },
         context_instance=RequestContext(request))
 
 

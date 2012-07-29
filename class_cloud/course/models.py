@@ -4,6 +4,8 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
+from django.contrib.admin import widgets
+
 """
 TimeStamped
 TimeStampedActivate
@@ -173,13 +175,22 @@ class Enrollment(models.Model):
 class Announcement(TimeStampedActivate):
 	title = models.CharField(max_length = 255)
 	slug = models.SlugField()
-	description = models.TextField(blank=True,help_text="details")
+	description = models.TextField(blank=True)
 	pub_date = models.DateTimeField('date published')
 	course = models.ForeignKey(Course, related_name ="class")
 	teacher = models.ForeignKey(User, related_name="announcements")
 	
 	def __unicode__(self):
 		return self.description
+
+class AnnoucementForm(ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ('title', 'description')
+        widgets = {
+            #'pud_date': widgets.AdminDateWidget()
+            'pub_date': widgets.AdminSplitDateTime()
+        }
 
 
 class Discussion(TimeStampedActivate):

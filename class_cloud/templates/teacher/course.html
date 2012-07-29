@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% load webdesign %}
+{% load adminmedia %}
 
 {% block page_title %}
   Courses List | {{ block.super }}
+{% endblock %}
+
+{% block more_css %}
+
 {% endblock %}
 
 {% block body %}
@@ -63,11 +68,21 @@
         <h3>Add Annoucement for {{ course.title }}</h3>
     </div>
     <div class="modal-body">
-        <p>Stuff should go here</p>
+        {% load bootstrap %}
+        <form method="post" action="." class="form-horizontal">
+        {{ announcementForm|bootstrap }}
+        <div class="form-actions">
+            <!--<button type="submit" class="btn btn-primary" value="Submit" />
+            Submit</button>-->
+
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <a href="#" type="submit" value="Submit" class="btn btn-primary">Submit Annoucment</a>
+
+        </div>
+        </form>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-        <a href="#" class="btn btn-primary">Submit Annoucment</a>
+        
     </div>
 </div>
 <!--END MODAL ADD ANNOUCEMENT------------------------------------------------->
@@ -97,7 +112,7 @@
         <h3>Choose a student to Enroll in {{ course.title }}</h3>
     </div>
     <div class="modal-body">
-        <p>Stuff should go here</p>
+        <p>Something should go here</p>
     </div>
     <div class="modal-footer">
         <a href="#" class="btn" data-dismiss="modal">Cancel</a>
