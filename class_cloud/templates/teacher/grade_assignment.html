@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+{% include 'teacher/t_header.html' %}
+
+{% load bootstrap %}
+<form enctype="multipart/form-data" method="post" action="." class="form-horizontal">
+{% csrf_token %}
+
+{{ form|bootstrap }}
+
+<input type="submit" value="submit" class="btn btn-primary" />
+
+</form>
+
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+{% include 'teacher/t_header.html' %}
+
+<!--I think that the table should be replaced with something else because it
+will be difficult on touch devices to select the hyper-links-->
+
+{% for k, v in assignments.iteritems %}
+    <h2>{{ k }}</h2>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Assignment</th>
+            <th>Student</th>
+            <th>Submission Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    {% for i in v %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{{ i.assignment.slug }}/{{ i.student }}">{{ i.assignment.name }}</a></td>
+            <td><a href="{{ i.assignment.slug }}/{{ i.student }}">{{ i.student }}</a></td>
+            <td><a href="{{ i.assignment.slug }}/{{ i.student }}">{{ i.submission.submit_date }}</a></td>
+        </tr>
+        
+    {% endfor %}
+
+    </tbody>
+    </table>
+{% empty %}
+    <tr>No Grades at the moment</tr>
+{% endfor %}
+
+{% endblock %}

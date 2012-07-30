@@ -64,10 +64,6 @@ urlpatterns = patterns('',
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),
     
-    #Professor - make an anouncement page
-    (r'^make_announcement/$', 'course.views.make_announcement'),
-    (r'^submit_announcement/$', 'course.views.submit_announcement'),
-    
     #Static Content
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),
@@ -80,6 +76,9 @@ urlpatterns = patterns('',
     (r'^teacher/(?P<course_slug>[-\w]+)/annoucement_complete/$', 'course.views.annoucement_complete'),
     (r'^teacher/(?P<course_slug>[-\w]+)/assignment_add/$', 'course.views.assignment_add'),
     (r'^teacher/(?P<course_slug>[-\w]+)/assignment_complete/$', 'course.views.assignment_complete'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/(?P<assignment_slug>[-\w]+)/(?P<student_username>[-\w]+)/assignment_graded/', 'course.views.grade_assignment_complete'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/(?P<assignment_slug>[-\w]+)/(?P<student_username>[-\w]+)/$', 'course.views.grade_assignment'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/$', 'course.views.grade_assignments'),
     (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
     
     (r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),

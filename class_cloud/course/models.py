@@ -61,6 +61,12 @@ class Grade(models.Model):
         return self.letter_grade()
 
 
+class GradeForm(ModelForm):
+    class Meta:
+        model = Grade
+        fields = ('points', 'max_points')
+
+
 #wtf what does this do?
 class AssignmentManager(models.Manager):
     def get_visible(self):
@@ -103,7 +109,7 @@ class Course(TimeStampedActivate):
             'slug': self.slug
         })
 
-
+#Remove or move this?
 class CourseForm(ModelForm):
     class Meta:
         model = Course
@@ -186,7 +192,10 @@ class StudentGrade(models.Model):
     student = models.ForeignKey(User, verbose_name="Student")
     assignment = models.ForeignKey(Assignment, verbose_name="For Assignment")
     grade = models.ForeignKey(Grade, verbose_name="Students Grade")
-
+    
+class StudentGradeForm(ModelForm):
+    class Meta:
+        model = StudentGrade
 
 class Enrollment(models.Model):
     students = models.ForeignKey(User, 

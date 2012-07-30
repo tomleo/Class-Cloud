@@ -7,7 +7,7 @@ from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssi
 from django.contrib.auth.models import User
 
 #Model Forms
-from course.models import CourseForm, AnnoucementForm, AssignmentForm
+from course.models import CourseForm, AnnoucementForm, AssignmentForm, GradeForm
 from django.forms.models import ModelForm, modelformset_factory
 
 from django.shortcuts import render_to_response, RequestContext
@@ -253,23 +253,6 @@ def discussions(request):
 		course_discussion = Announcement.objects.filter(course=icourse)
 		discussion_list.extend(course_discussion)
 		
-		
-#professor makes announcement
-def make_announcement(request):
-	courses = Course.objects.filter(students__username=request.user.username)
-	return render_to_response('teacher/make_announcement.html',
-	{'courses': courses},
-	context_instance=RequestContext(request))
-
-def submit_announcement(request):
-	TITLE = request.POST['input01']
-	COURSE = Course.objects.get(title = request.POST['select01'])
-	DESCRIPTION = request.POST['textarea2']
-	p = Announcement(title = TITLE, slug = "abc", description = DESCRIPTION, pub_date = timezone.now(),course = COURSE, teacher = request.user)
-	p.save()
-	return HttpResponseRedirect(reverse('course.views.make_announcement', ))
-	
-
 
 ## TEACHER VIEWS ##
 
@@ -348,6 +331,81 @@ def assignment_complete(request, course_slug):
     return render_to_response('teacher/assignment_complete.html',
         {'slug':course_slug},
         context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def grade_assignments(request, course_slug):
+
+    course = Course.objects.get(slug=course_slug)
+
+    course_assignments = Assignment.objects.filter(course=course)
+
+    submitted = SubmittedAssignment.objects.filter(assignment__course=course)
+
+    assignments = {}
+
+    for assignment in course_assignments:
+        assignments[assignment.name] = []
+        for submission in submitted:
+            if submission.assignment.name == assignment.name:
+                assignments[assignment.name].append(submission)
+                #submitted.remove(submission) #This will speed things up a little?
+
+    return render_to_response('teacher/grade_assignments.html',
+        {'assignments': assignments },
+        context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def grade_assignment(request, course_slug, assignment_slug, student_username):
+
+    #student & assignment
+    assignment = Assignment.objects.get(slug=assignment_slug)
+    student = User.objects.get(username=student_username)
+    
+    grade = Grade()
+    student_grade = StudentGrade(student=student, assignment=assignment)
+
+    #GradeForm
+    #StudentGradeForm
+
+    #course = Course.objects.get(slug=course_slug)
+    #assignment = Assignment(course=course, teacher=course.teacher)
+    
+    if request.method == 'POST':
+        form = GradeForm(request.POST, request.FILES, instance=grade)
+        if form.is_valid():
+            grade = form.save()
+            student_grade.grade = grade
+            student_grade.save()
+            return HttpResponseRedirect("/teacher/{0}/grade_assignments/{1}/{2}/assignment_graded/".format(course_slug, assignment_slug, student_username))
+    else:
+        form = GradeForm()
+
+
+    return render_to_response('teacher/grade_assignment.html',
+        {'form': form},
+        context_instance=RequestContext(request))
+    
+    
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def grade_assignment_complete(request, course_slug, assignment_slug, student_username):
+    return render_to_response('teacher/grade_assignment_complete.html',
+        {'slug': course_slug},
+        context_instance=RequestContext(request))
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
