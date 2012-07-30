@@ -397,13 +397,31 @@ def grade_assignment_complete(request, course_slug, assignment_slug, student_use
         {'slug': course_slug},
         context_instance=RequestContext(request))
 
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def edit_course(request, course_slug):
+
+    EditCourseFormSet = modelformset_factory(Course, max_num=1, extra=0,)
+    if request.method == 'POST':
+        formset = EditCourseFormSet(request.POST, request.FILES, 
+                                    queryset=Course.objects.filter(slug=course_slug))
+        if formset.is_valid():
+            formset.save()
+    else:
+        formset = EditCourseFormSet(queryset=Course.objects.filter(slug=course_slug))
+
+    return render_to_response('teacher/edit_course.html',
+        {'formset': formset},
+        context_instance=RequestContext(request))
 
 
-
-
-
-
-
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def edit_course_complete(request, course_slug):
+    course = Course.objects.get(slug=course_slug)
+    return render_to_response('teacher/edit_course_complete.html',
+        {'slug': course_slug},
+        context_instance=RequestContext(request))
 
 
 

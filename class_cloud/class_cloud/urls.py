@@ -79,6 +79,8 @@ urlpatterns = patterns('',
     (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/(?P<assignment_slug>[-\w]+)/(?P<student_username>[-\w]+)/assignment_graded/', 'course.views.grade_assignment_complete'),
     (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/(?P<assignment_slug>[-\w]+)/(?P<student_username>[-\w]+)/$', 'course.views.grade_assignment'),
     (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/$', 'course.views.grade_assignments'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/edit_course/$', 'course.views.edit_course'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/edit_course_complete/$', 'course.views.edit_course_complete'),
     (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
     
     (r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),

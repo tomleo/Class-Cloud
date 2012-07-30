@@ -47,21 +47,22 @@
                        data-toggle="modal">Enrollment Request <span class="badge badge-info">8</span></a></li>
             </ul>
         </div><!--END span5-->
+        
+        <div class="thumbnail span4">
+            <img src="{{ course.course_image.url }}" alt="">
+        </div><!--END thumbnail-->
             
         <div class="span4">
             <h4>Description</h4>
             <p>{{ course.description|linebreaks }}</p>
             <p><a href="{{ course.syllabus.url }}">{{ course.syllabus }}</a></p>
             <div class="btn-group">
-                <a class="btn btn-info" href="">Edit Course</a>
-                <a class="btn btn-info" href=""><i class="icon-wrench"></i></a>
+                <a class="btn btn-info" href="edit_course/">Edit Course</a>
+                <a class="btn btn-info" href="edit_course/"><i class="icon-wrench"></i></a>
             </div><!--END btn-group-->
-            
         </div>
         
-        <div class="thumbnail span4">
-            <img src="{{ course.course_image.url }}" alt="">
-        </div><!--END thumbnail-->
+        
 
 
         </div><!--END span5-->            
