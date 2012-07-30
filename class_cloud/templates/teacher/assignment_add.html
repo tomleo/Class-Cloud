@@ -4,15 +4,22 @@
 {% endblock %}
 
 {% block more_css %}
-<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
+<!--<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />-->
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery_ui_custom/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-timepicker-addon.css" />
 {% endblock %}
 
 {% block body %}
+
+<!--Not sure if I should keep this, or go with Paul Irish's method of targeting IE-->
+<!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery_ui_custom/jquery.ui.1.8.16.ie.css"/>
+<![endif]-->
+
 {% include 'teacher/t_header.html' %}
 
 {% load bootstrap %}
-<form method="post" action="." class="form-horizontal">
+<form enctype="multipart/form-data" method="post" action="." class="form-horizontal">
 {% csrf_token %}
 
 {{ assignmentForm|bootstrap }}

@@ -1,12 +1,14 @@
 import datetime
 import os.path
 from django.db import models
+from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 from django.contrib.admin import widgets
 
 from django.template.defaultfilters import slugify
+
 
 """
 TimeStamped
@@ -118,11 +120,9 @@ class Assignment(TimeStampedActivate):
     An assignment represents a homework assignment or task.
     Assignments have an assosiated User and course
     """
-    name = models.CharField(max_length=255,
-                            help_text="Name of assignment.")
+    name = models.CharField(max_length=255)
     slug = models.SlugField(blank=True)
-    description = models.TextField(blank=True,
-                                    help_text="Describe the assignment.")
+    description = models.TextField(blank=True)
     due_date = models.DateTimeField(default=False)
 
     teacher = models.ForeignKey(User, related_name="assignments")
@@ -162,12 +162,14 @@ def make_custom_datefield(f):
 
 class AssignmentForm(ModelForm):
     formfield_callback = make_custom_datefield
+    active = forms.BooleanField(label='Make Visible to Students')
     class Meta:
         model = Assignment
-        fields = ('name', 'description', 'due_date', 'attachments')
-        widgets = {
-            #'due_date': widgets.AdminSplitDateTime()
-        }
+        fields = ('name', 'description', 'due_date', 'attachments', 'active')
+        #widgets = {
+        #    'attachments': AdminFileWidget()
+        #}
+
 
 class SubmittedAssignment(models.Model):
     student = models.ForeignKey(User, verbose_name="Student")

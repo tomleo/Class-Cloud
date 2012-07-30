@@ -24,7 +24,7 @@ The Setup before you start coding
 
         virtualenv ENV
 
-5. type the following inthe commandline::
+5. type the following in the command line::
 
     source ENV/bin/activate
 
@@ -95,3 +95,28 @@ Other things installed
  - pip install mercurial
  - sudo apt-get install mercurial
  - pip install -e hg+https://bitbucket.org/offline/django-annoying/#egg=django_annoying
+
+Acknowledgements
+================
+
+Class-Cloud makes heavy use of front-end frameworks, plugins, and themes.
+
+django-bootstrap-form
+---------------------
+
+Using django-bootstrap-form to stylize model based form fields
+
+https://github.com/tzangms/django-bootstrap-form
+
+jquery-ui-bootstrap
+-------------------
+
+Using jquery-ui-bootstrap's custom theme to style the jQuery datepicker widget
+
+ - jquery-ui-1.8.16.custom.css
+ - jquery.ui.1.8.16.ie.css
+ - images/*
+
+https://github.com/addyosmani/jquery-ui-bootstrap
+
+See stuff installed via pip for more libraries/frameworks/code
