@@ -128,11 +128,11 @@
                     .addClass('holiday')
                     .empty()
                     .append('<span class="weekday">' +i+ '</span>')
-                    /*.popover({
+                    .popover({
                         'title': msg_evnts_hdr,
                         'content': this.title+ ' due today',
                         'delay': { 'show': 250, 'hide': 250 }
-                    })*/;
+                    });
                 }
             });
         }
