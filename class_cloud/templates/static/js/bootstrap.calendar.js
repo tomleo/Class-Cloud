@@ -115,7 +115,7 @@
                 var year = 1900 + live_date.getYear();
                 var month = live_date.getMonth();
 
-                var view_date = new Date(year, month, i==0?1:i, 0,0,0,0);
+                var view_date = new Date(year, month, i==0?1:(i-1), 0,0,0,0);
                 var event_date = new Date(this.date);
 
                 if( event_date.getDate() == view_date.getDate()
