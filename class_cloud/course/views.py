@@ -28,25 +28,6 @@ from django.template import defaultfilters
 #class SimpleFileForm(forms.Form):
  #   file = forms.Fields(widget=forms.FileInput, required=FALSE)
     
-def directupload(request):
-       
-       template = 'assignments.html'
-       
-       if request['method']=='POST':
-           if 'file' in request.FILES:
-            file = request.FILES['file']
-           
-            filename = file['filename']
-           
-            fd = open('%s/%s' % (MEDIA_ROOT, filename), 'wb')
-            fd.write(file['content'])
-            fd.close()
-           
-           return http.HttpResponseRedirect(' assignment.html')
-       else:
-            form = SimpleFileForm()
-            return render_to_response(template, { 'form': form })
-
 import bisect
 def calendar(request):
     assignment_list = []
@@ -250,6 +231,8 @@ def assignments(request):
     for icourse in courses:
         course_assignments = Assignment.objects.filter(course=icourse)
         assignment_list.extend(course_assignments)
+        
+        assignment_list.sort(key=lambda x: x.assignment.due_date)
     
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
@@ -686,5 +669,6 @@ def add_course(request):
         },
         context_instance=RequestContext(request))
         
+
 
 
