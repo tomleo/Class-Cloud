@@ -406,7 +406,11 @@ def edit_course(request, course_slug):
         formset = EditCourseFormSet(request.POST, request.FILES, 
                                     queryset=Course.objects.filter(slug=course_slug))
         if formset.is_valid():
-            formset.save()
+            instances = formset.save(commit=False)
+            for instance in instances:
+                #instance.save_m2m()
+                instance.save()
+            return HttpResponseRedirect("/teacher/")
     else:
         formset = EditCourseFormSet(queryset=Course.objects.filter(slug=course_slug))
 
