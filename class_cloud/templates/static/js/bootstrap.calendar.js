@@ -33,7 +33,7 @@
             msg_days: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
             msg_months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             msg_today: 'Today',
-            msg_events_header: 'Assignments Due Today',
+            msg_events_header: 'Sucks Today',
             events: null
         },
 
@@ -128,11 +128,11 @@
                     .addClass('holiday')
                     .empty()
                     .append('<span class="weekday">' +i+ '</span>')
-                    .popover({
+                    /*.popover({
                         'title': msg_evnts_hdr,
                         'content': this.title+ ' due today',
                         'delay': { 'show': 250, 'hide': 250 }
-                    });
+                    })*/;
                 }
             });
         }

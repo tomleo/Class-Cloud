@@ -32,7 +32,7 @@
             msg_days: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
             msg_months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             msg_today: 'Today',
-            msg_events_header: 'Events Today',
+            msg_events_header: 'Assignments Do Today',
             events: null
         },
 
@@ -127,7 +127,7 @@
                     .addClass('holiday')
                     .empty()
                     .append('<span class="weekday">' +i+ '</span>')
-                    .popover({
+                    .lo({
                         'title': msg_evnts_hdr,
                         'content': 'You have ' +this.title+ ' classes',
                         'delay': { 'show': 250, 'hide': 250 }
