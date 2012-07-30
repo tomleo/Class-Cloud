@@ -33,7 +33,7 @@
             msg_days: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
             msg_months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             msg_today: 'Today',
-            msg_events_header: 'Sucks Today',
+            msg_events_header: 'Assignment Due Today',
             events: null
         },
 
