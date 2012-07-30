@@ -330,7 +330,7 @@ def assignment_add(request, course_slug):
     assignment = Assignment(course=course, teacher=course.teacher)
     
     if request.method == 'POST':
-        form = Assignment(request.POST, instance=assignment)
+        form = AssignmentForm(request.POST, instance=assignment)
         if form.is_valid():
             assignment = form.save()
             return HttpResponseRedirect("/teacher/{0}/assignment_complete/".format(course.slug))

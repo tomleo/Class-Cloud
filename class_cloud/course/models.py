@@ -136,7 +136,7 @@ class Assignment(TimeStampedActivate):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Announcement, self).save(*args, **kwargs)
+        super(Assignment, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.name

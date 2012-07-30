@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block more_css %}
+<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-timepicker-addon.css" />
 {% endblock %}
 
@@ -13,6 +14,7 @@
 {% load bootstrap %}
 <form method="post" action="." class="form-horizontal">
 {% csrf_token %}
+
 {{ assignmentForm|bootstrap }}
 
 <input type="submit" value="submit" class="btn btn-primary" />
@@ -23,12 +25,15 @@
 
 {% block jQuery %}
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-<script src="{{ STATIC_URL }}js/jquery-ui-sliderAccess.js"></script>
 <script src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-sliderAccess.js"></script>
 <script>
 $(function() {
 //$( ".datePicker" ).datepicker();
-$('.datePicker').datetimepicker();
+    $('.datePicker').datetimepicker({
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false }
+    });
 });
 </script>
 {% endblock %}
