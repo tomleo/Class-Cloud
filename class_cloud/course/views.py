@@ -427,13 +427,32 @@ def edit_course_complete(request, course_slug):
         {'slug': course_slug},
         context_instance=RequestContext(request))
 
-
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def enroll_students(request, course_slug):
+    """
+    get all students that are not teachers, and not enrolled in course
+    """
+    #allStudents = User.objects.filter(groups__
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
-def teacher_enroll(request):
-    """Enroll Student in class"""
+def enroll_student(request, course_slug, student):
+    """
+    create submissioin form to enroll student
+    """
     pass
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+def enroll_student_complete(request, course_slug):
+    pass
+
+#@login_required
+#@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
+#def teacher_enroll(request):
+#    """Enroll Student in class"""
+#    pass
 
 
 @login_required

@@ -19,7 +19,7 @@
             {% for course in courses %}
             <li class="span5">
                 <a href = "{{ course.slug }}" class="thumbnail">
-		            <img src="{{course.course_image.url}}" alt="{{course.title}}">
+		            <img src="{{ course.course_image.url }}" alt="{{course.title}}">
 	            </a>
 	            <h5><a href = "{{ course.slug }}">{{course.title}}</a></h5>
 		        <p>{{course.teacher}}</p>
