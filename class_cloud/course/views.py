@@ -1,6 +1,8 @@
 #Don't think generic views are being used, might want to remove this
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
+from django.views.decorators.csrf import csrf_exempt
+
 
 #Models
 from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment
@@ -203,7 +205,7 @@ def assignments(request):
         {'assignments': assignment_list},
         context_instance=RequestContext(request))
        
- 
+@csrf_exempt 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def assignment(request, slug):
