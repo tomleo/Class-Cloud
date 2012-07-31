@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 #Models
 from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 #Model Forms
 from course.models import CourseForm, AnnoucementForm, AssignmentForm, GradeForm
@@ -78,13 +78,13 @@ def course_test(request, course_slug):
     return HttpResponse(course_assignments)
 
 
-@login_required
-@user_passes_test(lambda u: u.has_perm('course.student_view'))
-def wtf(request):
-    student_grades = StudentGrade.objects.filter(student__username=request.user.username)
-    return render_to_response('grades.html',
-        {'student_grades': student_grades},
-        context_instance=RequestContext(request))
+#@login_required
+#@user_passes_test(lambda u: u.has_perm('course.student_view'))
+#def wtf(request):
+#    student_grades = StudentGrade.objects.filter(student__username=request.user.username)
+#    return render_to_response('grades.html',
+#        {'student_grades': student_grades},
+#        context_instance=RequestContext(request))
     
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
@@ -435,7 +435,21 @@ def enroll_students(request, course_slug):
     """
     get all students that are not teachers, and not enrolled in course
     """
-    #allStudents = User.objects.filter(groups__
+    course = Course.objects.get(slug=course_slug)
+    student_permission = Permission.objects.get(codename='student_view')
+    #students = User.objects.filter(Q(groups__permissions=student_permission) | Q(user_permissions=student_permission)).distinct()
+
+    
+    #All Enrollments or the class
+    enrollments = Enrollment.objects.filter(course=course)
+
+    allStudents = [i.students for i in enrollments]
+    not_enrolled = [enrolled.course!=course for enrolled in enrollments]
+    
+    return render_to_response('teacher/enroll_students.html',
+            {'enrolled_students': allStudents,
+             'not_enrooled_students': not_enrolled },
+            context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))

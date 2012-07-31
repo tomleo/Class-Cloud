@@ -1,0 +1,13 @@
+<h1>Enrolled Students</h1>
+<ul>
+{% for student in students %}
+<li>{{ student }}</li>
+{% endfor %}
+</ul>
+
+<h1>Not Enrolled</h1>
+<ul>
+{% for student in not_enrooled_students %}
+  <li>{{ student }}</li>
+{% endfor %}
+</ul>

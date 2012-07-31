@@ -198,6 +198,7 @@ class StudentGradeForm(ModelForm):
         model = StudentGrade
 
 class Enrollment(models.Model):
+    #Should change this to student...
     students = models.ForeignKey(User, 
                                  verbose_name="Enrolled",
                                  help_text="Enroll this user as student in Course."

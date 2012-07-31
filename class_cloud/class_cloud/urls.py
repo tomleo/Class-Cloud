@@ -82,11 +82,13 @@ urlpatterns = patterns('',
     (r'^teacher/(?P<course_slug>[-\w]+)/grade_assignments/$', 'course.views.grade_assignments'),
     (r'^teacher/(?P<course_slug>[-\w]+)/edit_course/$', 'course.views.edit_course'),
     (r'^teacher/(?P<course_slug>[-\w]+)/edit_course_complete/$', 'course.views.edit_course_complete'),
-    (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
+    
     (r'^teacher/(?P<course_slug>[-\w]+)/enroll_students/$', 'course.views.enroll_students'),
     (r'^teacher/(?P<course_slug>[-\w]+)/enroll_student/(?P<student>[-\w]+)/$', 'course.views.enroll_student'),
     (r'^teacher/(?P<course_slug>[-\w]+)/enroll_student/(?P<student>[-\w]+)/complete/$', 'course.views.enroll_student_complete'),
     #(r'^teacher/enrollment/requests/$', 'course.views.teacher_enroll'),
+    (r'^teacher/(?P<course_slug>[-\w]+)/$', 'course.views.teacher_course'),
+
     (r'^teacher/add/course/$', 'course.views.add_course'),
 
     #Admin Site
