@@ -14,7 +14,7 @@
     <div class="row-fluid">
     		<h3>{{assignment.name}}</h3>
         <strong><a href = "/courses/{{course.slug}}/">{{ assignment.course }}</a></strong><br />
-        <p>Professor: <em>{{ assignment.teacher }}</em></p>
+        <p>Professor: <strong>{{ assignment.teacher.first_name }} {{assignment.teacher.last_name}}</strong> <em>({{assignment.teacher}})</em></p>
         <p>Due Date : {{assignment.due_date}}</p>
     </div>
     <hr />

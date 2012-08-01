@@ -22,7 +22,7 @@
 		            <img src="{{ course.course_image.url }}" alt="{{course.title}}">
 	            </a>
 	            <h5><a href = "{{ course.slug }}">{{course.title}}</a></h5>
-		        <p>{{course.teacher}}</p>
+		        <p><strong>{{course.teacher.first_name}} {{course.teacher.last_name}}</strong> ({{course.teacher}})</p>
             </li>
             {% empty %}
             <p>It does not apear you are registered for any classes</p>
