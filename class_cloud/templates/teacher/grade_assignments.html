@@ -5,10 +5,13 @@
 
 {% block body %}
 {% include 'teacher/t_header.html' %}
+{% include 'teacher/course_navigation.html' %}
 
 <!--I think that the table should be replaced with something else because it
 will be difficult on touch devices to select the hyper-links-->
-
+<div class= "span9">
+	<h3>{{course.title}}</h3>
+   	<div class="well">
 {% for k, v in assignments.iteritems %}
     <h2>{{ k }}</h2>
     <table class="table table-striped">
@@ -37,5 +40,7 @@ will be difficult on touch devices to select the hyper-links-->
 {% empty %}
     <tr>No Grades at the moment</tr>
 {% endfor %}
-
+</div>
+</div>
+{% include 'teacher/post_course.html' %}
 {% endblock %}

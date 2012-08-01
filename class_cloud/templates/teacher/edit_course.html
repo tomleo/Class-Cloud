@@ -5,6 +5,11 @@
 
 {% block body %}
 {% include 'teacher/t_header.html' %}
+{% include 'teacher/course_navigation.html' %}
+
+<div class="span8 offset4">
+	<h3>{{course.title}}</h3>
+   	<div class="well">
 
 {% load bootstrap %}
 
@@ -21,6 +26,9 @@
 <!---->
 
 </form>
+		</div>
+	</div>
 
+{% include 'teacher/post_course.html' %}
 {% endblock %}
 

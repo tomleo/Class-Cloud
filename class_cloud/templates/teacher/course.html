@@ -18,22 +18,23 @@
 {% include 'teacher/course_navigation.html' %}
 
 
-		<div class="span8">
-        <h4>{{course.title}}</h4>
-        <div class="thumbnail span4">
-            <img src="{{ course.course_image.url }}" alt="">
-        </div><!--END thumbnail-->
-            
-        <div class="span4">
-            <h4>Description</h4>
-            <p>{{ course.description|linebreaks }}</p>
-            <p><a href="{{ course.syllabus.url }}">{{ course.syllabus }}</a></p>
-            <div class="btn-group">
+	<div class="span8 offset4">
+		<div class="well">
+        <h3>{{course.title}}</h3>
+        <div class="well">
+        <img src="{{ course.course_image.url }}" alt="" align="top">
+        <h4>Description</h4>
+        <p>{{ course.description|linebreaks }}</p>
+        <p><a href="{{ course.syllabus.url }}">{{ course.syllabus }}</a></p>
+        <div class="btn-group">
                 <a class="btn btn-info" href="edit_course/">Edit Course</a>
                 <a class="btn btn-info" href="edit_course/"><i class="icon-wrench"></i></a>
-            </div><!--END btn-group-->
+        </div><!--END btn-group-->
         </div>
-        </div>
+      </div>
+	</div>
+
+   
         
 
 

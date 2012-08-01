@@ -14,10 +14,11 @@
 <div class="span10 offset2">
   <div class="row-fluid">
     <div class="span3">
+    	<div class="well">
     	
       <!-- Sidebar content -->
       <div class="row-fluid">
-      <h3>Manage your Courses</h3>
+      <h4>Manage your Courses</h4>
         <ul class="nav nav-tabs nav-stacked">
           {% for course in courses %}
         <li><a href="{{ course.slug }}"><i class="icon-wrench"></i> {{ course.title }}</a></li>
@@ -28,12 +29,13 @@
       
       <!--Sidebar content -->
       <div class="row-fluid">
-            <h3>Create Courses</h3>
+            <h4>Create Courses</h4>
         <ul class="nav nav-tabs nav-stacked">
             <li><a href="add/course/">Add Course <i class="icon-plus"></i></a></li>
         </ul>
       </div>
       <!--END Sidebar content -->
+      </div>
       
       	
     <!--Sidebar content (This is for professor only!!!)-->
