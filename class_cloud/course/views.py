@@ -204,6 +204,10 @@ def assignments(request):
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
         context_instance=RequestContext(request))
+
+#We need to filter those assignments out that are past due, submitted or graded.
+#ToDo
+#best of luck
        
 @csrf_exempt 
 @login_required
@@ -211,8 +215,10 @@ def assignments(request):
 def assignment(request, slug):
 
     a = Assignment.objects.get(slug=slug)
+    b = a.course
     return render_to_response('assignment.html',
-        {'assignment':a},
+        {'assignment':a,
+         'course':b,},
         context_instance=RequestContext(request))
 
 
@@ -220,8 +226,10 @@ def assignment(request, slug):
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def course_assignment(request, course_slug, assignment_slug):
     a = Assignment.objects.get(slug=assignment_slug)
+    b = a.course
     return render_to_response('assignment.html',
-        {'assignment':a},
+        {'assignment':a,
+         'course':b,},
         context_instance=RequestContext(request))
 
 
