@@ -12,6 +12,91 @@
 
 <div class="container-fluid">
 <div class="span10 offset2">
+  <div class="row-fluid">
+    <div class="span3">
+    	
+      <!-- Sidebar content -->
+      <div class="row-fluid">
+      <h3>Manage your Courses</h3>
+        <ul class="nav nav-tabs nav-stacked">
+          {% for course in courses %}
+        <li><a href="{{ course.slug }}"><i class="icon-wrench"></i> {{ course.title }}</a></li>
+        {% endfor %}
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      <!--Sidebar content -->
+      <div class="row-fluid">
+            <h3>Create Courses</h3>
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href="add/course/">Add Course <i class="icon-plus"></i></a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      	
+    <!--Sidebar content (This is for professor only!!!)-->
+    <!--		
+		<div class = "row-fluid">
+			<ul class="nav nav-tabs nav-stacked">
+    			<li><a href="/make_announcement">Make an announcement</a></li>
+				<li><a href="PGrade.html">Assign an assignment</a></li>
+    		</ul>
+		</div>
+    -->
+      
+    </div><!--END span3-->  
+    
+    
+    <!-- Teacher profile paage-->
+    
+    <div class="span7">
+			<div class="well">
+				  <h4>Welcome Professor {{ user.get_full_name }}</h4>
+				  <br>
+				<div class = "well">
+				<div>
+					<img src = "http://www.ellen-parrots.com/gaaies_co/naoko_icons/asi6.gif" alt ="" align = "left">
+					<h5>&nbsp;&nbsp; {{user.get_full_name}}</h5>
+					<br>
+					<p><strong>&nbsp;&nbsp; Wentworth Institute of Technolgy</strong></p>
+					<br>
+					<p>&nbsp;&nbsp; Status: Teacher</p>
+					<br>
+					<p>&nbsp;&nbsp; email: {{user.email}}</p>
+					</div>
+		</div>
+		
+		<div class="row-fluid">
+		<div class="well">
+		<div>
+			<h4>Courses you are currently teaching:</h4>
+				<ul>
+				   {% for course in courses %}
+  					<li>{{course.title}}</li>
+  					{% endfor %}
+				</ul>
+		</div>
+		</div>
+		</div>
+		
+		<div class = "row-fluid">
+			<div class = "well">
+				<div >
+				<a href="" >Change password </a>
+				</div>	
+			</div>	
+		</div>
+		
+
+		</div>
+
+  </div>
+
+<!--
+<div class="container-fluid">
+<div class="span10 offset2">
 
 <div class="row-fluid">
     <h2>Welcome Professor {{ user.get_full_name }}</h2>
@@ -35,9 +120,10 @@
     </div>
     
 </div><!--END row-fluid-->
-
-</div><!--END span10 offset2-->
+<!--
+</div><!--END span10 offset2--><!--
 </div><!--END container-fluid-->
+
 
 {% endblock %}
 
