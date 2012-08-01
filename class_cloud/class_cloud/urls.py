@@ -60,6 +60,8 @@ urlpatterns = patterns('',
     #Assignment page
     (r'^assignments/(?P<slug>[-\w]+)/$', 'course.views.assignment'),
     (r'^assignments/$', 'course.views.assignments'),
+    
+    #LOL .php ------------->  :D
     (r'^assignments/(?P<slug>[-\w]+)/file_upload.php/', 'course.views.assignment'),
     
     #Announcement page
