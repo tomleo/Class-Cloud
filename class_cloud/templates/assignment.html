@@ -17,8 +17,7 @@
         <p>Professor: <strong>{{ assignment.teacher.first_name }} {{assignment.teacher.last_name}}</strong> <em>({{assignment.teacher}})</em></p>
         <p>Due Date : {{assignment.due_date}}</p>
     </div>
-    <hr />
-    <div class="container-fluid">
+    <hr /><!--Do hr's need to be escaped, also this hr is backwards lolz-->
     <div class="row-fluid">     
         <p>{{ assignment.description|linebreaks }}</p>
     </div>
@@ -29,35 +28,33 @@
         </a>
         </p>
     </div>
-    </div>
+    <div class="row-fluid">
     
-    <hr />
+        {% if submission_status == "graded" %}
+        <!--If Graded-->
+        <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">Graded <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">View Grade</a></li>
+            </ul>
+        </div>
+        {% else %}{% if submission_status == "submitted" %}
+        <!--If Submitted-->
+        <div class="btn-group">
+          <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">Success <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#">View Submission</a></li>
+            <li><a href="#">Edit Submission</a></li>
+          </ul>
+        </div>
+        {% else %}{% if submission_status == "need to submit" %}
+        <!--Need to Submit-->
+        <a href="submit/" class="btn btn-warning dropdown-toggle">Submit Assignment</a>
+        {% endif %}{% endif %}{% endif %}
 
+        
+    </div>
 
-<form>
-<fieldset>
-<div class="clearfix">
-            <label for="textarea">Comments</label>
-            <div class="input">
-              <textarea class="xxlarge" id="textarea2" name="textarea2" rows="3"></textarea>
-              <span class="help-block">
-               Anything you want to say about your assignment
-              </span>
-            </div>
-          </div><!-- /clearfix -->
-          
-			<div class = "control-group">
-				<label class = "control-label" for = "attachment">Attachment</label>
-				<div class = "controls">
-					<input id = "attachment" class = "input-file" type = "file">
-				</div>			
-			</div>
-          
-          <div class="actions">
-            <input type="submit" class="btn primary" value="Submit">&nbsp;<button type="reset" class="btn">Cancel</button>
-          </div>
-        </fieldset>
-      </form>
 </div>
 {%  include 'post_body.html' %}
 

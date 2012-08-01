@@ -47,6 +47,11 @@ urlpatterns = patterns('',
     #Courses
     (r'^courses/$', 'course.views.index'),
     (r'^courses/(?P<course_slug>[-\w]+)/$', 'course.views.course'),
+    
+    #Assignment
+    (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/submit/complete/$', 'course.views.course_assignment_complete'),
+    (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/submit/$', 'course.views.course_assignment_submit'),
+    (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/edit/$', 'course.views.course_assignment_edit'),
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),
   
     #Calendar

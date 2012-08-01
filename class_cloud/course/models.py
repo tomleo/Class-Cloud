@@ -120,6 +120,10 @@ class AssignmentAttempt(models.Model):
     comments = models.TextField(blank=True)
     submit_date = models.DateTimeField(auto_now_add=True, blank=True)
 
+class AssignmentAttemptForm(ModelForm):
+    class Meta:
+        model = AssignmentAttempt
+        fields = ('attachment', 'comments')
 
 class Assignment(TimeStampedActivate):
     """
