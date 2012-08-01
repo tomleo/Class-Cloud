@@ -67,6 +67,15 @@ def courses(request, slug):
         {'courses': courses},
         context_instance=RequestContext(request))
 
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
+def profile(request):
+	name = request.user
+	courses = Course.objects.filter(students__username=request.user.username)
+	return render_to_response('profile.html',
+	{'name': name,
+	 'courses': courses,},
+	context_instance=RequestContext(request))
 
 def course_test(request, course_slug):
     
@@ -537,5 +546,6 @@ def enroll_student_complete(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))    
 def add_course(request):
     pass
+
 
 

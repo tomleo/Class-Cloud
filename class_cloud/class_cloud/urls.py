@@ -41,6 +41,9 @@ urlpatterns = patterns('',
     #url(r'^courses/(?P<course_id>\d+)/$', DisplayCourseRedirectView.as_view()),
     (r'^$', 'course.views.index'),
     
+    #Profile
+    (r'^profile/$', 'course.views.profile'),
+    
     #Grades
     (r'^grades/$', 'course.views.grades'),
     
