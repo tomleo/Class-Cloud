@@ -5,11 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 #Models
-from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment
+from course.models import Course, Assignment, Grade, StudentGrade, SubmittedAssignment, Announcement, Discussion, Enrollment, AssignmentAttempt
 from django.contrib.auth.models import User, Permission
 
 #Model Forms
-from course.models import CourseForm, AnnoucementForm, AssignmentForm, GradeForm
+from course.models import CourseForm, AnnoucementForm, AssignmentForm, GradeForm, AssignmentAttemptForm
 from django.forms.models import ModelForm, modelformset_factory
 
 from django.shortcuts import render_to_response, RequestContext
@@ -227,10 +227,64 @@ def assignment(request, slug):
 def course_assignment(request, course_slug, assignment_slug):
     a = Assignment.objects.get(slug=assignment_slug)
     b = a.course
+    
+    user = request.user
+    graded_submissions = StudentGrade.objects.filter(assignment__slug=assignment_slug, student=user)
+    submissions = SubmittedAssignment.objects.filter(assignment__slug=assignment_slug, student=user)
+    
+    if graded_submissions:
+        submission_status = "graded"
+    elif submissions:
+        submission_status = "submitted"
+    else:
+        submission_status = "need to submit"
+        
     return render_to_response('assignment.html',
         {'assignment':a,
-         'course':b,},
+         'course':b,
+         'submission_status':submission_status},
         context_instance=RequestContext(request))
+
+def course_assignment_edit(request, course_slug, assignment_slug):
+    pass
+    
+def course_assignment_submit(request, course_slug, assignment_slug):
+    assignment = Assignment.objects.get(slug=assignment_slug)
+    submission = AssignmentAttempt()
+    #courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/complete/
+
+    if request.method == 'POST':
+        form = AssignmentAttemptForm(request.POST, request.FILES, instance=submission)
+        if form.is_valid():
+            submission = form.save()
+            full = SubmittedAssignment(student=request.user, assignment=assignment, submission=submission)
+            full.save()
+            return HttpResponseRedirect('complete/')
+    else:
+        form = AssignmentAttemptForm()
+
+    return render_to_response('assignment_submit.html',
+            {'form':form},
+            context_instance=RequestContext(request))
+
+    
+def course_assignment_complete(request, course_slug, assignment_slug):
+
+    #request.META['HTTP_REFERER'] = http://localhost:8000/courses/course-2/hope-this-works/submit/
+    #import pdb; pdb.set_trace()
+    cf = request.META['HTTP_REFERER']
+    comingFrom = cf.split('/')[-2]
+    #are you coming from...
+    #if comingFrom is 'submit':
+    #    pass
+    #elif comingFrom is 'edit':
+    #    pass
+    #else:
+    #    pass
+
+    return render_to_response('assignment_complete.html',
+            {'comingFrom':comingFrom},
+            context_instance=RequestContext(request))
 
 
 def logout_view(request):
