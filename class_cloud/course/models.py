@@ -96,6 +96,11 @@ class Course(TimeStampedActivate):
     def __unicode__(self):
         return '{0}'.format(self.title)
 
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Announcement, self).save(*args, **kwargs)
+        
     class Meta:
         ordering = ["-title"]
         permissions = (
@@ -109,11 +114,14 @@ class Course(TimeStampedActivate):
             'slug': self.slug
         })
 
-#Remove or move this?
+
 class CourseForm(ModelForm):
-    class Meta:
-        model = Course
-        fields = ('title', 'description', 'syllabus', 'course_image')
+	active = forms.BooleanField(label='Make Visible to Students')
+	class Meta:
+		model = Course
+		fields = ('title', 'description', 'syllabus', 'course_image')
+        
+        
 
 class AssignmentAttempt(models.Model):
     attachment = models.FileField(upload_to='assignment_submissions')
