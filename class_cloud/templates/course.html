@@ -135,8 +135,7 @@ assignments_inbox
 <!-- Grade Tab -->
 <div class="tab-pane fade" id="grades">
     <table class="table table-striped">
-    {% for grade, submission in assignments_graded %}
-        <thead>
+     <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
@@ -145,16 +144,17 @@ assignments_inbox
             </tr>
         </thead>
         <tbody>
+        {% for grade, submission in assignments_graded %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td><a href={{ submission.assignment.slug }}>{{ submission.assignment.name }}</a></td>
                 <td>{{ grade.points }} out of {{ grade.max_points }}</td>
                 <td>{{ grade }}</td>
             </tr>
+        {% empty %}
+        <tr><td>No Grades</td></tr>
+        {% endfor %}
         </tbody>
-    {% empty %}
-    <tr><td>No Grades</td></tr>
-    {% endfor %}
     </table>
 </div>
 
