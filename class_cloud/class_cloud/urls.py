@@ -54,7 +54,9 @@ urlpatterns = patterns('',
     #Assignment
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/submit/complete/$', 'course.views.course_assignment_complete'),
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/submit/$', 'course.views.course_assignment_submit'),
-    (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/edit/$', 'course.views.course_assignment_edit'),
+    #(r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/edit/$', 'course.views.course_assignment_edit'),
+    (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/grade/$', 'course.views.course_assignment_grade'),
+    (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/view/$', 'course.views.course_assignment_view'),
     (r'^courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/$', 'course.views.course_assignment'),
   
     #Calendar
@@ -70,7 +72,7 @@ urlpatterns = patterns('',
     (r'^assignments/$', 'course.views.assignments'),
     
     #LOL .php ------------->  :D
-    (r'^assignments/(?P<slug>[-\w]+)/file_upload.php/', 'course.views.assignment'),
+    #(r'^assignments/(?P<slug>[-\w]+)/file_upload.php/', 'course.views.assignment'),
     
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),

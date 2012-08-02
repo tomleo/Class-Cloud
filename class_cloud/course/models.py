@@ -186,6 +186,10 @@ class SubmittedAssignment(models.Model):
     assignment = models.ForeignKey(Assignment, verbose_name="Assignment")
     submission = models.ForeignKey(AssignmentAttempt)
 
+class SubmittedAssignmentForm(ModelForm):
+    class Meta:
+        model = SubmittedAssignment
+        fields = ('submission',)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

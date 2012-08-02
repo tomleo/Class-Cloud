@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  Assignment Edit | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+{% load bootstrap %}
+
+<form enctype="multipart/form-data" method="post" action="." class="form-horizontal">
+{% csrf_token %}
+
+{{ formset.management_form }}
+{% for form in formset %}
+    {{ form|bootstrap }}</li>
+{% endfor %}
+    <input type="submit" value="submit" class="btn btn-primary" />
+</form>
+
+{% endblock %}

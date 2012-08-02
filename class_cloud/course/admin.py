@@ -26,10 +26,11 @@ class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ('students', 'course', 'start_date')
     
 class AssignmentSubmissionAdmin(admin.ModelAdmin):
-    pass
+    #assignment attempt
+    list_display = ('comments', 'submit_date')
     
 class SubmittedAssignmentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('student', 'assignment')
 
 class AnnouncementAdmin(admin.ModelAdmin):
     pass

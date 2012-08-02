@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Assignments | {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+
+{% include 'header.html' %}
+{% include 'pre_body.html' %}
+
+<div class="span9">
+    <div class="row-fluid">
+        <dl class="dl-horizontal">
+            <dt><strong>Assignment:</strong></dt>
+            <dd>{{ studentgrade.assignment }}</dd>
+
+            <dt><strong>Grade:</strong></dt>
+            <dd>{{ studentgrade.grade.points }} out of {{ studentgrade.grade.max_points }}
+            <span class="label label-info">{{ studentgrade.grade }}</span>
+            </dd>
+
+            <dt><strong>Submit Date:</strong></dt>
+            <dd>{{ submission.submit_date }}</dd>
+
+            <dt><strong>Comments Made:</strong></dt>
+            <dd>{{ submission.comments }}</dd>
+
+            {% if submission.attachment %}
+            <dt><strong>Attachment:</strong></dt>
+            <dd><a href="{{ submission.attachment.url }}">{{ submission.attachment.name }}</a></dd>
+            {% endif %}
+    </div>
+</div>
+
+{%  include 'post_body.html' %}
+
+{% endblock %}
