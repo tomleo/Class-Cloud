@@ -1,3 +1,14 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  Courses List | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+{% include 'teacher/t_header.html' %}
+{% include 'teacher/course_navigation.html' %}
+<div class="span8 offset4">
+	<h3>{{course.title}}</h3>
+   	<div class="well">
 <h1>Enrolled Students</h1>
 <ul>
 {% for student in students %}
@@ -11,3 +22,5 @@
   <li>{{ student }}</li>
 {% endfor %}
 </ul>
+{% include 'teacher/post_course.html' %}
+{% endblock %}

@@ -4,16 +4,21 @@
 {% endblock %}
 {% block body %}
 {% include 'teacher/t_header.html' %}
+{% include 'teacher/course_navigation.html' %}
 
+<div class="span8 offset4">
+	<h3>{{course.title}}</h3>
+   	<div class="well">
+			{% load bootstrap %}
+			<form method="post" action="." class="form-horizontal">
+			{% csrf_token %}
+			{{ announcementForm|bootstrap }}
 
-{% load bootstrap %}
-<form method="post" action="." class="form-horizontal">
-{% csrf_token %}
-{{ announcementForm|bootstrap }}
+				<input type="submit" value="submit" class="btn btn-primary" />
 
-<input type="submit" value="submit" class="btn btn-primary" />
+			</form>
+		</div>
+	</div>
 
-</form>
-
-
+{% include 'teacher/post_course.html' %}
 {% endblock %}

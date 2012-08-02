@@ -15,60 +15,30 @@
 
 {% include 'teacher/t_header.html' %}
 
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span10 offset2">
-            <h2>{{ course.title }}</h2>
-            <hr>
-        </div><!--END span10 offset2-->
+{% include 'teacher/course_navigation.html' %}
 
-    <div class="row-fluid">
-        <div class="span4">
-            <ul id="courses" class="nav nav-pills nav-stacked">
-                <li class="nav-header">Annoucements</li>
-                <!--<li><a href="#add-annoucement"
-                       id="a-add-annoucement"
-                       data-toggle="modal">Add Annoucement</a></li>-->
-                <li><a href="annoucement_add/">Add Annoucement</a></li>
-                
-                <li class="nav-header">Assignments</li>
-                <!--<li><a href="#add-assignment"
-                       id="a-add-assignment"
-                       data-toggle="modal">Add Assignment</a></li>-->
-                <li><a href="assignment_add/">Add Assignment</a></li>
-                <li><a href="grade_assignments/"><i class="icon-share-alt"></i> Grade Assignments </a></li>
-                
-                <li class="nav-header">Enrollment</li>
-                <!--<li><a href="#enroll-student"
-                       id="a-enroll-student"
-                       data-toggle="modal">Enroll Student</a></li>-->
-                <li><a href="enroll_students/">Enroll Student</a><li>
-                <!--<li><a href="#enroll-request"
-                       id="a-enroll-request"
-                       data-toggle="modal">Enrollment Request <span class="badge badge-info">8</span></a></li>-->
-            </ul>
-        </div><!--END span5-->
-        
-        <div class="thumbnail span4">
-            <img src="{{ course.course_image.url }}" alt="">
-        </div><!--END thumbnail-->
-            
-        <div class="span4">
-            <h4>Description</h4>
-            <p>{{ course.description|linebreaks }}</p>
-            <p><a href="{{ course.syllabus.url }}">{{ course.syllabus }}</a></p>
-            <div class="btn-group">
+
+	<div class="span8 offset4">
+		<div class="well">
+        <h3>{{course.title}}</h3>
+        <div class="well">
+        <img src="{{ course.course_image.url }}" alt="" align="top">
+        <h4>Description</h4>
+        <p>{{ course.description|linebreaks }}</p>
+        <p><a href="{{ course.syllabus.url }}">{{ course.syllabus }}</a></p>
+        <div class="btn-group">
                 <a class="btn btn-info" href="edit_course/">Edit Course</a>
                 <a class="btn btn-info" href="edit_course/"><i class="icon-wrench"></i></a>
-            </div><!--END btn-group-->
+        </div><!--END btn-group-->
         </div>
-        
+      </div>
+	</div>
+
+   
         
 
 
-        </div><!--END span5-->            
-    </div><!--END row-fluid-->
-</div><!--END container-fluid-->
+{% include 'teacher/post_course.html' %}
 
 <!--MODAL ADD ANNOUCEMENT----------------------------------------------------->
 <div class="modal hide" id="add-annoucement">

@@ -401,9 +401,10 @@ def teacher_index(request):
 def teacher_course(request, course_slug):
     
     course = Course.objects.get(slug=course_slug)
-
+    courses = Course.objects.filter(teacher=request.user)	
     return render_to_response('teacher/course.html',
-        { 'course': course, },
+        { 'course': course,
+          'courses': courses, },
         context_instance=RequestContext(request))
 
 
@@ -411,6 +412,7 @@ def teacher_course(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def annoucement_add(request, course_slug):
     course = Course.objects.get(slug=course_slug)
+    courses = Course.objects.filter(teacher=request.user)
     annoucement = Announcement(course=course, teacher=course.teacher)
     
     if request.method == 'POST':
@@ -422,7 +424,9 @@ def annoucement_add(request, course_slug):
         form = AnnoucementForm()
     
     return render_to_response('teacher/annoucement_add.html',
-        { 'announcementForm': form },
+        { 'announcementForm': form, 
+        'course':course,
+        'courses':courses,},
         context_instance=RequestContext(request))
 
 
@@ -438,6 +442,7 @@ def annoucement_complete(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def assignment_add(request, course_slug):
     course = Course.objects.get(slug=course_slug)
+    courses = Course.objects.filter(teacher=request.user)
     assignment = Assignment(course=course, teacher=course.teacher)
     
     if request.method == 'POST':
@@ -449,7 +454,9 @@ def assignment_add(request, course_slug):
         form = AssignmentForm()
     
     return render_to_response('teacher/assignment_add.html',
-        { 'assignmentForm': form },
+        { 'assignmentForm': form,
+          'course':course,
+          'courses':courses,},
         context_instance=RequestContext(request))
         
 
@@ -466,6 +473,7 @@ def assignment_complete(request, course_slug):
 def grade_assignments(request, course_slug):
 
     course = Course.objects.get(slug=course_slug)
+    courses = Course.objects.filter(teacher=request.user)
 
     course_assignments = Assignment.objects.filter(course=course)
 
@@ -481,7 +489,9 @@ def grade_assignments(request, course_slug):
                 #submitted.remove(submission) #This will speed things up a little?
 
     return render_to_response('teacher/grade_assignments.html',
-        {'assignments': assignments },
+        {'assignments': assignments,
+         'course':course,
+         'courses':courses, },
         context_instance=RequestContext(request))
 
 
@@ -490,6 +500,7 @@ def grade_assignments(request, course_slug):
 def grade_assignment(request, course_slug, assignment_slug, student_username):
 
     #student & assignment
+    courses = Course.objects.filter(teacher=request.user)
     assignment = Assignment.objects.get(slug=assignment_slug)
     student = User.objects.get(username=student_username)
     
@@ -514,7 +525,8 @@ def grade_assignment(request, course_slug, assignment_slug, student_username):
 
 
     return render_to_response('teacher/grade_assignment.html',
-        {'form': form},
+        {'form': form,
+        'courses':courses,},
         context_instance=RequestContext(request))
     
     
@@ -561,6 +573,7 @@ def enroll_students(request, course_slug):
     """
     get all students that are not teachers, and not enrolled in course
     """
+    courses = Course.objects.filter(teacher=request.user)    
     course = Course.objects.get(slug=course_slug)
     student_permission = Permission.objects.get(codename='student_view')
     #students = User.objects.filter(Q(groups__permissions=student_permission) | Q(user_permissions=student_permission)).distinct()
@@ -574,7 +587,9 @@ def enroll_students(request, course_slug):
     
     return render_to_response('teacher/enroll_students.html',
             {'enrolled_students': allStudents,
-             'not_enrooled_students': not_enrolled },
+             'not_enrooled_students': not_enrolled,
+             'course':course,
+             'courses':courses, },
             context_instance=RequestContext(request))
 
 @login_required
