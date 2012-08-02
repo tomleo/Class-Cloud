@@ -668,6 +668,7 @@ def enroll_student_complete(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))    
 def add_course(request):
 	courses = Course.objects.filter(teacher=request.user)
+	#needs to be changed
 	for course in courses:
 		teacher = course.teacher
 	newcourse = Course(teacher=teacher)
@@ -680,6 +681,7 @@ def add_course(request):
 		form = CourseForm()
 	return render_to_response('teacher/course_add.html',
         { 'CourseForm': form,
+        'courses':courses
         },
         context_instance=RequestContext(request))
         
