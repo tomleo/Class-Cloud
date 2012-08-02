@@ -616,16 +616,20 @@ def enroll_student_complete(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))    
 def add_course(request):
 	courses = Course.objects.filter(teacher=request.user)
+	for course in courses:
+		teacher = course.teacher
+	newcourse = Course(teacher=teacher)
 	if request.method == 'POST':
-		form = CourseForm(request.POST, request.FILES, instance=Course)
+		form = CourseForm(request.POST, request.FILES, instance=newcourse)
 		if form.is_valid():
-			course = form.save()
-			return HttpResponseRedirect("/teacher/{0}/assignment_complete/".format(course.slug))
+			newcourse = form.save()
+			return HttpResponseRedirect("/teacher/")
 	else:
 		form = CourseForm()
 	return render_to_response('teacher/course_add.html',
         { 'CourseForm': form,
         },
         context_instance=RequestContext(request))
+        
 
 

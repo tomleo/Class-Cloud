@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  Create a course | {{ block.super }}
+{% endblock %}
+
+{% block more_css %}
+<!--<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />-->
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery_ui_custom/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-timepicker-addon.css" />
+{% endblock %}
+
+{% block body %}
+
+<!--Not sure if I should keep this, or go with Paul Irish's method of targeting IE-->
+<!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery_ui_custom/jquery.ui.1.8.16.ie.css"/>
+<![endif]-->
+
+{% include 'teacher/t_header.html' %}
+{% include 'teacher/course_navigation.html' %}
+<div class="span8 offset4">
+	<h3>Create a course</h3>
+   	<div class="well">
+{% load bootstrap %}
+<form enctype="multipart/form-data" method="post" action="." class="form-horizontal">
+{% csrf_token %}
+
+{{ CourseForm|bootstrap }}
+
+<input type="submit" value="submit" class="btn btn-primary" />
+
+</form>
+
+</div>
+</div>
+{% include 'teacher/post_course.html' %}
+{% endblock %}
+
+{% block jQuery %}
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-sliderAccess.js"></script>
+<script>
+$(function() {
+//$( ".datePicker" ).datepicker();
+    $('.datePicker').datetimepicker({
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false }
+    });
+});
+</script>
+{% endblock %}

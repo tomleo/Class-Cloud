@@ -99,7 +99,7 @@ class Course(TimeStampedActivate):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super(Announcement, self).save(*args, **kwargs)
+        super(Course, self).save(*args, **kwargs)
         
     class Meta:
         ordering = ["-title"]
@@ -116,7 +116,6 @@ class Course(TimeStampedActivate):
 
 
 class CourseForm(ModelForm):
-	active = forms.BooleanField(label='Make Visible to Students')
 	class Meta:
 		model = Course
 		fields = ('title', 'description', 'syllabus', 'course_image')
