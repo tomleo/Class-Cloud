@@ -142,6 +142,7 @@ class Assignment(TimeStampedActivate):
     slug = models.SlugField(blank=True)
     description = models.TextField(blank=True)
     due_date = models.DateTimeField(default=False)
+   
 
     teacher = models.ForeignKey(User, related_name="assignments")
     course = models.ForeignKey(Course, related_name="classes")

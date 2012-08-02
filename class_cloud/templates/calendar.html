@@ -10,30 +10,44 @@
 
 {% include 'header.html' %}
 {% include 'pre_body.html' %}
-<<<<<<< HEAD
 
-=======
->>>>>>> 7ee027cd4e6c04be5bedb0b769d703b39e110c08
+
+
 <div class="span9">
-<div class="well">
-	<h1>Calendar</h1>
-	<div class = "span6" id="calendar">
+	<div class = "span7" id="calendar" >
 	</div>
-	<div class="span5">
-	<br>	<br> <br>
-		<div class = "row-fluid">
-				<div id="lo" >
-				<h6>Events:</h6>
-					Maybe we should display events of the day here!!
-					<h6>8:00 AM</h6> 
-					CS 566 Mid -term exam
-					<h6>12:00 AM</h6> 
-					CS 647 Compiler Assignment due
-				</div>
-			
-		</div>
-	</div>
+	<div class="span5" >
+	<br>	<br> <br>      
+     	<div class = "row-fluid">
+			<div class = "well">
+			<div id="lo">
+			<h6>Click a highlighted date to see an assignment or look below</h6>				
+			</div>	
+		</div>     
 </div>
+</div>
+
+<div class="span5">
+
+	<div class="span12" >
+     	<div class = "row-fluid">
+			<div class = "well">
+			<div id="po">
+			<div >{% for assignment in assignments %}
+			        {% if not submission %}
+					<h6>{{assignment.name}}</h6>
+					<h6>{{assignment.due_date}}</h6>
+					<h6>{{assignment.course}} - {{assignment.teacher}}</h6>
+					<h6>_________________________</h6>
+                    {% endif %}
+					{% endfor %}
+				</div>	
+			</div>	
+		</div>     
+</div>
+</div>
+
+
 {% include 'post_body.html' %}
 {% endblock %}
 
@@ -47,31 +61,27 @@ $(document).ready(function(){
     return {
       "event":
       [
-           	{% for assignment in assignments %}
+           {% for assignment in assignments %}
                       		
-                      			{"date":"{{assignment.due_date|date:"Y-m-d"}}","title":"assignment {{assignment.name}} from course {{assignment.course}} by professor {{assignment.teacher}}"},
-									{% endfor %}
+          {"date":"{{assignment.due_date|date:"Y-m-d"}}","title":"assignment {{assignment.name}}" },
+          
+									{% endfor %}	
       ]
     }
 };
 
-$('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
-    .on('changeDay', function(event){ $(lo).html("No events"); })
-    .on('onEvent', function(event){
-    var a = event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf();
-    var c = "sss"
-    {% for assignment in assignments %}
-     var b =  {{assignment.due_date|date:"Y-m-d"}};
-	 {% endfor %}
-    $(lo).html(a
-			
-    
-    ); 
-    })
+
+$('#calendar').Calendar({ 'events': evnts, 'weekStart': 7 })
+    .on('changeDay', function(event){ $(lo).html("Click a highlighted date to see an assignment or look below"); })
+    {% for assignment in assignments %}    
+    .on('onEvent', function(event){ $(lo).html("Assignment: {{assignment.name}} | Due Date: {{assignment.due_date}} | Course: {{assignment.course}} | Professor {{assignment.teacher}}"); })
+    {% endfor %}
     .on('onNext', function(event){  })
     .on('onPrev', function(event){  })
     .on('onCurrent', function(event){  });
+    
 });
+
 
 </script>
 
