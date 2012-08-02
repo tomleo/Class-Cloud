@@ -193,7 +193,11 @@ a:hover {
   float: left;
   margin-left: 20px;
 }
-
+.container-home{
+	width:750px;
+	margin:0px,auto;
+	}
+	
 .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
