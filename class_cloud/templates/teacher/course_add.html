@@ -17,7 +17,47 @@
 <![endif]-->
 
 {% include 'teacher/t_header.html' %}
-{% include 'teacher/course_navigation.html' %}
+
+
+<div class="container-fluid">
+<div class="span10 offset2">
+  <div class="row-fluid">
+    <div class="span3">
+    	<div class="well">
+    	
+      <!-- Sidebar content -->
+      <div class="row-fluid">
+      <h4>Manage your Courses</h4>
+        <ul class="nav nav-tabs nav-stacked">
+          {% for course in courses %}
+        <li><a href="/teacher/{{ course.slug }}"><i class="icon-wrench"></i> {{ course.title }}</a></li>
+        {% endfor %}
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      
+      <!--Sidebar content -->
+      <div class="row-fluid">
+            <h4>Create Courses</h4>
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href="/teacher/add/course/">Add Course <i class="icon-plus"></i></a></li>
+        </ul>
+      </div>
+      <!--END Sidebar content -->
+      </div>
+      
+      	
+    <!--Sidebar content (This is for professor only!!!)-->
+    <!--		
+		<div class = "row-fluid">
+			<ul class="nav nav-tabs nav-stacked">
+    			<li><a href="/make_announcement">Make an announcement</a></li>
+				<li><a href="PGrade.html">Assign an assignment</a></li>
+    		</ul>
+		</div>
+    -->
+      
+    </div><!--END span3-->  
 <div class="span8 offset4">
 	<h3>Create a course</h3>
    	<div class="well">
@@ -33,7 +73,6 @@
 
 </div>
 </div>
-{% include 'teacher/post_course.html' %}
 {% endblock %}
 
 {% block jQuery %}
