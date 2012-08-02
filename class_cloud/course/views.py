@@ -115,7 +115,6 @@ def course_grades(request, course_slug):
             if submission.assignment == student_grade.assignment:
                 a_graded.append((student_grade.grade, submission))
                                           
-    #import pdb; pdb.set_trace()              
     template_name = 'course_grades.html'
     return render_to_response(template_name, 
         {'course':selected_course,
@@ -126,8 +125,6 @@ def course_grades(request, course_slug):
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def grades(request):
-    
-    #import pdb; pdb.set_trace()
     
     grades = {}
     
@@ -141,8 +138,6 @@ def grades(request):
                 grades[grade.assignment.course.title] = [grade]
             else:
                 grades[grade.assignment.course.title].append(grade)
-
-    #import pdb; pdb.set_trace()
 
     return render_to_response('grades.html',
         {'student_grades': grades},
@@ -218,7 +213,6 @@ def assignments(request):
 #ToDo
 #best of luck
        
-@csrf_exempt 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def assignment(request, slug):
@@ -247,15 +241,45 @@ def course_assignment(request, course_slug, assignment_slug):
         submission_status = "submitted"
     else:
         submission_status = "need to submit"
-        
+    
+    template_vars = {
+        'assignment': a,
+        'course': b,
+        'submission_status': submission_status
+    }
+
     return render_to_response('assignment.html',
-        {'assignment':a,
-         'course':b,
-         'submission_status':submission_status},
+        template_vars,
         context_instance=RequestContext(request))
 
+
+@login_required
+@user_passes_test(lambda u: u.has_perm('course.student_view'))
 def course_assignment_edit(request, course_slug, assignment_slug):
-    pass
+    """
+    Edit Assignment Submission if it hasn't been graded yet
+
+    Not yet functional, will not be implemented for seniorr design showcase
+    """
+    submissionAssignment = SubmittedAssignment.objects.filter(student=request.user, assignment__slug=assignment_slug)
+    EditAssignmentSubmissionForm = modelformset_factory(SubmittedAssignment, max_num=1, extra=0)
+    if request.method == 'POST':
+        formset = EditAssignmentSubmissionForm(request.POST, request.FILES,
+                                               queryset=SubmittedAssignment.objects.filter(student=request.user,
+                                                   assignment__slug=assignment_slug))
+        if formset.is_valid():
+            instance = formset.save(commit=False)
+            for instance in instances:
+                instance.save()
+            return HttpResponseRedirect("complete/")
+    else:
+        formset = EditAssignmentSubmissionForm(queryset=SubmittedAssignment.objects.filter(student=request.user,
+                                                   assignment__slug=assignment_slug))
+    return render_to_response('assignment_complete.html',
+        {'formset': formset},
+        context_instance=RequestContext(request))
+
+    
     
 def course_assignment_submit(request, course_slug, assignment_slug):
     assignment = Assignment.objects.get(slug=assignment_slug)
@@ -280,7 +304,6 @@ def course_assignment_submit(request, course_slug, assignment_slug):
 def course_assignment_complete(request, course_slug, assignment_slug):
 
     #request.META['HTTP_REFERER'] = http://localhost:8000/courses/course-2/hope-this-works/submit/
-    #import pdb; pdb.set_trace()
     cf = request.META['HTTP_REFERER']
     comingFrom = cf.split('/')[-2]
     #are you coming from...
@@ -292,7 +315,39 @@ def course_assignment_complete(request, course_slug, assignment_slug):
     #    pass
 
     return render_to_response('assignment_complete.html',
-            {'comingFrom':comingFrom},
+            {'course_slug': course_slug,
+             'assignment_slug': assignment_slug,
+             'comingFrom':comingFrom },
+            context_instance=RequestContext(request))
+
+def course_assignment_grade(request, course_slug, assignment_slug):
+
+    #at the moment I am only grabbing the first grade in the list,
+    #for later iterations it might be interesting to re-submit an assignment and
+    #see all versions submitted
+    sg = StudentGrade.objects.filter(assignment__slug=assignment_slug, student=request.user)
+
+    #grade = sg[0].grade
+
+    sub = SubmittedAssignment.objects.filter(student=request.user, assignment__slug=assignment_slug)
+    #sub is returning an empty list, if the course has a grade then it should
+    #have also been submitted... 
+    #import pdb; pdb.set_trace()
+
+    submission = sub[0].submission
+
+    return render_to_response('assignment_grade.html',
+        {'studentgrade': sg[0],
+         'submission': submission},
+        context_instance=RequestContext(request))
+
+def course_assignment_view(request, course_slug, assignment_slug):
+    assignment = Assignment.objects.get(slug=assignment_slug)
+    sub = SubmittedAssignment.objects.filter(student=request.user, assignment__slug=assignment_slug)
+
+    return render_to_response('assignment_view.html',
+            {'assignment': assignment,
+             'submission': sub[0].submission},
             context_instance=RequestContext(request))
 
 

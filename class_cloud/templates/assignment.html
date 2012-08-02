@@ -22,6 +22,7 @@
     <div class="row-fluid">     
         <p>{{ assignment.description|linebreaks }}</p>
     </div>
+    {% if assignment.attachments %}
     <div class="row-fluid">
         <p>Attachments: <i class="icon-file"></i>
         <a href="{{ assignment.attachments.url }}">{{ assignment.attachments.name }}
@@ -29,6 +30,7 @@
         </a>
         </p>
     </div>
+    {% endif %}
     <div class="row-fluid">
     
         {% if submission_status == "graded" %}
@@ -36,7 +38,7 @@
         <div class="btn-group">
             <button class="btn dropdown-toggle" data-toggle="dropdown">Graded <span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><a href="#">View Grade</a></li>
+                <li><a href="grade/">View Grade</a></li>
             </ul>
         </div>
         {% else %}{% if submission_status == "submitted" %}
@@ -44,8 +46,8 @@
         <div class="btn-group">
           <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">Success <span class="caret"></span></button>
           <ul class="dropdown-menu">
-            <li><a href="#">View Submission</a></li>
-            <li><a href="#">Edit Submission</a></li>
+            <li><a href="view/">View Submission</a></li>
+            <!--<li><a href="edit/">Edit Submission</a></li>-->
           </ul>
         </div>
         {% else %}{% if submission_status == "need to submit" %}

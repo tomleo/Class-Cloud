@@ -1,6 +1,48 @@
 
-{% if comingFrom == "submit" %}
-<p>Assignment Submission Complete</p>
-{% else %}{% if comingFrom == "edit" %}
-<p>Assignment Edit Complete</p>
-{% endif %}{% endif %}
+
+
+{% extends 'base.html' %}
+{% block page_title %}
+  Assignment Saved! | {{ block.super }}
+{% endblock %}
+
+{% block head_js %}
+<script type="text/javascript">
+function redirectURL() {
+    window.location.replace("/courses/{{ course_slug }}/{{ assignment_slug }}");
+}
+
+function delayRedirect() {
+    timeout = window.setTimeout(redirectURL,  2000);
+}
+</script>
+{% endblock %}
+
+{% block body_attrs %}
+onLoad="delayRedirect();"
+{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">&nbsp;</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">&nbsp;</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1">&nbsp;</div>
+        <div id="redirect" class="span10 alert alert-success">
+            {% if comingFrom == "submit" %}
+            <p>Assignment Submission Complete</p>
+            {% else %}{% if comingFrom == "edit" %}
+            <p>Assignment Edit Complete</p>
+            {% endif %}{% endif %}
+        </div>
+        <div class="span1">&nbsp;</div>
+    </div>
+</div>
+
+{% endblock %}
