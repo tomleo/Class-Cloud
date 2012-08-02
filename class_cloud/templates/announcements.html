@@ -11,17 +11,17 @@
 {% include 'pre_body.html' %}
 
 <div class="span9">
+	<div class="well">
 	<h1>Announcements</h1>
 
    {% for announcement in announcements %}
 
      	<div class = "row-fluid">
-			<div class = "well">
-				<div >
+			<div class = "well"  style="background-color:white;border:1px solid black;padding:10px;">
+				<div>
 					<h4>{{announcement.title}}</h4>
 					<h6>{{announcement.teacher.first_name}} {{announcement.teacher.last_name}} ({{announcement.teacher}})</h6>
 					<h6>{{announcement.course}}</h6>
-					<br>
 					<p> {{announcement.description}}</p>
 					<p align = "right"><small>{{announcement.pub_date}}</small></p>
 				</div>	
@@ -29,6 +29,7 @@
 		</div>
       {% endfor %}
 
+  </div>
   </div>
 
 

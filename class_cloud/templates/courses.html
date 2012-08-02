@@ -14,8 +14,9 @@
 <!-- Assignment -->
     <div class="span8">
       <div class="row-fluid">
+      <div class="well">
+      <h1>Courses</h1>
         <ul class="thumbnails">
-            <h1>Courses</h1>
             {% for course in courses %}
             <li class="span5">
                 <a href = "{{ course.slug }}" class="thumbnail">
@@ -29,6 +30,7 @@
             {% endfor %}
         </ul>
       </div><!--END row-fluid-->
+      </div>
     </div><!--END span8 -->
 <!-- END Assignment -->
 	
