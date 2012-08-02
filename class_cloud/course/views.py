@@ -1,7 +1,9 @@
 #Don't think generic views are being used, might want to remove this
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
-from django.views.decorators.csrf import csrf_exempt
+import datetime
+from django.shortcuts import render_to_response
+from django.conf import settings
 
 
 #Models
@@ -23,17 +25,61 @@ from django.contrib.auth.decorators import login_required, user_passes_test, per
 
 from django.template import defaultfilters
 
+#class SimpleFileForm(forms.Form):
+ #   file = forms.Fields(widget=forms.FileInput, required=FALSE)
+    
+def directupload(request):
+       
+       template = 'assignments.html'
+       
+       if request['method']=='POST':
+           if 'file' in request.FILES:
+            file = request.FILES['file']
+           
+            filename = file['filename']
+           
+            fd = open('%s/%s' % (MEDIA_ROOT, filename), 'wb')
+            fd.write(file['content'])
+            fd.close()
+           
+           return http.HttpResponseRedirect(' assignment.html')
+       else:
+            form = SimpleFileForm()
+            return render_to_response(template, { 'form': form })
+
+import bisect
 def calendar(request):
     assignment_list = []
-    courses = []
-    courses.extend(Course.objects.filter(students__username=request.user.username))
+    #courses = []
+    courses = Course.objects.filter(students__username=request.user.username)
+    user = request.user
+    
+    current_date = datetime.date.today()
     
     for icourse in courses:
         course_assignments = Assignment.objects.filter(course=icourse)
-        assignment_list.extend(course_assignments)
+        for assignment in course_assignments:
+            #import pdb; pdb.set_trace()
+            #bisect.insort(assignment_list, assignment)
+            assignment_list.append(assignment)
+        #assignment_list.extend(course_assignments)
+        
+        submissionAssignment = SubmittedAssignment.objects.filter(student=request.user, assignment__slug=assignment_list)
+        
+        #submissions = SubmittedAssignment.objects.filter(assignment__slug=assignment_slug, student=user)
+        
+        
+        
+        
+    assignment_list.sort(key=lambda x: x.assignment.due_date)
+    #import pdb; pdb.set_trace()
 
     return render_to_response('calendar.html',
-    		{'assignments': assignment_list},
+    		{'assignments': assignment_list,
+    		'currentdate' : current_date,
+    		'submission' : submissionAssignment,
+    		},
+    		
         	context_instance=RequestContext(request))
 
 
@@ -209,10 +255,16 @@ def assignments(request):
         {'assignments': assignment_list},
         context_instance=RequestContext(request))
 
+
 #We need to filter those assignments out that are past due, submitted or graded.
 #ToDo
 #best of luck
        
+
+        
+
+
+
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def assignment(request, slug):
