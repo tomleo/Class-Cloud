@@ -592,7 +592,8 @@ def grade_assignment_complete(request, course_slug, assignment_slug, student_use
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def edit_course(request, course_slug):
-
+    course = Course.objects.filter(slug=course_slug)
+    courses = Course.objects.filter(teacher=request.user) 
     EditCourseFormSet = modelformset_factory(Course, max_num=1, extra=0,)
     if request.method == 'POST':
         formset = EditCourseFormSet(request.POST, request.FILES, 
@@ -607,7 +608,9 @@ def edit_course(request, course_slug):
         formset = EditCourseFormSet(queryset=Course.objects.filter(slug=course_slug))
 
     return render_to_response('teacher/edit_course.html',
-        {'formset': formset},
+        {'formset': formset,
+        'course':course,
+        'courses':courses,},
         context_instance=RequestContext(request))
 
 
