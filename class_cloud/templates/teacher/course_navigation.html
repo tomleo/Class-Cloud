@@ -1,5 +1,5 @@
-<div class="container-fluid">
-	<div class="span10 offset2">
+<div class="container-fluid"  >
+	<div class="span10 offset2" style="">
 		<div class="row-fluid">
     		<div class="span3">
     			<div class="well">
@@ -42,7 +42,7 @@
       			<h4>Manage your Courses</h4>
         			<ul class="nav nav-tabs nav-stacked">
           		{% for course in courses %}
-        			<li><a href="{{ course.slug }}"><i class="icon-wrench"></i> {{ course.title }}</a></li>
+        			<li><a href="/teacher/{{ course.slug }}"><i class="icon-wrench"></i> {{ course.title }}</a></li>
         			{% endfor %}
         			</ul>
       		</div>
