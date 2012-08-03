@@ -671,9 +671,7 @@ def enroll_student_complete(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))    
 def add_course(request):
 	courses = Course.objects.filter(teacher=request.user)
-	#needs to be changed
-	for course in courses:
-		teacher = course.teacher
+	teacher = request.user
 	newcourse = Course(teacher=teacher)
 	if request.method == 'POST':
 		form = CourseForm(request.POST, request.FILES, instance=newcourse)
