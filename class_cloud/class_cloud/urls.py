@@ -1,8 +1,10 @@
 from django.conf import settings
 from django.conf.urls import *
+from django.conf.urls.defaults import *
 from django.views.generic import list_detail, TemplateView, ListView, DetailView
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
+from django.contrib.auth.views import password_reset
 
 admin.autodiscover()
 
@@ -64,8 +66,16 @@ urlpatterns = patterns('',
     
     #Login & Registration
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
-        {'template_name': 'login.html'} ),
+        {'template_name': 'login.html',
+        }
+    ),
+    (r'^accounts/password/reset/$', password_reset, {'template_name': 'registration/password_reset.html'}),
     (r'^accounts/', include('registration.backends.default.urls')),
+    
+    #url(r'^admin/password_reset/$', 'django.contrib.auth.views.password_reset', name='admin_password_reset'),
+    #(r'^admin/password_reset/done/$', 'django.contrib.auth.views.password_reset_done'),
+    #(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
+    #(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
     #Assignment page
     (r'^assignments/(?P<slug>[-\w]+)/$', 'course.views.assignment'),

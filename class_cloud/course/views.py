@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 
 
@@ -13,6 +13,10 @@ from django.contrib.auth.models import User, Permission
 #Model Forms
 from course.models import CourseForm, AnnoucementForm, AssignmentForm, GradeForm, AssignmentAttemptForm
 from django.forms.models import ModelForm, modelformset_factory
+
+#Rest password includes
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, PasswordChangeForm
+from django.contrib.auth.tokens import default_token_generator
 
 from django.shortcuts import render_to_response, RequestContext
 
@@ -25,51 +29,34 @@ from django.contrib.auth.decorators import login_required, user_passes_test, per
 
 from django.template import defaultfilters
 
-#class SimpleFileForm(forms.Form):
- #   file = forms.Fields(widget=forms.FileInput, required=FALSE)
     
-import bisect
+# Their is no login decorator, or authentication...
 def calendar(request):
     assignment_list = []
-    #courses = []
     courses = Course.objects.filter(students__username=request.user.username)
     user = request.user
-    
     current_date = datetime.date.today()
-    
     for icourse in courses:
         course_assignments = Assignment.objects.filter(course=icourse)
         for assignment in course_assignments:
-            #import pdb; pdb.set_trace()
-            #bisect.insort(assignment_list, assignment)
             assignment_list.append(assignment)
-        #assignment_list.extend(course_assignments)
-        
+        # This is being query is being called for every course the user is enrolled in
+        # and its never being used...
         submissionAssignment = SubmittedAssignment.objects.filter(student=request.user, assignment__slug=assignment_list)
-        
-        #submissions = SubmittedAssignment.objects.filter(assignment__slug=assignment_slug, student=user)
-        
-        
-        
-        
     assignment_list.sort(key=lambda x: x.assignment.due_date)
-    #import pdb; pdb.set_trace()
 
     return render_to_response('calendar.html',
     		{'assignments': assignment_list,
     		'currentdate' : current_date,
     		'submission' : submissionAssignment,
     		},
-    		
         	context_instance=RequestContext(request))
 
 
+#Can this be removed?
 def passign(request):
     return render_to_response('passign.html',
         context_instance=RequestContext(request))
-
-
-    
 
 
 @login_required
@@ -80,6 +67,7 @@ def index(request):
     The context is a dictionary mapping between template variable names and
     Python objects
     """
+
     courses = Course.objects.filter(students__username=request.user.username)
     return render_to_response('courses.html',
         {'courses': courses},
@@ -94,6 +82,7 @@ def courses(request, slug):
         {'courses': courses},
         context_instance=RequestContext(request))
 
+
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def profile(request):
@@ -104,24 +93,14 @@ def profile(request):
 	 'courses': courses,},
 	context_instance=RequestContext(request))
 
-def course_test(request, course_slug):
-    
-    selected_course = Course.objects.get(slug=course_slug)
-    course_assignments = Assignment.objects.filter(course=selected_course)
-    
-    import pdb; pdb.set_trace()
-    
-    return HttpResponse(course_assignments)
 
+#def course_test(request, course_slug):
+#    selected_course = Course.objects.get(slug=course_slug)
+#    course_assignments = Assignment.objects.filter(course=selected_course)
+#    import pdb; pdb.set_trace()
+#    return HttpResponse(course_assignments)
 
-#@login_required
-#@user_passes_test(lambda u: u.has_perm('course.student_view'))
-#def wtf(request):
-#    student_grades = StudentGrade.objects.filter(student__username=request.user.username)
-#    return render_to_response('grades.html',
-#        {'student_grades': student_grades},
-#        context_instance=RequestContext(request))
-    
+   
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def course_grades(request, course_slug):    
@@ -149,6 +128,7 @@ def course_grades(request, course_slug):
          'grades':student_grades},
          context_instance=RequestContext (request))                                      
 
+
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
 def grades(request):
@@ -169,6 +149,7 @@ def grades(request):
     return render_to_response('grades.html',
         {'student_grades': grades},
         context_instance=RequestContext(request))
+
 
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.student_view'))
@@ -242,10 +223,6 @@ def assignments(request):
 #We need to filter those assignments out that are past due, submitted or graded.
 #ToDo
 #best of luck
-       
-
-        
-
 
 
 @login_required
@@ -265,18 +242,18 @@ def assignment(request, slug):
 def course_assignment(request, course_slug, assignment_slug):
     a = Assignment.objects.get(slug=assignment_slug)
     b = a.course
-    
+
     user = request.user
     graded_submissions = StudentGrade.objects.filter(assignment__slug=assignment_slug, student=user)
     submissions = SubmittedAssignment.objects.filter(assignment__slug=assignment_slug, student=user)
-    
+
     if graded_submissions:
         submission_status = "graded"
     elif submissions:
         submission_status = "submitted"
     else:
         submission_status = "need to submit"
-    
+
     template_vars = {
         'assignment': a,
         'course': b,
@@ -319,7 +296,6 @@ def course_assignment_edit(request, course_slug, assignment_slug):
 def course_assignment_submit(request, course_slug, assignment_slug):
     assignment = Assignment.objects.get(slug=assignment_slug)
     submission = AssignmentAttempt()
-    #courses/(?P<course_slug>[-\w]+)/(?P<assignment_slug>[-\w]+)/complete/
 
     if request.method == 'POST':
         form = AssignmentAttemptForm(request.POST, request.FILES, instance=submission)
@@ -355,6 +331,7 @@ def course_assignment_complete(request, course_slug, assignment_slug):
              'comingFrom':comingFrom },
             context_instance=RequestContext(request))
 
+
 def course_assignment_grade(request, course_slug, assignment_slug):
 
     #at the moment I am only grabbing the first grade in the list,
@@ -362,12 +339,9 @@ def course_assignment_grade(request, course_slug, assignment_slug):
     #see all versions submitted
     sg = StudentGrade.objects.filter(assignment__slug=assignment_slug, student=request.user)
 
-    #grade = sg[0].grade
-
     sub = SubmittedAssignment.objects.filter(student=request.user, assignment__slug=assignment_slug)
     #sub is returning an empty list, if the course has a grade then it should
     #have also been submitted... 
-    #import pdb; pdb.set_trace()
 
     submission = sub[0].submission
 
@@ -375,6 +349,7 @@ def course_assignment_grade(request, course_slug, assignment_slug):
         {'studentgrade': sg[0],
          'submission': submission},
         context_instance=RequestContext(request))
+
 
 def course_assignment_view(request, course_slug, assignment_slug):
     assignment = Assignment.objects.get(slug=assignment_slug)
@@ -384,6 +359,36 @@ def course_assignment_view(request, course_slug, assignment_slug):
             {'assignment': assignment,
              'submission': sub[0].submission},
             context_instance=RequestContext(request))
+
+
+def password_reset(request, is_admin_site=False,
+    template_name='registration/password_reset_form.html',
+    email_template_name='registration/password_reset_email.html',
+    password_reset_form=PasswordResetForm,
+    token_generator=default_token_generator,
+    post_reset_redirect=None):
+    pass
+
+
+def password_reset_done(request,
+                        template_name='registration/password_reset_done.html',
+                        current_app=None, extra_context=None):
+    pass
+
+
+def password_reset_confirm(request, uidb36=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    pass
+
+
+def password_reset_complete(request,
+                            template_name='registration/password_reset_complete.html',
+                            current_app=None, extra_context=None):
+    pass
 
 
 def logout_view(request):
@@ -642,12 +647,6 @@ def enroll_student(request, course_slug, student):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def enroll_student_complete(request, course_slug):
     pass
-
-#@login_required
-#@user_passes_test(lambda u: u.has_perm('course.teacher_view'))
-#def teacher_enroll(request):
-#    """Enroll Student in class"""
-#    pass
 
 
 @login_required
