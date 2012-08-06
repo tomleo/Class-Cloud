@@ -286,4 +286,29 @@ class Discussion(TimeStampedActivate):
         return self.slug
 
 
-	
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    
+    YEAR_IN_SCHOOL_CHOICES = (
+        ('FR', 'Freshman'),
+        ('SO', 'Sophomore'),
+        ('JR', 'Junior'),
+        ('SR', 'Senior'),
+        ('GR', 'Graduate'),
+    )
+    
+    current_school = models.CharField(max_length=20, default="Wentworth")
+    status = models.CharField(max_length=2, default="FR", choices=YEAR_IN_SCHOOL_CHOICES)
+    location = models.CharField(max_length=80)
+    #gravatar_email = EmailField()
+    
+    def get_absolute_url(self):
+        return ('profiles_profile_detail', (), { 'username': self.user.username })
+        
+    get_absolute_url = models.permalink(get_absolute_url)
+    
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+
+

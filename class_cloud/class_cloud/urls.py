@@ -14,26 +14,34 @@ from course.models import Course, Assignment
 from django.conf import settings
 
 
-        
-course_info = {
-	"queryset": Course.objects.filter(active=True),
-    "template_name": "courses.html",
-    "template_object_name": "courses",
-    "extra_context": {"assignments": Assignment.objects.filter(active=True)}
-}
+from django.db.models.signals import post_save
+from course.models import UserProfile
+from django.contrib.auth.models import User
 
-assignment_info = {
-    "queryset": Assignment.objects.filter(active=True),
-    "template_name": "assignments.html",
-    "template_object_name": "assignments",
-}
+def createUserProfile(sender, instance, **kwargs):
+    UserProfile.objects.get_or_create(user=instance)
+    
+post_save.connect(createUserProfile, sender=User)
 
-assignment_detail = {
-    "queryset":
-    Assignment.objects.filter(active=True).order_by('due_date').reverse(),
-    #The order_by and reverse functions do not seem to be working
-    "template_name": "assignment.html",
-} 
+#course_info = {
+#	"queryset": Course.objects.filter(active=True),
+#    "template_name": "courses.html",
+#    "template_object_name": "courses",
+#    "extra_context": {"assignments": Assignment.objects.filter(active=True)}
+#}
+
+#assignment_info = {
+#    "queryset": Assignment.objects.filter(active=True),
+#    "template_name": "assignments.html",
+#    "template_object_name": "assignments",
+#}
+
+#assignment_detail = {
+#    "queryset":
+#    Assignment.objects.filter(active=True).order_by('due_date').reverse(),
+#    #The order_by and reverse functions do not seem to be working
+#    "template_name": "assignment.html",
+#} 
 
 urlpatterns = patterns('',
 
@@ -44,7 +52,8 @@ urlpatterns = patterns('',
     (r'^$', 'course.views.index'),
     
     #Profile
-    (r'^profile/$', 'course.views.profile'),
+    (r'^profiles/edit/$', 'profiles.views.edit_profile', {'form_class': UserProfileForm, }),
+    (r'^profiles/$', include('profiles.urls')),
     
     #Grades
     (r'^grades/$', 'course.views.grades'),

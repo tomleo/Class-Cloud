@@ -134,6 +134,7 @@ INSTALLED_APPS = (
 
     #'django_extensions',
     'registration',
+    'profiles',
     'bootstrapform',
 
 #    'assignments',
