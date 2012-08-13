@@ -229,19 +229,17 @@ class SubmittedAssignmentForm(ModelForm):
         model = SubmittedAssignment
         fields = ('submission',)
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    #Additional fields will go here
-    
 
 class StudentGrade(models.Model):
     student = models.ForeignKey(User, verbose_name="Student")
     assignment = models.ForeignKey(Assignment, verbose_name="For Assignment")
     grade = models.ForeignKey(Grade, verbose_name="Students Grade")
-    
+
+
 class StudentGradeForm(ModelForm):
     class Meta:
         model = StudentGrade
+
 
 class Enrollment(models.Model):
     #Should change this to student...
@@ -268,6 +266,7 @@ class Announcement(TimeStampedActivate):
         self.slug = slugify(self.title)
         unique_slug(self, slug_source = 'title', slug_field = 'slug')
         super(Announcement, self).save(*args, **kwargs)
+
 
 class AnnoucementForm(ModelForm):
     class Meta:
@@ -306,7 +305,8 @@ class UserProfile(models.Model):
         return ('profiles_profile_detail', (), { 'username': self.user.username })
         
     get_absolute_url = models.permalink(get_absolute_url)
-    
+
+
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile

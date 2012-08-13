@@ -120,3 +120,24 @@ Using jquery-ui-bootstrap's custom theme to style the jQuery datepicker widget
 https://github.com/addyosmani/jquery-ui-bootstrap
 
 See stuff installed via pip for more libraries/frameworks/code
+
+django-registration
+-------------------
+
+Made the following modification so that registered users are added to the 
+student group:
+
+in ENV/lib/python2.7/site-packages/registration/models.py I added the following::
+
+    def create_inactive_user
+        ...
+        new_user = User.objects.create_user(username, email, password)
+        new_user.is_active = False
+        
+      + student = Group.objects.get(name='Student Users')
+      + new_user.groups.add(student)
+      
+        new_user.save()
+        ...
+
+

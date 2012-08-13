@@ -15,7 +15,7 @@ from django.conf import settings
 
 
 from django.db.models.signals import post_save
-from course.models import UserProfile
+from course.models import UserProfile, UserProfileForm
 from django.contrib.auth.models import User
 
 def createUserProfile(sender, instance, **kwargs):
