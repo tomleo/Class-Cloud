@@ -15,9 +15,9 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycop2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'leot_class_cloud',                      # Or path to database file if using sqlite3.
-        'USER': 'leot_class_cloud',                      # Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'leot_class_cloud',                      # Name of the server as it appears on the control panel (via http://docs.webfaction.com/software/django/config.html)
+        'USER': 'leot_class_cloud',                      # Name of the server as it appears on the control panel (via http://docs.webfaction.com/software/django/config.html)
         'PASSWORD': 'thomas',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -64,7 +64,7 @@ MEDIA_URL = 'http://127.0.0.1:8000/media/' #tleo this will have to change
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/leot/webapps/django_static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -75,8 +75,11 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/leot/webapps/django_static',
+    #'/home/leot/webapps/django_static',
     rel_path('../templates/static'),
+    rel_path('../media'),
+    rel_path('../syllabus'),
+    rel_path('../course_image'),
     #'/home/tom/Programming/Class-Cloud/class_cloud/templates/static',
 )
 
@@ -182,7 +185,7 @@ LOGGING = {
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'mailbox_leot'
 EMAIL_HOST_PASSWORD = 'thomas'
-DEFAULT_FROM_EMAIL = 'tomjleo@gmail.com'
-#SERVER_EMAIL = 'valid_email_address' #tleo need to change t his
-SERVER_EMAIL = 'tom@tomleo.com'
+DEFAULT_FROM_EMAIL = 'tom@leot.webfactional.com'
+SERVER_EMAIL = 'tom@leot.webfactional.com'
+
 

@@ -14,7 +14,7 @@ from django.conf import settings
 
         
 course_info = {
-	"queryset": Course.objects.filter(active=True),
+    "queryset": Course.objects.filter(active=True),
     "template_name": "courses.html",
     "template_object_name": "courses",
     "extra_context": {"assignments": Assignment.objects.filter(active=True)}
@@ -76,7 +76,8 @@ urlpatterns = patterns('',
     
     #Announcement page
     (r'^announcements/$', 'course.views.announcements'),
-    
+   
+    #leot I think this has to be removed... 
     #Static Content
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),

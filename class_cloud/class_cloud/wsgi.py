@@ -15,7 +15,7 @@ framework.
 """
 import os
 import sys
-sys.path = ['/home/leot/webapps/django/Class-Cloud/class_cloud', '/home/leot/webapps/django/lib/python2.7'] + sys.path
+sys.path = ['/home/leot/webapps/django/class_cloud', '/home/leot/webapps/django/lib/python2.7'] + sys.path
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "class_cloud.settings")
 
