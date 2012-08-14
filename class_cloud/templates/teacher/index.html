@@ -55,19 +55,16 @@
     
     <div class="span7">
 			<div class="well">
-				  <h4>Welcome Professor {{ user.get_full_name }}</h4>
+				  <h4>
+                    Welcome Professor
+                    {% if user.first_name and user.last_name %}
+                    &nbsp;{{user.first_name}}&nbsp;{{user.last_name}}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                  </h4>
 				  <br>
-				<div class = "well">
-				<div>
-					<img src = "http://www.ellen-parrots.com/gaaies_co/naoko_icons/asi6.gif" alt ="" align = "left">
-					<h5>&nbsp;&nbsp; {{user.get_full_name}}</h5>
-					<br>
-					<p><strong>&nbsp;&nbsp; Wentworth Institute of Technolgy</strong></p>
-					<br>
-					<p>&nbsp;&nbsp; Status: Teacher</p>
-					<br>
-					<p>&nbsp;&nbsp; email: {{user.email}}</p>
-					</div>
+				<p>&nbsp;&nbsp; email: {{user.email}}</p>
 		</div>
 		
 		<div class="row-fluid">

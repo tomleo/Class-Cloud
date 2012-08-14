@@ -2,7 +2,7 @@
 from django.views.generic import list_detail, date_based, TemplateView, RedirectView, DetailView
 from django.views.generic.edit import FormView
 import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 
 
@@ -24,6 +24,11 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 
 from django.template import defaultfilters
+
+#Reset password includes
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm,
+PasswordChangeForm
+from django.contrib.auth.tokens import default_token_generator
 
 #class SimpleFileForm(forms.Form):
  #   file = forms.Fields(widget=forms.FileInput, required=FALSE)
@@ -250,6 +255,7 @@ def assignments(request):
     for icourse in courses:
         course_assignments = Assignment.objects.filter(course=icourse)
         assignment_list.extend(course_assignments)
+        assignment_list.sort(key=lambda x: x.assignment.due_date)
     
     return render_to_response('assignments.html',
         {'assignments': assignment_list},
@@ -259,10 +265,6 @@ def assignments(request):
 #We need to filter those assignments out that are past due, submitted or graded.
 #ToDo
 #best of luck
-       
-
-        
-
 
 
 @login_required
@@ -401,6 +403,41 @@ def course_assignment_view(request, course_slug, assignment_slug):
             {'assignment': assignment,
              'submission': sub[0].submission},
             context_instance=RequestContext(request))
+
+
+def password_reset(request, is_admin_site=False,
+    template_name='registration/password_reset_form.html',
+    email_template_name='registration/password_reset_email.html',
+    password_reset_form=PasswordResetForm,
+    token_generator=default_token_generator,
+    post_reset_redirect=None):
+    pass
+
+
+def password_reset_done(request,
+    template_name='registration/password_reset_done.html',
+    current_app=None, extra_context=None):
+    pass
+
+def password_reset_done(request,
+                        template_name='registration/password_reset_done.html',
+                        current_app=None, extra_context=None):
+    pass
+
+
+def password_reset_confirm(request, uidb36=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    pass    
+
+
+def password_reset_complete(request,
+                            template_name='registration/password_reset_complete.html',
+                            current_app=None, extra_context=None):
+    pass
 
 
 def logout_view(request):
@@ -592,7 +629,8 @@ def grade_assignment_complete(request, course_slug, assignment_slug, student_use
 @login_required
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))
 def edit_course(request, course_slug):
-
+    course = Course.objects.filter(slug=course_slug)
+    courses = Course.objects.filter(teacher=request.user) 
     EditCourseFormSet = modelformset_factory(Course, max_num=1, extra=0,)
     if request.method == 'POST':
         formset = EditCourseFormSet(request.POST, request.FILES, 
@@ -607,7 +645,10 @@ def edit_course(request, course_slug):
         formset = EditCourseFormSet(queryset=Course.objects.filter(slug=course_slug))
 
     return render_to_response('teacher/edit_course.html',
-        {'formset': formset},
+        {'formset': formset,
+         'course': course,
+         'courses': courses,
+        },
         context_instance=RequestContext(request))
 
 
@@ -668,6 +709,7 @@ def enroll_student_complete(request, course_slug):
 @user_passes_test(lambda u: u.has_perm('course.teacher_view'))    
 def add_course(request):
 	courses = Course.objects.filter(teacher=request.user)
+    teacher = request.user
 	for course in courses:
 		teacher = course.teacher
 	newcourse = Course(teacher=teacher)
@@ -680,6 +722,7 @@ def add_course(request):
 		form = CourseForm()
 	return render_to_response('teacher/course_add.html',
         { 'CourseForm': form,
+          'courses': courses,
         },
         context_instance=RequestContext(request))
         

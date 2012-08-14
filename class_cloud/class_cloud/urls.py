@@ -1,8 +1,11 @@
 from django.conf import settings
 from django.conf.urls import *
+from django.conf.urls.default import *
+from django.conf.urls.default import *
 from django.views.generic import list_detail, TemplateView, ListView, DetailView
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
+from django.contrib.auth.views import password_reset
 
 admin.autodiscover()
 
@@ -11,27 +14,9 @@ from course.models import Course, Assignment
 
 from django.conf import settings
 
-
-        
-course_info = {
-    "queryset": Course.objects.filter(active=True),
-    "template_name": "courses.html",
-    "template_object_name": "courses",
-    "extra_context": {"assignments": Assignment.objects.filter(active=True)}
-}
-
-assignment_info = {
-    "queryset": Assignment.objects.filter(active=True),
-    "template_name": "assignments.html",
-    "template_object_name": "assignments",
-}
-
-assignment_detail = {
-    "queryset":
-    Assignment.objects.filter(active=True).order_by('due_date').reverse(),
-    #The order_by and reverse functions do not seem to be working
-    "template_name": "assignment.html",
-} 
+from django.db.models.signals import post_save
+#from course.models import UserProfile, UserProfileForm
+from django.contrib.auth.models import User
 
 urlpatterns = patterns('',
 
@@ -65,6 +50,7 @@ urlpatterns = patterns('',
     #Login & Registration
     (r'^accounts/login/$', 'django.contrib.auth.views.login', 
         {'template_name': 'login.html'} ),
+    (r'^accounts/password/reset/$', password_reset, {'template_name': 'registration/password_reset.html'}),
     (r'^accounts/', include('registration.backends.default.urls')),
 
     #Assignment page
