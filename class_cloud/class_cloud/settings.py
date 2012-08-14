@@ -146,8 +146,16 @@ INSTALLED_APPS = (
 
 #tleo will have to fix registration
 ACCOUNT_ACTIVATION_DAYS = 7
-#EMAIL_HOST = 'localhost'
-#EMAIL_PORT = 
+EMAIL_HOST = 'smtp.webfaction.com'
+EMAIL_HOST_USER = 'leot'
+EMAIL_HOST_PASSWORD = 'thomas'
+#EMAIL_PORT = 25
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'tom@leot.webfactional.com'
+#DEFAULT_FROM_EMAIL = 'leot@mail.webfaction.com'
+SERVER_EMAIL = 'tom@leot.webfactional.com'
+#SERVER_EMAIL = 'leot@mail.webfaction.com'
+SEND_BROKEN_LINK_EMAILS = True
 #DEFAULT_FROM_EMAIL = 'tomleo@localhost'
 #LOGIN_REDIRECT_URL = '/'
 
