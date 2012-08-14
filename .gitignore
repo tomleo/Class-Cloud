@@ -5,3 +5,6 @@
 .DS_Store
 ENV/*
 class_cloud/syllabus/*
+class_cloud/media/*
+class_cloud/course_image/*
+database.db*

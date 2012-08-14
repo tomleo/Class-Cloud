@@ -121,6 +121,8 @@ TEMPLATE_DIRS = (
     #'/home/tom/Programming/Class-Cloud/class_cloud/templates',
 )
 
+AUTH_PROFILE_MODULE = 'course.UserProfile'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -148,7 +150,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 #DEFAULT_FROM_EMAIL = 'tomleo@localhost'
 #LOGIN_REDIRECT_URL = '/'
 
-AUTH_PROFILE_MODULE = 'course.UserProfile'
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -1,0 +1,5 @@
+
+<p>All the users...</p>
+{% for p in object_list %}
+    <a href="{% url profiles_profile_detail p.user %}">{{ p }}</a>
+{% endfor %}

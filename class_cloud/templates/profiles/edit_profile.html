@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Class Cloud
+{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<div class="container-fluid">
+    <div class="span10 offset2">
+      <div class="row-fluid">
+        <div class="span3">
+            <div class="row-fluid"></div>
+        </div><!--END span3-->
+
+        <div class="span8">
+            <h1>Edit info for {{ user }}</h1>
+        
+            {% load bootstrap %}
+
+            <form method="post" action=".">{% csrf_token %}
+
+            {{ form|bootstrap }}
+
+            <input type="submit" name="submit" value="Update" />
+            </form>
+
+        </div><!--END span8-->
+
+        </div><!--END row-fluid-->
+    </div><!--END span10 offset2-->
+</div><!--END container-fluid-->
+
+{% endblock %}

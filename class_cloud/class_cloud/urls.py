@@ -52,7 +52,7 @@ urlpatterns = patterns('',
     (r'^$', 'course.views.index'),
     
     #Profile
-    (r'^profiles/edit/$', 'profiles.views.edit_profile', {'form_class': UserProfileForm, }),
+    (r'^profiles/edit/$', 'profiles.views.edit_profile', {'form_class': UserProfileForm }),
     (r'^profiles/$', include('profiles.urls')),
     
     #Grades
