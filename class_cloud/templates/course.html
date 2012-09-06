@@ -4,15 +4,11 @@
   Courses List | {{ block.super }}
 {% endblock %}
 
-
 {% block body %}
-
-
 
 {% include 'header.html' %}
 {% include 'pre_body.html' %}  
-
-  
+ 
 <div class="span8">
 <div class="tabbable">       
 
@@ -31,12 +27,7 @@
     <li class=""><a href="#grades" data-toggle="tab">Grades</a></li>
     <li class=""><a href="#discussions" data-toggle="tab">Discussions</a></li>
 </ul>
-  
- 
-  
-  
-  
-  
+
 <div id="myTabContent" class="tab-content">
 
 <!--Home Tab-->
@@ -44,11 +35,9 @@
     <img src="{{course.course_image.url}}" alt="{{course.title}}">
 	{{ course.description|linebreaks }}
 	<div class = "row-fluid">
-		<div class = "well">
-			<div class = "span9">
-			    <strong>Syllabus for {{course.title}}: <a href="{{course.syllabus.url}}"><i class="icon-file"></i>{{course.title}}/Syllabus</a></strong>
-			</div>
-		</div>	
+    <div class = "span9">
+        <strong>Syllabus for {{course.title}}: <a href="{{course.syllabus.url}}"><i class="icon-file"></i>{{course.title}}/Syllabus</a></strong>
+    </div>
 	</div>
 </div>
  
@@ -72,12 +61,6 @@
         <p>No Announcements at this time</p>
       {% endfor %}
 </div>
-
-<!--
-assignments_graded
-assignments_submitted
-assignments_inbox
--->
 
 <!-- Assignments Inbox Tab -->
 <div class="tab-pane fade" id="dropdown1">
