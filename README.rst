@@ -1,3 +1,5 @@
+|waffle|_
+
 ===========
 Class Cloud
 ===========
@@ -8,11 +10,6 @@ About
 Class Cloud is a course management software application designed for ease of use
 and ubiquity across all modern web capable devices
 i.e. Desktop Browsers, Tablets, and Phones.
-
-|waffle|_
-
-.. |waffle| image:: https://badge.waffle.io/tomleo/class-cloud.png
-.. _waffle: http://waffle.io/tomleo/class-cloud
 
 
 The Setup before you start coding
@@ -147,3 +144,6 @@ in ENV/lib/python2.7/site-packages/registration/models.py I added the following:
         ...
 
 
+
+.. |waffle| image:: https://badge.waffle.io/tomleo/class-cloud.png
+.. _waffle: http://waffle.io/tomleo/class-cloud
