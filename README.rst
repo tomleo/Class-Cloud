@@ -9,6 +9,9 @@ Class Cloud is a course management software application designed for ease of use
 and ubiquity across all modern web capable devices
 i.e. Desktop Browsers, Tablets, and Phones.
 
+.. image:: https://badge.waffle.io/tomleo/class-cloud.png
+:target: http://waffle.io/tomleo/class-cloud
+
 The Setup before you start coding
 =================================
 
